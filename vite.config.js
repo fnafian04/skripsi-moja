@@ -1,14 +1,16 @@
-import { defineConfig } from 'vite';
-import { resolve } from 'path';
+import { defineConfig } from "vite";
+import tailwindcss from "@tailwindcss/vite"; // Plugin wajib buat Tailwind v4
 
 export default defineConfig({
+  plugins: [
+    tailwindcss(), // Aktifkan mesin Tailwind-nya di sini
+  ],
   build: {
     rollupOptions: {
       input: {
-        main: resolve(__dirname, 'index.html'),
-        peta: resolve(__dirname, 'peta.html'),
-        // legena: resolve(__dirname, 'legena.html') // Ini aku siapin sekalian buat nanti!
-      }
-    }
-  }
+        main: "index.html", // Halaman Utama
+        peta: "peta.html", // Halaman Peta Candi
+      },
+    },
+  },
 });
