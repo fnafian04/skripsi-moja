@@ -205,3 +205,55 @@
   transform: translate(2px, 2px) !important;
   box-shadow: 0px 0px 0px #FFB300 !important;
 }
+/* --- EFEK BUKU DONGENG (VERSI ABSTRAK & MODERN) --- */
+
+/* Pita Hijau (Bentuk Kertas Abstrak) */
+.book-banner {
+  background: linear-gradient(135deg, #5c7a52, #3a5332);
+  border: 2px solid #3E2723;
+  /* KUNCI: Pinggiran acak ala perkamen kuno */
+  border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px !important;
+  box-shadow: 4px 4px 0px rgba(62,39,35,0.2);
+  color: #fdf5e6;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+}
+
+/* Batu Prasasti (Lebih natural, tidak kotak) */
+.stone-plaque {
+  background: linear-gradient(to bottom, #d7ccc8, #8d6e63);
+  border: 2px solid #3E2723;
+  /* Bentuk batu tak beraturan */
+  border-radius: 30px 10px 20px 15px / 15px 20px 10px 25px;
+  box-shadow: 0 5px 5px rgba(0,0,0,0.5), inset 2px 2px 3px rgba(255,255,255,0.4);
+  color: #3E2723;
+}
+
+/* Background Pemandangan (Kotak dengan tepi hand-drawn / abstrak) */
+.landscape-bg {
+  background: linear-gradient(to bottom, #a0d8ef 0%, #e0f6ff 45%, #a3d9a5 55%, #6ab06c 100%);
+  /* KUNCI: Bentuk kotak tapi pinggirannya sedikit miring/acak natural */
+  border-radius: 15px 8px 25px 10px / 10px 25px 8px 15px;
+  border: 2px solid rgba(62, 39, 35, 0.2);
+  /* Tambahan bayangan biar terkesan seperti stiker tebal / polaroid */
+  box-shadow: inset 0 0 15px rgba(255,255,255,0.6), 4px 4px 0px rgba(62,39,35,0.1);
+  transition: all 0.3s ease;
+}
+
+/* Tombol Cek Jawaban (Modern, Elegan, 3D Gamified) */
+.btn-modern-3d {
+  background: linear-gradient(135deg, #FFD54F, #FF8F00);
+  color: #3E2723;
+  border: 2px solid #3E2723;
+  border-radius: 12px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  /* Efek tebal 3D pop-up */
+  box-shadow: 0 4px 0px #3E2723, 0 8px 10px rgba(0,0,0,0.2);
+  transition: all 0.1s ease-in-out;
+}
+.btn-modern-3d:active {
+  /* Saat ditekan, tombolnya "amblas" ke bawah */
+  transform: translateY(4px);
+  box-shadow: 0 0px 0px #3E2723, 0 2px 3px rgba(0,0,0,0.2);
+}
