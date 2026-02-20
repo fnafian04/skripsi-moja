@@ -1,120 +1,127 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="id">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Eksplorasi Candi — Caraka</title>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Javanese&display=swap" rel="stylesheet">
-</head>
-<body class="bg-[#FFF3E0] font-sans overflow-hidden flex flex-col h-screen">
-  
-  <header class="lg:hidden bg-[#3E2723] text-white p-3 flex justify-between items-center sticky top-0 z-[70] shadow-md">
-    <button id="hamburger" class="px-3 py-1 bg-[#FFB300] text-[#3E2723] rounded-md shadow-sm text-xl font-bold leading-none hover:bg-yellow-400 transition">☰</button>
-    <a href="/index.html" class="font-serif text-lg hover:scale-105 hover:text-[#FFB300] transition-transform duration-300">Caraka 📜</a>
-  </header>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>8 Candi di Mojokerto</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Javanese&display=swap" rel="stylesheet" />
+  </head>
+  <body class="bg-[#FFF3E0] font-sans overflow-hidden flex flex-col h-[100dvh]">
+    <header class="lg:hidden bg-[#3E2723] text-white p-3 flex-none relative z-[70] shadow-md flex justify-between items-center">
+      <button id="hamburger" class="px-3 py-1 bg-[#FFB300] text-[#3E2723] rounded-md shadow-sm text-xl font-bold leading-none hover:bg-yellow-400 transition">☰</button>
+      <a href="/index.html" class="font-serif text-lg hover:scale-105 hover:text-[#FFB300] transition-transform duration-300">Pasinaon📜</a>
+    </header>
 
-  <div id="sidebar-overlay" class="fixed inset-0 bg-black/50 z-[55] hidden"></div>
+    <div id="sidebar-overlay" class="fixed inset-0 bg-black/50 z-[55] hidden"></div>
 
-  <div class="flex flex-1 overflow-hidden">
-    <aside id="sidebar" class="fixed lg:static inset-y-0 left-0 w-64 bg-[#F5E6CA] border-r-8 border-[#3E2723] z-[60] transform -translate-x-full lg:translate-x-0 transition-transform duration-300 flex flex-col">
-      <a href="/index.html" class="block p-5 bg-[#3E2723] text-[#FFB300] text-center font-serif text-2xl transition-all duration-300 border-b-4 border-[#3E2723]">Caraka</a>
-      <nav class="flex-1 p-3 space-y-2 overflow-y-auto text-[#5D4037] font-semibold text-sm">
-        <p class="p-2 text-[10px] uppercase opacity-50 tracking-widest">Utama</p>
-        <a href="#" class="block p-2.5 hover:bg-[#D7CCC8] rounded-xl">1. Pengenalan Aksara Jawa</a>
-        <a href="legena.html" class="block p-2.5 hover:bg-[#D7CCC8] rounded-xl">2. Aksara Legena (Menebali)</a>
-        <a href="#" class="block p-2.5 hover:bg-[#D7CCC8] rounded-xl">3. Pasangan Aksara (Menebali)</a>
-        <p class="p-2 text-[10px] uppercase opacity-50 tracking-widest">Lanjut</p>
-        <button class="w-full text-left p-2.5 hover:bg-[#D7CCC8] rounded-xl">4. Sandhangan</button>
-        <a href="peta.html" class="block p-3 bg-[#FFB300] text-[#3E2723] rounded-xl shadow-md mt-4 text-center font-bold">5. Latihan Pasinaon ⚔️</a>
-      </nav>
-    </aside>
+    <div class="flex flex-1 overflow-hidden relative">
+      <aside id="sidebar" class="fixed lg:static inset-y-0 left-0 w-64 bg-[#F5E6CA] border-r-8 border-[#3E2723] z-[60] transform -translate-x-full lg:translate-x-0 transition-transform duration-300 flex flex-col">
+        <a href="/index.html" class="block p-5 bg-[#3E2723] text-[#FFB300] text-center font-serif text-2xl transition-all duration-300 border-b-4 border-[#3E2723]">Caraka</a>
+        <nav class="flex-1 p-3 space-y-2 overflow-y-auto text-[#5D4037] font-semibold text-sm">
+          <p class="p-2 text-[10px] uppercase opacity-50 tracking-widest">Utama</p>
+          <a href="#" class="block p-2.5 hover:bg-[#D7CCC8] rounded-xl">1. Pengenalan Aksara Jawa</a>
+          <a href="legena.html" class="block p-2.5 hover:bg-[#D7CCC8] rounded-xl">2. Aksara Legena (Menebali)</a>
+          <a href="#" class="block p-2.5 hover:bg-[#D7CCC8] rounded-xl">3. Pasangan Aksara (Menebali)</a>
+          <p class="p-2 text-[10px] uppercase opacity-50 tracking-widest">Lanjut</p>
+          <button class="w-full text-left p-2.5 hover:bg-[#D7CCC8] rounded-xl">4. Sandhangan</button>
+          <a href="peta.html" class="block p-3 bg-[#FFB300] text-[#3E2723] rounded-xl shadow-md mt-4 text-center font-bold">5. Latihan Pasinaon ⚔️</a>
+        </nav>
+      </aside>
 
-    <main class="flex-1 bg-batik relative overflow-hidden flex flex-col">
-      <div class="map-container-scroll flex-1 p-4 lg:p-8">
-        <div class="map-wrapper animate-dive-in">
-          <img src="/assets/peta-candi-blank.png" class="map-image" />
-          
-          <button data-id="brahu" onclick="openQuiz('brahu')" class="hotspot" style="left: 37.48%; top: 26.39%;">
-            <img src="/assets/candi-brahu.png" style="width: 85px;" />
-            <div class="hotspot-name">Candi Brahu<span class="font-jawa">ꦕꦤ꧀ꦓꦶꦧꦿꦲꦸ</span></div>
-          </button>
-          <button data-id="bajang" onclick="openQuiz('bajang')" class="hotspot" style="left: 60.5%; top: 57.84%;">
-            <img src="/assets/candi-bajang.png" style="width: 100px;" />
-            <div class="hotspot-name">Bajang Ratu<span class="font-jawa">ꦧꦗꦁꦫꦠꦸ</span></div>
-          </button>
-          <button data-id="gentong" onclick="openQuiz('gentong')" class="hotspot" style="left: 55.47%; top: 26.61%;">
-            <img src="/assets/candi-gentong.png" style="width: 65px;" />
-            <div class="hotspot-name">Candi Gentong<span class="font-jawa">ꦕꦤ꧀ꦓꦶꦒꦼꦤ꧀ꦠꦺꦴꦁ</span></div>
-          </button>
-          <button data-id="tikus" onclick="openQuiz('tikus')" class="hotspot" style="left: 42.66%; top: 49.01%;">
-            <img src="/assets/candi-tikus.png" style="width: 55px;" />
-            <div class="hotspot-name">Candi Tikus<span class="font-jawa">ꦕꦤ꧀ꦓꦶꦠꦶꦏꦸꦱ꧀</span></div>
-          </button>
-          <button data-id="minakjinggo" onclick="openQuiz('minakjinggo')" class="hotspot" style="left: 70.41%; top: 69.77%;">
-            <img src="/assets/candi-minakjinggo.png" style="width: 70px;" />
-            <div class="hotspot-name">Minak Jinggo<span class="font-jawa">ꦩꦶꦤꦏ꧀ꦗꦶꦁꦒꦺꦴ</span></div>
-          </button>
-          <button data-id="wringinlawang" onclick="openQuiz('wringinlawang')" class="hotspot" style="left: 66.9%; top: 35.44%;">
-            <img src="/assets/candi-wringinlawang.png" style="width: 70px;" />
-            <div class="hotspot-name">Wringin Lawang<span class="font-jawa">ꦮꦿꦶꦔꦶꦤ꧀ꦭꦮꦁ</span></div>
-          </button>
-          <button data-id="jedong" onclick="openQuiz('jedong')" class="hotspot" style="left: 30.01%; top: 61%;">
-            <img src="/assets/candi-jedong.png" style="width: 60px;" />
-            <div class="hotspot-name">Candi Jedong<span class="font-jawa">ꦕꦤ꧀ꦓꦶꦗꦼꦢꦺꦴꦁ</span></div>
-          </button>
-          <button data-id="kedaton" onclick="openQuiz('kedaton')" class="hotspot" style="left: 48.61%; top: 66.89%;">
-            <img src="/assets/candi-kedaton.png" style="width: 65px;" />
-            <div class="hotspot-name">Candi Kedaton<span class="font-jawa">ꦕꦤ꧀ꦓꦶꦏꦼꦢꦠꦺꦴꦤ꧀</span></div>
-          </button>
-        </div>
-      </div>
-    </main>
-  </div>
+      <main class="flex-1 bg-batik relative overflow-hidden flex flex-col">
+        <div class="map-container-scroll flex-1 p-4 lg:p-8">
+          <div class="map-wrapper animate-dive-in">
+            <img src="/assets/peta-candi-blank.png" class="map-image" />
 
-  <div id="popup-book" class="fixed inset-0 z-[100] hidden flex items-center justify-center p-4 md:p-8 bg-black/70 backdrop-blur-sm">
-    <div class="book-container w-full max-w-4xl lg:max-w-3xl bg-wood-css p-3 md:p-5 rounded-2xl book-3d-shadow relative">
-      <button onclick="closeQuiz()" class="absolute -top-5 -right-5 bg-red-800 text-[#FFB300] px-4 py-2 rounded-full z-[110] shadow-lg font-bold border-2 border-[#FFB300]">✖</button>
-      <div class="flex flex-col md:flex-row h-[75vh] md:h-[400px] book-content rounded-xl overflow-hidden shadow-inner">
-        <div class="flex-1 book-page p-4 flex flex-col items-center border-b-2 md:border-b-0 md:border-r-2 border-[#3E2723]/10 overflow-y-auto">
-          <img id="book-img" src="" class="h-32 object-contain mb-3" />
-          <h2 id="book-title" class="text-2xl font-serif text-[#3E2723] text-center"></h2>
-          <p id="book-lokasi" class="text-[10px] text-[#5D4037] mb-3 uppercase font-bold"></p>
-          <p id="book-desc" class="text-xs md:text-sm text-center text-[#5D4037]"></p>
-        </div>
-        <div class="flex-1 book-page p-4 flex flex-col space-y-3 overflow-y-auto bg-[#fdf5e6]/50">
-         <h3 class="font-serif text-lg md:text-xl border-b border-[#3E2723]/20 pb-2 text-[#3E2723]">Latihan Soal</h3>
-          
-          <div class="space-y-4 flex-1 mt-2">
-            <div>
-              <label id="q1-text" class="block text-xs font-bold mb-1 text-[#3E2723]"></label>
-              <div class="relative flex items-center">
-                <input id="ans1" type="text" class="quiz-input w-full p-2 md:p-3 pr-24 rounded-xl border-2 transition-all outline-none text-sm bg-white focus:border-[#FFB300]" placeholder="Ketik jawaban...">
-                <div id="feedback1" class="feedback-bubble"></div>
-              </div>
-            </div>
-            
-            <div>
-              <label id="q2-text" class="block text-xs font-bold mb-1 text-[#3E2723]"></label>
-              <div class="relative flex items-center">
-                <input id="ans2" type="text" class="quiz-input w-full p-2 md:p-3 pr-24 rounded-xl border-2 transition-all outline-none text-sm bg-white focus:border-[#FFB300]" placeholder="Ketik jawaban...">
-                <div id="feedback2" class="feedback-bubble"></div>
-              </div>
-            </div>
+            <button data-id="brahu" onclick="openQuiz('brahu')" class="hotspot" style="left: 37.48%; top: 26.39%">
+              <img src="/assets/candi-brahu.png" style="width: 85px" />
+              <div class="hotspot-name">Candi Brahu<span class="font-jawa">ꦕꦤ꧀ꦓꦶꦧꦿꦲꦸ</span></div>
+            </button>
+            <button data-id="bajang" onclick="openQuiz('bajang')" class="hotspot" style="left: 60.5%; top: 57.84%">
+              <img src="/assets/candi-bajang.png" style="width: 100px" />
+              <div class="hotspot-name">Bajang Ratu<span class="font-jawa">ꦧꦗꦁꦫꦠꦸ</span></div>
+            </button>
+            <button data-id="gentong" onclick="openQuiz('gentong')" class="hotspot" style="left: 55.47%; top: 26.61%">
+              <img src="/assets/candi-gentong.png" style="width: 65px" />
+              <div class="hotspot-name">Candi Gentong<span class="font-jawa">ꦕꦤ꧀ꦓꦶꦒꦼꦤ꧀ꦠꦺꦴꦁ</span></div>
+            </button>
+            <button data-id="tikus" onclick="openQuiz('tikus')" class="hotspot" style="left: 42.66%; top: 49.01%">
+              <img src="/assets/candi-tikus.png" style="width: 55px" />
+              <div class="hotspot-name">Candi Tikus<span class="font-jawa">ꦕꦤ꧀ꦓꦶꦠꦶꦏꦸꦱ꧀</span></div>
+            </button>
+            <button data-id="minakjinggo" onclick="openQuiz('minakjinggo')" class="hotspot" style="left: 70.41%; top: 69.77%">
+              <img src="/assets/candi-minakjinggo.png" style="width: 70px" />
+              <div class="hotspot-name">Minak Jinggo<span class="font-jawa">ꦩꦶꦤꦏ꧀ꦗꦶꦁꦒꦺꦴ</span></div>
+            </button>
+            <button data-id="wringinlawang" onclick="openQuiz('wringinlawang')" class="hotspot" style="left: 66.9%; top: 35.44%">
+              <img src="/assets/candi-wringinlawang.png" style="width: 70px" />
+              <div class="hotspot-name">Wringin Lawang<span class="font-jawa">ꦮꦿꦶꦔꦶꦤ꧀ꦭꦮꦁ</span></div>
+            </button>
+            <button data-id="jedong" onclick="openQuiz('jedong')" class="hotspot" style="left: 30.01%; top: 61%">
+              <img src="/assets/candi-jedong.png" style="width: 60px" />
+              <div class="hotspot-name">Candi Jedong<span class="font-jawa">ꦕꦤ꧀ꦓꦶꦗꦼꦢꦺꦴꦁ</span></div>
+            </button>
+            <button data-id="kedaton" onclick="openQuiz('kedaton')" class="hotspot" style="left: 48.61%; top: 66.89%">
+              <img src="/assets/candi-kedaton.png" style="width: 65px" />
+              <div class="hotspot-name">Candi Kedaton<span class="font-jawa">ꦕꦤ꧀ꦓꦶꦏꦼꦢꦠꦺꦴꦤ꧀</span></div>
+            </button>
           </div>
-          
-          <button onclick="checkAllAnswers()" class="w-full bg-[#3E2723] hover:bg-[#4E342E] text-[#FFB300] py-2 md:py-3 rounded-xl font-bold shadow-md active:scale-95 transition text-sm md:text-base mt-2 border border-[#FFB300]/30">Cek Jawaban ✅</button></div>
+        </div>
+      </main>
+    </div>
+
+    <div id="popup-book" class="fixed inset-0 z-[100] hidden flex items-center justify-center p-2 md:p-8 bg-black/70 backdrop-blur-sm">
+      <div class="book-container w-full max-w-5xl bg-wood-css p-2 md:p-5 rounded-xl md:rounded-2xl book-3d-shadow relative">
+        <button onclick="closeQuiz()" class="absolute -top-3 -right-3 md:-top-5 md:-right-5 bg-red-800 text-[#FFB300] px-3 py-1 md:px-4 md:py-2 rounded-full z-[110] shadow-lg font-bold border-2 border-[#FFB300]">✖</button>
+
+        <div class="flex flex-row h-[85vh] md:h-[400px] book-content rounded-xl overflow-hidden shadow-inner bg-[#fdf5e6]">
+          <div class="flex-1 w-1/2 book-page p-2 md:p-4 flex flex-col items-center border-r-2 border-[#3E2723]/10 overflow-y-auto">
+            <img id="book-img" src="" class="h-16 md:h-32 object-contain mb-2" />
+            <h2 id="book-title" class="text-sm md:text-2xl font-serif text-[#3E2723] text-center font-bold"></h2>
+            <p id="book-lokasi" class="text-[8px] md:text-[10px] text-[#5D4037] mb-2 uppercase font-bold text-center"></p>
+            <p id="book-desc" class="text-[9px] md:text-sm text-center text-[#5D4037] leading-relaxed"></p>
+          </div>
+
+          <div class="flex-1 w-1/2 book-page p-2 md:p-4 flex flex-col bg-[#fdf5e6]/50 overflow-hidden">
+            <h3 class="font-serif text-xs md:text-xl border-b border-[#3E2723]/20 pb-1 md:pb-2 text-[#3E2723] flex-none font-bold text-center md:text-left mb-2">Latihan Soal</h3>
+
+            <div class="space-y-3 flex-1 mt-1 overflow-y-auto pr-1 pb-2">
+              <div>
+                <label id="q1-text" class="block text-[9px] md:text-xs font-bold mb-1 text-[#3E2723]"></label>
+                <div class="relative flex items-center">
+                  <input id="ans1" type="text" class="quiz-input w-full p-1.5 md:p-3 pr-14 md:pr-24 rounded-lg border-2 transition-all outline-none text-[10px] md:text-sm bg-white focus:border-[#FFB300]" placeholder="Ketik jawaban..." />
+                  <div id="feedback1" class="feedback-bubble text-[8px] md:text-[11px] right-1 md:right-2"></div>
+                </div>
+              </div>
+
+              <div>
+                <label id="q2-text" class="block text-[9px] md:text-xs font-bold mb-1 text-[#3E2723]"></label>
+                <div class="relative flex items-center">
+                  <input id="ans2" type="text" class="quiz-input w-full p-1.5 md:p-3 pr-14 md:pr-24 rounded-lg border-2 transition-all outline-none text-[10px] md:text-sm bg-white focus:border-[#FFB300]" placeholder="Ketik jawaban..." />
+                  <div id="feedback2" class="feedback-bubble text-[8px] md:text-[11px] right-1 md:right-2"></div>
+                </div>
+              </div>
+            </div>
+
+            <button
+              onclick="checkAllAnswers()"
+              class="w-full bg-[#3E2723] hover:bg-[#4E342E] text-[#FFB300] py-1.5 md:py-3 rounded-lg font-bold shadow-md active:scale-95 transition text-[10px] md:text-base mt-2 border border-[#FFB300]/30 flex-none"
+            >
+              Cek Jawaban ✅
+            </button>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  <script type="module" src="/src/main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script type="module" src="/src/main.js"></script>
 
-  <div class="fixed bottom-4 right-4 z-[200] flex gap-2 flex-wrap justify-end">
-    <button id="btn-scale-down" class="hidden bg-gray-700 text-white px-3 py-2 rounded-xl shadow-lg font-bold border-2 border-white">➖</button>
-    <button id="btn-scale-up" class="hidden bg-gray-700 text-white px-3 py-2 rounded-xl shadow-lg font-bold border-2 border-white">➕</button>
-    <button id="btn-edit" class="bg-blue-600 text-white px-4 py-2 rounded-xl shadow-lg font-bold border-2 border-white">🛠️ Mode Edit</button>
-    <button id="btn-save-json" class="hidden bg-green-600 text-white px-4 py-2 rounded-xl shadow-lg font-bold border-2 border-white">💾 JSON</button>
-  </div>
-</body>
+    <div class="fixed bottom-4 right-4 z-[200] flex gap-2 flex-wrap justify-end">
+      <button id="btn-scale-down" class="hidden bg-gray-700 text-white px-3 py-2 rounded-xl shadow-lg font-bold border-2 border-white">➖</button>
+      <button id="btn-scale-up" class="hidden bg-gray-700 text-white px-3 py-2 rounded-xl shadow-lg font-bold border-2 border-white">➕</button>
+      <button id="btn-edit" class="bg-blue-600 text-white px-4 py-2 rounded-xl shadow-lg font-bold border-2 border-white">🛠️ Mode Edit</button>
+      <button id="btn-save-json" class="hidden bg-green-600 text-white px-4 py-2 rounded-xl shadow-lg font-bold border-2 border-white">💾 JSON</button>
+    </div>
+  </body>
 </html>
