@@ -12,23 +12,56 @@
 }
 .font-jawa { font-family: 'Noto Sans Javanese', sans-serif; }
 
-/* --- PERBAIKAN PETA & HOTSPOT --- */
-.map-wrapper { position: relative; display: inline-block; max-width: 100%; }
-.map-image { 
-  display: block; 
-  max-width: 100%; 
-  max-height: 95vh; /* Peta otomatis nge-pas di layar HP */
-  width: auto; height: auto; object-fit: contain;
+/* --- KUNCI UTAMA POSISI CANDI --- */
+.hotspot {
+  position: absolute;
+  /* Membuat titik tengah candi tepat di koordinat JSON */
+  transform: translate(-50%, -50%); 
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  items-center: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: none;
+  background: transparent;
 }
 
-.hotspot { @apply absolute transform -translate-x-1/2 -translate-y-1/2 z-10 transition-transform duration-300 cursor-pointer flex flex-col items-center; }
-.hotspot img { @apply drop-shadow-xl transition-all duration-300; width: 40px; }
-@media (min-width: 768px) { .hotspot img { width: 70px; } }
+/* Sisa CSS lainnya (map-container-scroll, dll) biarkan tetap ada di bawahnya */
+.map-container-scroll {
+  @apply w-full overflow-auto flex justify-start lg:justify-center items-center p-4;
+  /* Agar scrollbar terlihat cantik */
+  scrollbar-width: thin;
+  scrollbar-color: #3E2723 transparent;
+}
 
-/* Label Candi (Lebih Imut & Compact) */
+.map-wrapper {
+  position: relative;
+  display: inline-block;
+  flex-shrink: 0; /* Mencegah peta menciut */
+}
+
+.map-image {
+  display: block;
+  /* Di HP, kita kunci lebar minimalnya agar bisa di-scroll dan candi tetap pas ukurannya */
+  min-width: 800px; 
+  width: 100%;
+  height: auto;
+  @apply shadow-2xl rounded-lg border-4 border-white;
+}
+
+@media (min-width: 1024px) {
+  .map-image {
+    min-width: unset;
+    max-width: 900px; /* Di laptop tetap rapi */
+  }
+}
+
+/* Label Candi (Ukuran Pas untuk Scroll) */
 .hotspot-name {
-  @apply mt-1 bg-[#3E2723]/80 backdrop-blur-sm text-[#FFB300] text-[7px] leading-tight font-bold px-1.5 py-1 rounded shadow-md text-center border border-[#FFB300]/20 min-w-[40px] z-20 transition-all duration-300 pointer-events-none flex flex-col items-center justify-center;
+  @apply mt-1 bg-[#3E2723]/90 text-[#FFB300] text-[10px] leading-tight font-bold px-2 py-1 rounded shadow-lg text-center border border-[#FFB300]/30 min-w-[60px] z-20 pointer-events-none flex flex-col items-center;
 }
+.hotspot-name .font-jawa { @apply text-[12px] text-white; }
 
 /* Teks Aksara Jawa di dalam label */
 .hotspot-name .font-jawa { 
