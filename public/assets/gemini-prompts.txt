@@ -1,0 +1,22 @@
+Candi Bajang Ratu (file: candi-bajang.png)
+"Photorealistic PNG of Candi Bajang Ratu — single isolated temple structure, frontal 3/4 view, high detail in brick texture and entrance arch, neutral daylight, warm tones, soft shadow under base, transparent background, 2048×2048, no text or watermark, royalty-free for educational use."
+
+Candi Gentong (file: candi-gentong.png)
+"Photorealistic PNG of Candi Gentong — small stone temple in rural setting but isolated on transparent background, detailed stonework texture, soft warm lighting, 2048×2048, educational royalty-free."
+
+
+Candi Minak Jinggo (file: candi-minakjinggo.png)
+"Photorealistic PNG of Candi Minak Jinggo — mythic-temple silhouette, clean isolated composition on transparent background, warm daylight, 2048×2048, no people."
+
+Candi Jedong (file: candi-jedong.png)
+"Photorealistic PNG of Candi Jedong — small temple ruin, centered, detailed stone texture and weathering, transparent background, 2048×2048."
+
+Candi Kedaton (file: candi-kedaton.png)
+"Photorealistic PNG of Candi Kedaton — mid-sized temple, frontal view, detailed masonry, transparent background, 2048×2048."
+
+Full Map Image (file: peta-candi-full.png)
+"High-resolution illustrated map of Mojokerto temples for an educational website — top-down stylized photoreal/illustrative hybrid, include 8 marked temple icons (but do not render text labels), warm parchment/wood background, clear visual hotspots (small circular markers), resolution 3840×2160, PNG with transparent areas around the map edges OR large WEBP, no logos, royalty-free."
+
+Notes:
+- For map request ask: "Please provide the map centered on Mojokerto area showing simplified landmarks — do not include any real-world copyrighted map tiles; stylized illustration is preferred."
+- When generating with Gemini, request 32-bit PNG with alpha channel and "no text, no watermark".

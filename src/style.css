@@ -1,0 +1,98 @@
+@import "tailwindcss";
+
+@theme {
+  --font-serif: "Playfair Display", serif;
+  --font-sans: "Quicksand", sans-serif;
+}
+
+/* Background Motif Batik SVG */
+.bg-batik {
+  background-color: #fff3e0;
+  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%235d4037' fill-opacity='0.08'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+.font-jawa { font-family: 'Noto Sans Javanese', sans-serif; }
+
+/* --- PERBAIKAN PETA & HOTSPOT --- */
+.map-wrapper { position: relative; display: inline-block; max-width: 100%; }
+.map-image { 
+  display: block; 
+  max-width: 100%; 
+  max-height: 95vh; /* Peta otomatis nge-pas di layar HP */
+  width: auto; height: auto; object-fit: contain;
+}
+
+.hotspot { @apply absolute transform -translate-x-1/2 -translate-y-1/2 z-10 transition-transform duration-300 cursor-pointer flex flex-col items-center; }
+.hotspot img { @apply drop-shadow-xl transition-all duration-300; width: 40px; }
+@media (min-width: 768px) { .hotspot img { width: 70px; } }
+
+/* Label Candi (Lebih Imut & Compact) */
+.hotspot-name {
+  @apply mt-1 bg-[#3E2723]/80 backdrop-blur-sm text-[#FFB300] text-[7px] leading-tight font-bold px-1.5 py-1 rounded shadow-md text-center border border-[#FFB300]/20 min-w-[40px] z-20 transition-all duration-300 pointer-events-none flex flex-col items-center justify-center;
+}
+
+/* Teks Aksara Jawa di dalam label */
+.hotspot-name .font-jawa { 
+  @apply text-[10px] font-normal text-white mt-0.5 block leading-none; 
+}
+
+/* Ukuran agak dibesarkan sedikit khusus di tablet/laptop */
+@media (min-width: 768px) { 
+  .hotspot-name { @apply text-[9px] px-2 py-1 min-w-[60px]; } 
+  .hotspot-name .font-jawa { @apply text-[13px]; }
+}
+
+/* EFEK HOVER & EDIT MODE */
+.hotspot:hover { z-index: 30; }
+.hotspot:hover img { transform: scale(1.05); }
+.edit-active img { filter: drop-shadow(0 0 10px red) !important; transform: scale(1.1); }
+
+/* --- PERBAIKAN POP-UP BOOK & LANDSCAPE --- */
+.book-page {
+  background: #fdf5e6;
+  background-image: linear-gradient(90deg, rgba(62,39,35,0.05) 0%, transparent 5%, transparent 95%, rgba(62,39,35,0.05) 100%);
+}
+
+/* FIX TOTAL UNTUK HP MIRING (Landscape) */
+/* Logika: Jika layar pendek (miring), paksa tinggi buku menyesuaikan layar & aktifkan scroll */
+@media (max-height: 500px) and (orientation: landscape) {
+  #popup-book {
+    padding: 2px !important; /* Kurangi padding luar */
+    align-items: flex-start !important; /* Mulai dari atas */
+  }
+  .book-container {
+    margin-top: 5px;
+    max-height: 98vh !important; /* Tinggi maksimal 98% layar */
+    display: flex;
+    flex-direction: column;
+  }
+  .book-content {
+    /* Tinggi konten = tinggi layar dikurangi sedikit space untuk tombol close */
+    height: calc(98vh - 30px) !important;
+  }
+  /* Perkecil elemen di dalam buku saat landscape */
+  .book-page { padding: 1rem !important; }
+  #book-img { height: 80px !important; }
+  #book-title { font-size: 1.2rem !important; }
+  .quiz-input { padding: 0.5rem !important; font-size: 0.9rem !important; }
+}
+
+/* Animasi Masuk Peta */
+.animate-dive-in { animation: diveIn 1.2s ease-out forwards; }
+@keyframes diveIn {
+  0% { transform: scale(1.2); opacity: 0; filter: blur(5px); }
+  100% { transform: scale(1); opacity: 1; filter: blur(0); }
+}
+
+/* --- EFEK BACKGROUND KAYU & 3D BUKU --- */
+.bg-wood-css {
+  background-color: #3e2723;
+  /* Membuat pola serat kayu vertikal simpel */
+  background-image: repeating-linear-gradient(to right, rgba(0,0,0,0.1) 0px, rgba(0,0,0,0.1) 2px, transparent 2px, transparent 8px),
+                    linear-gradient(90deg, #4e342e, #3e2723, #4e342e);
+}
+
+.book-3d-shadow {
+  /* Bayangan tebal biar buku seolah melayang di atas peta */
+  box-shadow: 0 30px 60px rgba(0,0,0,0.8), inset 0 0 15px rgba(0,0,0,0.5);
+  border: 4px solid #5d4037;
+}
