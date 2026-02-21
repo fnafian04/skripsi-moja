@@ -204,7 +204,7 @@ window.checkAllAnswers = () => {
         Swal.fire({
           icon: "warning",
           title: "Kesempatan Habis!",
-          text: "Kamu sudah salah 3 kali di candi ini, ayoo baca lagi deskripsinya!",
+          text: "Kamu sudah salah kaping 3 di candi iki, ayoo diwoco alon2 deskripsine!",
           confirmButtonColor: "#3E2723",
           customClass: { popup: "swal-paper", confirmButton: "swal-paper-confirm" },
         }).then(() => {
@@ -236,15 +236,15 @@ function applyFeedbackState(inputId, feedbackId, state) {
 
   feedback.classList.add("show");
   if (state === "correct") {
-    feedback.innerText = "Benar! ✅";
+    feedback.innerText = "Jawaban Benar! ✅";
     feedback.classList.add("feedback-correct");
     input.classList.add("border-green-500", "bg-green-50");
   } else if (state === "wrong") {
-    feedback.innerText = "Salah! ❌";
+    feedback.innerText = "Jawaban Salah! ❌";
     feedback.classList.add("feedback-wrong");
     input.classList.add("border-red-500", "bg-red-50");
   } else if (state === "empty") {
-    feedback.innerText = "Kosong! ⚠️";
+    feedback.innerText = "Sek Kosong! ⚠️";
     feedback.classList.add("feedback-empty");
     input.classList.add("border-yellow-500", "bg-yellow-50");
   }
@@ -274,7 +274,7 @@ function checkFinishAll() {
       Swal.fire({
         title: "Luar Biasa!",
         html: `Misi selesai! Semua teka-teki candi telah terpecahkan.<br><br><b>Skor Akhirmu: <span style="font-size: 2.5em; color: #166534; display: block; margin-top: 10px;">${score}</span></b>`,
-        confirmButtonText: "Main Lagi ⚔️",
+        confirmButtonText: "Main Maneh ⚔️",
         allowOutsideClick: false,
         // Ini yang bikin modalnya jadi kertas abstrak kuno!
         customClass: {
