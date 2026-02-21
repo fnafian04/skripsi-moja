@@ -167,127 +167,146 @@
 }
 
 /* =========================================================
-   4. SISTEM BUKU MEWAH (KERTAS TIDUR & KONTEN MENGAMBANG)
+   4. SISTEM BUKU MEWAH (ANTI-CLIPPING & SUPER 3D)
    ========================================================= */
-#popup-book { perspective: 1500px; }
+   #popup-book { perspective: 1000px; }
 
-.book-container {
-  transform: rotateX(12deg);
-  transform-style: preserve-3d;
-  box-shadow: 0 40px 60px rgba(0,0,0,0.8);
-  animation: bookOpen3D 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-}
+   .book-container {
+     transform: rotateX(30deg);
+     transform-style: preserve-3d;
+     /* KUNCI 1: Paksa overflow terlihat agar candi bisa tembus keluar buku */
+     overflow: visible !important; 
+     box-shadow: 0 40px 60px rgba(0,0,0,0.8);
+     animation: bookOpen3D 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+   }
+   
+   @keyframes bookOpen3D {
+     0% { transform: rotateX(45deg) scale(0.8); opacity: 0; }
+     100% { transform: rotateX(30deg) scale(1); opacity: 1; }
+   }
+   
+   /* KUNCI 2: Semua halaman harus mendukung ruang 3D dan tidak memotong konten */
+   .book-content, .page-left, .page-right {
+     transform-style: preserve-3d !important;
+     overflow: visible !important; 
+   }
+   
+   .book-container, .book-content {
+     border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px !important;
+   }
+   
+   .page-left {
+     box-shadow: inset -25px 0 35px -15px rgba(0,0,0,0.6) !important;
+     border-right: none !important; 
+   }
+   .page-right {
+     box-shadow: inset 25px 0 35px -15px rgba(0,0,0,0.5) !important;
+     border-left: none !important; 
+   }
+   
+   /* --- GAMBAR CANDI (PALING TEGAK, KELUAR BUKU & PALING DEPAN!) --- */
+   .pop-up-image {
+     transform-origin: bottom center;
+     /* Tetap 90px biar paling depan menembus tumpukan lain */
+     transform: translateZ(90px) rotateX(-30deg) scale(1.35);
+     z-index: 100 !important; 
+     filter: drop-shadow(0 40px 25px rgba(0,0,0,0.7));
+     transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+     position: relative; 
+   }
+   .pop-up-image:hover {
+     transform: translateZ(120px) rotateX(-30deg) scale(1.5) translateY(-15px);
+     filter: drop-shadow(0 60px 35px rgba(0,0,0,0.9));
+   }
+   
+   /* --- KOTAK PENJELASAN & SOAL (BERDIRI MAKIN TIMBUL!) --- */
+   .floating-item {
+     position: relative; 
+     z-index: 10;
+     transform-origin: bottom center;
+     transform: translateZ(55px) rotateX(-30deg); 
+     box-shadow: 0 35px 40px rgba(0,0,0,0.4); 
+     transition: all 0.3s ease;
+   }
+   .floating-item:hover {
+     transform: translateZ(75px) rotateX(-30deg) translateY(-5px);
+     box-shadow: 0 45px 55px rgba(0,0,0,0.5);
+   }
+   
+   
+   /* =========================================================
+      5. ELEMEN BUKU LAINNYA (JUDUL, TOMBOL, LOKASI)
+      ========================================================= */
+   
+   /* --- JUDUL (NEMPEL KERTAS TAPI TEBAL BALOK 3D) --- */
+   .book-banner {
+     background: linear-gradient(135deg, #5c7a52, #3a5332);
+     border: 2px solid #3E2723;
+     border-radius: 8px 2px 8px 2px !important;
+     color: #FFD54F; 
+     /* Ditarik sedikit Z-nya, tanpa rotasi, dikasih bayangan balok super tebal */
+     transform: translateZ(10px);
+     box-shadow: 0 8px 0px #221310, 0 15px 20px rgba(0,0,0,0.5) !important;
+     text-shadow: 0 0 8px rgba(255, 213, 79, 0.8), 1px 1px 2px rgba(0,0,0,0.9);
+   }
+   
+   .stone-plaque {
+     background: linear-gradient(to bottom, #A1887F, #5D4037);
+     border: 2px solid #3E2723;
+     border-radius: 30px 10px 20px 15px / 15px 20px 10px 25px;
+     color: #FFF3E0; 
+     transform: translateZ(5px); /* Nempel kertas tapi sedikit bervolume */
+     text-shadow: -1px -1px 0px rgba(0,0,0,0.6), 1px 1px 0px rgba(255,255,255,0.2);
+     box-shadow: 0 6px 0px #2E1B15, 0 10px 15px rgba(0,0,0,0.5);
+     letter-spacing: 1px;
+   }
+   
+   .btn-modern-3d {
+     background: linear-gradient(135deg, #FFCA28, #F57F17);
+     color: #3E2723;
+     border: 2px solid #3E2723;
+     border-radius: 8px 3px 8px 3px !important;
+     font-weight: 900;
+     text-transform: uppercase;
+     letter-spacing: 1.5px;
+     text-shadow: 1px 1px 0px rgba(255,255,255,0.5);
+     transition: all 0.2s ease-in-out;
+     box-shadow: 0 6px 0px #3E2723, 0 12px 15px rgba(0,0,0,0.4), inset 0 2px 4px rgba(255,255,255,0.4) !important;
+   }
+   .btn-modern-3d:hover { filter: brightness(1.1); }
+   .btn-modern-3d:active {
+     transform: translateY(4px);
+     box-shadow: 0 0px 0px #3E2723, -2px 2px 5px rgba(0,0,0,0.5), inset 1px 1px 3px rgba(0,0,0,0.3) !important;
+   }
+   
+   .landscape-bg {
+     background: radial-gradient(circle, rgba(255,243,224,0.8) 0%, rgba(255,243,224,0) 70%);
+     filter: blur(15px);
+   }
+   
+   .quiz-input {
+     box-shadow: inset 0 2px 5px rgba(0,0,0,0.1), 0 4px 0 rgba(0,0,0,0.05);
+     border-radius: 4px !important;
+   }
+   
+   /* Feedback Bubble */
+   .feedback-bubble {
+     position: absolute;
+     top: 50%;
+     transform: translateY(-50%);
+     padding: 4px 10px;
+     border-radius: 8px;
+     font-weight: bold;
+     opacity: 0;
+     pointer-events: none;
+     transition: all 0.3s ease;
+     box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+   }
+   .feedback-bubble.show { opacity: 1; }
+   .feedback-correct { background-color: #f0fdf4; color: #166534; border: 1px solid #22c55e; }
+   .feedback-wrong { background-color: #fef2f2; color: #991b1b; border: 1px solid #ef4444; }
+   .feedback-empty { background-color: #fffbeb; color: #b45309; border: 1px solid #f59e0b; }
 
-@keyframes bookOpen3D {
-  0% { transform: rotateX(30deg) scale(0.8); opacity: 0; }
-  100% { transform: rotateX(12deg) scale(1); opacity: 1; }
-}
-
-.book-content, .page-left, .page-right {
-  transform-style: preserve-3d;
-}
-
-.book-container, .book-content {
-  border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px !important;
-}
-
-.page-left {
-  box-shadow: inset -25px 0 25px -15px rgba(0,0,0,0.5) !important;
-  border-right: none !important; 
-}
-.page-right {
-  box-shadow: inset 25px 0 25px -15px rgba(0,0,0,0.4) !important;
-  border-left: none !important; 
-}
-
-/* JURUS MENGAMBANG */
-.floating-item {
-  transform: translateZ(40px) scale(1.02); 
-  box-shadow: 0 15px 25px rgba(0,0,0,0.3); 
-  transition: all 0.3s ease;
-}
-.floating-item:hover {
-  transform: translateZ(50px) scale(1.04) translateY(-2px);
-  box-shadow: 0 20px 30px rgba(0,0,0,0.4);
-}
-
-.pop-up-image {
-  transform: translateZ(50px) rotateX(-5deg); 
-  filter: drop-shadow(0 20px 15px rgba(0,0,0,0.6)) drop-shadow(0 0 2px rgba(255,255,255,0.4));
-  transform-origin: bottom center;
-  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-.pop-up-image:hover {
-  transform: translateZ(70px) rotateX(-5deg) scale(1.15) translateY(-5px);
-  filter: drop-shadow(0 30px 20px rgba(0,0,0,0.8));
-}
-
-/* =========================================================
-   5. ELEMEN BUKU LAINNYA & KUIS
-   ========================================================= */
-.stone-plaque {
-  background: linear-gradient(to bottom, #A1887F, #5D4037);
-  border: 2px solid #3E2723;
-  border-radius: 30px 10px 20px 15px / 15px 20px 10px 25px;
-  color: #FFF3E0; 
-  text-shadow: -1px -1px 0px rgba(0,0,0,0.6), 1px 1px 0px rgba(255,255,255,0.2);
-  box-shadow: 0 6px 10px rgba(0,0,0,0.5), inset 2px 2px 4px rgba(255,255,255,0.2), inset -2px -2px 4px rgba(0,0,0,0.4);
-  letter-spacing: 1px;
-}
-
-.book-banner {
-  background: linear-gradient(135deg, #5c7a52, #3a5332);
-  border: 2px solid #3E2723;
-  border-radius: 8px 2px 8px 2px !important;
-  color: #FFD54F; 
-  text-shadow: 0 0 8px rgba(255, 213, 79, 0.8), 1px 1px 2px rgba(0,0,0,0.9);
-}
-
-.btn-modern-3d {
-  background: linear-gradient(135deg, #FFCA28, #F57F17);
-  color: #3E2723;
-  border: 2px solid #3E2723;
-  border-radius: 8px 3px 8px 3px !important;
-  font-weight: 900;
-  text-transform: uppercase;
-  letter-spacing: 1.5px;
-  text-shadow: 1px 1px 0px rgba(255,255,255,0.5);
-  transition: all 0.2s ease-in-out;
-  box-shadow: 0 4px 0px #3E2723, 0 10px 15px rgba(0,0,0,0.4), inset 0 2px 4px rgba(255,255,255,0.4);
-  transform: translateY(-2px);
-}
-.btn-modern-3d:hover { filter: brightness(1.1); }
-.btn-modern-3d:active {
-  transform: translate(0px, 2px);
-  box-shadow: 0px 0px 0px #3E2723, -2px 2px 5px rgba(0,0,0,0.5), inset 1px 1px 3px rgba(0,0,0,0.3);
-}
-
-.landscape-bg {
-  background: radial-gradient(circle, rgba(255,243,224,0.8) 0%, rgba(255,243,224,0) 70%);
-  filter: blur(15px);
-}
-
-.quiz-input {
-  box-shadow: inset 0 2px 5px rgba(0,0,0,0.1), 0 4px 0 rgba(0,0,0,0.05);
-  border-radius: 4px !important;
-}
-
-.feedback-bubble {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  padding: 4px 10px;
-  border-radius: 8px;
-  font-weight: bold;
-  opacity: 0;
-  pointer-events: none;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-}
-.feedback-bubble.show { opacity: 1; }
-.feedback-correct { background-color: #f0fdf4; color: #166534; border: 1px solid #22c55e; }
-.feedback-wrong { background-color: #fef2f2; color: #991b1b; border: 1px solid #ef4444; }
-.feedback-empty { background-color: #fffbeb; color: #b45309; border: 1px solid #f59e0b; }
 
 /* =========================================================
    6. EFEK ANIMASI & SWEETALERT
@@ -363,4 +382,18 @@ details > summary::-webkit-details-marker { display: none; }
     transform: scale(0.85); 
     transform-origin: top center;
   }
+}
+
+/* --- TOMBOL X (ANTI TERTINDAS & MELAYANG PALING TINGGI) --- */
+.btn-close-3d {
+  /* Kita angkat 100px ke atas kertas, mengalahkan semua teks dan candi! */
+  transform: translateZ(100px); 
+  transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  z-index: 200;
+}
+.btn-close-3d:hover {
+  /* Pas disentuh, dia membesar tapi tetap di ketinggian 100px */
+  transform: translateZ(100px) scale(1.15); 
+  box-shadow: 0 15px 20px rgba(0,0,0,0.6);
+  background-color: #991b1b; /* Makin merah cerah pas disorot */
 }

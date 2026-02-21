@@ -290,7 +290,7 @@ function checkFinishAll() {
 }
 
 // ==========================================
-// FITUR EDIT (GESER + UKURAN) - FIX DRAG
+// FITUR EDIT (GESER + UKURAN) - SUPER SMOOTH DRAG
 // ==========================================
 const btnEdit = document.getElementById("btn-edit");
 const btnSave = document.getElementById("btn-save-json");
@@ -298,22 +298,22 @@ const btnScaleUp = document.getElementById("btn-scale-up");
 const btnScaleDown = document.getElementById("btn-scale-down");
 
 let isEditMode = false;
-let activeHotspot = null; // Candi yang dipilih (buat di-resize)
-let isDragging = false; // Status apakah sedang ditahan/digeser
+let activeHotspot = null; 
+let isDragging = false; 
 
 if (btnEdit && btnSave) {
   btnEdit.onclick = () => {
     isEditMode = !isEditMode;
     if (isEditMode) {
-      btnEdit.innerText = "❌ Keluar Edit";
+      btnEdit.innerHTML = "❌ Keluar Edit";
       btnEdit.classList.replace("bg-blue-600", "bg-red-600");
       btnSave.classList.remove("hidden");
       btnScaleUp.classList.remove("hidden");
       btnScaleDown.classList.remove("hidden");
       enableDrag();
-      Swal.fire("Mode Edit Aktif!", "1. Klik candi untuk memilihnya (menyala merah).\n2. Tahan dan geser posisinya.\n3. Pakai ➕ / ➖ untuk ubah ukuran.", "info");
+      Swal.fire("Mode Edit Aktif! 🛠️", "1. Klik candi untuk memilihnya (glow merah).\n2. TAHAN lalu GESER posisinya.\n3. Pakai ➕/➖ untuk ubah ukuran.", "info");
     } else {
-      btnEdit.innerText = "🛠️ Mode Edit";
+      btnEdit.innerHTML = "🛠️ Mode Edit Posisi";
       btnEdit.classList.replace("bg-red-600", "bg-blue-600");
       btnSave.classList.add("hidden");
       btnScaleUp.classList.add("hidden");
@@ -343,81 +343,101 @@ if (btnEdit && btnSave) {
       }
     });
     navigator.clipboard.writeText(JSON.stringify(result, null, 2));
-    Swal.fire("JSON Disalin! 📋", "Paste hasilnya di chat AI.", "success");
+    Swal.fire("JSON Disalin! 📋", "Koordinat berhasil di-copy, silakan paste di data candi-mu.", "success");
   };
 }
 
 function scaleHotspot(amount) {
-  if (!activeHotspot) return Swal.fire("Pilih Candi Dulu!", "Klik salah satu candi yang mau diubah ukurannya.", "warning");
+  if (!activeHotspot) return Swal.fire("Pilih Candi Dulu!", "Klik candi yang mau diubah ukurannya.", "warning");
   const img = activeHotspot.querySelector("img");
   let currentWidth = parseInt(img.style.width || window.getComputedStyle(img).width);
-  img.style.width = currentWidth + amount + "px";
+  img.style.width = (currentWidth + amount) + "px";
 }
 
+// --- FUNGSI DRAG INTI ---
 function enableDrag() {
-  const mapContainer = document.querySelector(".map-image").parentElement;
   const hotspots = document.querySelectorAll(".hotspot");
+
+  // Bersihkan event global sebelumnya biar gak numpuk
+  document.removeEventListener("mousemove", handleMove);
+  document.removeEventListener("touchmove", handleMove);
+  document.removeEventListener("mouseup", stopDrag);
+  document.removeEventListener("touchend", stopDrag);
 
   hotspots.forEach((hotspot) => {
     hotspot.style.cursor = "move";
+    
+    // Matikan klik pop-up kuis sementara saat edit
     if (hotspot.getAttribute("onclick")) {
       hotspot.setAttribute("data-onclick", hotspot.getAttribute("onclick"));
       hotspot.removeAttribute("onclick");
     }
 
+    // JURUS RAHASIA: Matikan fitur drag bawaan browser pada gambar!
+    hotspot.ondragstart = () => false;
+
+    // Aksi pas mulai ditahan (Mouse / Jari)
     const startDrag = (e) => {
       if (!isEditMode) return;
       if (activeHotspot) activeHotspot.classList.remove("edit-active");
-
+      
       activeHotspot = hotspot;
       activeHotspot.classList.add("edit-active");
-      isDragging = true; // TANDAI MULAI DITARIK
-
-      if (e.cancelable) e.preventDefault();
+      isDragging = true;
     };
 
     hotspot.onmousedown = startDrag;
     hotspot.ontouchstart = startDrag;
   });
 
-  const doDrag = (e) => {
-    // HANYA GESER KALAU isDragging TRUE
-    if (!isEditMode || !isDragging || !activeHotspot) return;
-    e.preventDefault();
+  // Pantau pergerakan (wajib pakai { passive: false } biar layar ga ikut ke-scroll pas di HP)
+  document.addEventListener("mousemove", handleMove, { passive: false });
+  document.addEventListener("touchmove", handleMove, { passive: false });
+  document.addEventListener("mouseup", stopDrag);
+  document.addEventListener("touchend", stopDrag);
+}
 
-    const rect = mapContainer.getBoundingClientRect();
-    let clientX = e.touches ? e.touches[0].clientX : e.clientX;
-    let clientY = e.touches ? e.touches[0].clientY : e.clientY;
+function handleMove(e) {
+  if (!isEditMode || !isDragging || !activeHotspot) return;
+  
+  // Cegah layar nge-scroll pas kita lagi asyik geser candi
+  if (e.cancelable) e.preventDefault();
 
-    let leftPct = ((clientX - rect.left) / rect.width) * 100;
-    let topPct = ((clientY - rect.top) / rect.height) * 100;
+  const mapContainer = document.querySelector(".map-wrapper");
+  const rect = mapContainer.getBoundingClientRect();
 
-    activeHotspot.style.left = Math.max(0, Math.min(100, leftPct)).toFixed(2) + "%";
-    activeHotspot.style.top = Math.max(0, Math.min(100, topPct)).toFixed(2) + "%";
-  };
+  // Deteksi ini mouse atau jari HP
+  let clientX = e.touches ? e.touches[0].clientX : e.clientX;
+  let clientY = e.touches ? e.touches[0].clientY : e.clientY;
 
-  const stopDrag = () => {
-    isDragging = false; // BERHENTI DITARIK SAAT DILEPAS
-  };
+  // Hitung persentase posisi agar responsif
+  let leftPct = ((clientX - rect.left) / rect.width) * 100;
+  let topPct = ((clientY - rect.top) / rect.height) * 100;
 
-  document.onmousemove = doDrag;
-  document.ontouchmove = doDrag;
-  document.onmouseup = stopDrag;
-  document.ontouchend = stopDrag;
+  // Update posisi candi
+  activeHotspot.style.left = Math.max(0, Math.min(100, leftPct)).toFixed(2) + "%";
+  activeHotspot.style.top = Math.max(0, Math.min(100, topPct)).toFixed(2) + "%";
+}
+
+function stopDrag() {
+  isDragging = false;
 }
 
 function disableDrag() {
   const hotspots = document.querySelectorAll(".hotspot");
   hotspots.forEach((hotspot) => {
     hotspot.style.cursor = "pointer";
+    // Kembalikan klik pop-up kuis
     if (hotspot.hasAttribute("data-onclick")) {
       hotspot.setAttribute("onclick", hotspot.getAttribute("data-onclick"));
     }
     hotspot.onmousedown = null;
     hotspot.ontouchstart = null;
+    hotspot.ondragstart = null;
   });
-  document.onmousemove = null;
-  document.ontouchmove = null;
-  document.onmouseup = null;
-  document.ontouchend = null;
+
+  document.removeEventListener("mousemove", handleMove);
+  document.removeEventListener("touchmove", handleMove);
+  document.removeEventListener("mouseup", stopDrag);
+  document.removeEventListener("touchend", stopDrag);
 }
