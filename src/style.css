@@ -5,184 +5,299 @@
   --font-sans: "Quicksand", sans-serif;
 }
 
-/* Background Motif Batik "Sekar Jagad" Seamless (Versi Terang untuk Konten) */
+/* =========================================================
+   1. PENGATURAN UMUM & BACKGROUND BATIK
+   ========================================================= */
+.font-jawa { 
+  font-family: 'Noto Sans Javanese', sans-serif; 
+}
+
 .bg-batik {
   background-color: #fff3e0;
-  /* Motif Sekar Jagad yang lembut agar teks tetap mudah dibaca */
   background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%235d4037' stroke-width='1' stroke-opacity='0.06'%3E%3Cpath d='M0 0c10 0 15 5 15 15s-5 15-15 15M100 0c-10 0-15 5-15 15s5 15 15 15M0 100c10 0 15-5 15-15s-5-15-15-15M100 100c-10 0-15-5-15-15s5-15 15-15M50 50c-10 0-15-5-15-15s5-15 15-15 15 5 15 15-5 15-15 15zM50 50c0 10-5 15-15 15s-15-5-15-15M50 50c0-10 5-15 15-15s15 5 15 15M50 50c10 0 15 5 15 15s-5 15-15 15M50 50c-10 0-15 5-15 15s5 15 15 15'/%3E%3Cpath d='M25 25c5 5 10 0 10-5s-5-10-10-5-10 0-5 5 0 10 5 5zM75 75c5 5 10 0 10-5s-5-10-10-5-10 0-5 5 0 10 5 5zM25 75c-5 5-10 0-10-5s5-10 10-5 10 0 5 5 0 10-5 5zM75 25c-5 5-10 0-10-5s5-10 10-5 10 0 5 5 0 10-5 5z'/%3E%3C/g%3E%3C/svg%3E");
   background-repeat: repeat;
   background-size: 80px 80px;
 }
-.font-jawa { font-family: 'Noto Sans Javanese', sans-serif; }
 
-/* --- KUNCI UTAMA POSISI CANDI --- */
-.hotspot {
-  position: absolute;
-  /* Membuat titik tengah candi tepat di koordinat JSON */
-  transform: translate(-50%, -50%); 
-  z-index: 10;
-  display: flex;
-  flex-direction: column;
-  items-center: center;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  border: none;
-  background: transparent;
+.bg-batik-dark {
+  background-color: #2c1e1a;
+  background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%23d4af37' stroke-width='1' stroke-opacity='0.2'%3E%3Cpath d='M0 0c10 0 15 5 15 15s-5 15-15 15M100 0c-10 0-15 5-15 15s5 15 15 15M0 100c10 0 15-5 15-15s-5-15-15-15M100 100c-10 0-15-5-15-15s5-15 15-15M50 50c-10 0-15-5-15-15s5-15 15-15 15 5 15 15-5 15-15 15zM50 50c0 10-5 15-15 15s-15-5-15-15M50 50c0-10 5-15 15-15s15 5 15 15M50 50c10 0 15 5 15 15s-5 15-15 15M50 50c-10 0-15 5-15 15s5 15 15 15'/%3E%3Cpath d='M25 25c5 5 10 0 10-5s-5-10-10-5-10 0-5 5 0 10 5 5zM75 75c5 5 10 0 10-5s-5-10-10-5-10 0-5 5 0 10 5 5zM25 75c-5 5-10 0-10-5s5-10 10-5 10 0 5 5 0 10-5 5zM75 25c-5 5-10 0-10-5s5-10 10-5 10 0 5 5 0 10-5 5z'/%3E%3C/g%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 100px 100px;
 }
 
-/* --- PERBAIKAN PETA SCROLLABLE --- */
+/* =========================================================
+   2. HALAMAN SPLASH SCREEN (index.html)
+   ========================================================= */
+/* .majestic-box {
+  background: linear-gradient(135deg, #fff3e0, #e6cca0);
+  border: 6px solid #3E2723;
+  border-radius: 16px;
+  outline: 3px solid #D4AF37;
+  outline-offset: -14px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.8), inset 0 0 40px rgba(62,39,35,0.25);
+  transition: transform 0.4s ease;
+}
+.majestic-box:hover { transform: scale(1.02); }
+
+.text-glow-gold {
+  color: #3E2723;
+  text-shadow: 1px 1px 0px #D4AF37, 2px 2px 0px #8D6E63, 4px 4px 4px rgba(0,0,0,0.6), 0 0 25px rgba(255, 179, 0, 0.8), 0 0 45px rgba(212, 175, 55, 0.6);
+}
+
+.text-jawa-embossed {
+   color: #5D4037;
+   text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.7), -1px -1px 1px rgba(0,0,0,0.2);
+} */
+
+/* =========================================================
+   3. AREA PETA & HOTSPOT CANDI (EFEK DUARR 3D NYATA)
+   ========================================================= */
 .map-container-scroll {
-  /* HAPUS items-center dan lg:justify-center, ganti dengan items-start */
-  @apply w-full overflow-auto flex justify-start items-start p-6 lg:p-10;
+  width: 100%;
+  overflow: auto;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding: 1.5rem;
   scrollbar-width: thin;
   scrollbar-color: #3E2723 transparent;
+}
+@media (min-width: 1024px) {
+  .map-container-scroll { padding: 2.5rem; }
 }
 
 .map-wrapper {
   position: relative;
   display: inline-block;
   flex-shrink: 0;
-  /* Tambahkan margin auto. Ini jurus rahasia biar peta tetap ke tengah kalau layarnya besar, tapi nggak kepotong kalau layarnya kecil! */
   margin: auto; 
 }
 
 .map-image {
   display: block;
-  /* Di HP, kita kunci lebar minimalnya agar bisa di-scroll dan candi tetap pas ukurannya */
   min-width: 800px; 
   width: 100%;
   height: auto;
-  @apply shadow-2xl rounded-lg border-4 border-white;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6), 0 0 0 8px rgba(93, 64, 55, 0.2);
+  border-radius: 0.5rem;
+  border: 4px solid #fff3e0;
 }
 
 @media (min-width: 1024px) {
-  .map-image {
-    min-width: unset;
-    max-width: 900px; /* Di laptop tetap rapi */
-  }
+  .map-image { min-width: unset; max-width: 900px; }
 }
 
-/* Label Candi (Ukuran Pas untuk Scroll) */
-.hotspot-name {
-  @apply mt-1 bg-[#3E2723]/90 text-[#FFB300] text-[10px] leading-tight font-bold px-2 py-1 rounded shadow-lg text-center border border-[#FFB300]/30 min-w-[60px] z-20 pointer-events-none flex flex-col items-center;
-}
-.hotspot-name .font-jawa { @apply text-[12px] text-white; }
-
-/* Teks Aksara Jawa di dalam label */
-.hotspot-name .font-jawa { 
-  @apply text-[10px] font-normal text-white mt-0.5 block leading-none; 
-}
-
-/* Ukuran agak dibesarkan sedikit khusus di tablet/laptop */
-@media (min-width: 768px) { 
-  .hotspot-name { @apply text-[9px] px-2 py-1 min-w-[60px]; } 
-  .hotspot-name .font-jawa { @apply text-[13px]; }
+.hotspot {
+  position: absolute;
+  transform: translate(-50%, -50%); 
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  transform-style: preserve-3d;
 }
 
-/* Gambar candi diberi shadow halus biar timbul dari peta */
+/* --- EFEK DUARR 3D NYATA (Candi Berdiri Tegak) --- */
 .hotspot img {
-  transition: all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
-  filter: drop-shadow(0 4px 4px rgba(0,0,0,0.4));
-}
-/* Efek Hover (sedikit membesar dan melayang naik) */
-.hotspot:hover { z-index: 30; }
-.hotspot:hover img {
-  transform: scale(1.08) translateY(-2px);
-  filter: drop-shadow(0 8px 6px rgba(0,0,0,0.5));
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transform: scale(1.25) translateY(-12px);
+  filter: drop-shadow(0 15px 10px rgba(0,0,0,0.7)) drop-shadow(0 4px 4px rgba(0,0,0,0.5));
 }
 
-/* Efek Dipencet / Active (Bisa untuk HP & Laptop) */
 .hotspot:active img {
-  transform: scale(0.95) translateY(2px);
-  filter: drop-shadow(0 1px 2px rgba(0,0,0,0.6));
+  transform: scale(1) translateY(2px);
+  filter: drop-shadow(0 2px 3px rgba(0,0,0,0.8));
 }
 
-/* JURUS ANTI-NYANGKUT: Efek Hover HANYA jalan di perangkat yang punya mouse (Laptop/PC) */
 @media (hover: hover) and (pointer: fine) {
-  .hotspot:hover { z-index: 30; }
+  .hotspot:hover { z-index: 50; }
   .hotspot:hover img {
-    transform: scale(1.08) translateY(-2px);
-    filter: drop-shadow(0 8px 6px rgba(0,0,0,0.5));
+    transform: scale(1.4) translateY(-18px);
+    filter: drop-shadow(0 25px 20px rgba(0,0,0,0.6));
   }
 }
 
-.edit-active img { filter: drop-shadow(0 0 10px red) !important; transform: scale(1.1); }
-
-/* --- PERBAIKAN POP-UP BOOK & LANDSCAPE --- */
-.book-page {
-  background: #fdf5e6;
-  background-image: linear-gradient(90deg, rgba(62,39,35,0.05) 0%, transparent 5%, transparent 95%, rgba(62,39,35,0.05) 100%);
+/* --- FIX LABEL NAMA (Papan Kayu Mewah Anti Tabrakan) --- */
+.hotspot-name {
+  margin-top: 0.5rem;
+  background: linear-gradient(to bottom, #4E342E, #3E2723) !important;
+  color: #FFCA28 !important;
+  font-size: 11px !important;
+  line-height: 1.2 !important;
+  font-weight: 800 !important;
+  padding: 4px 8px !important;
+  border-radius: 6px !important;
+  box-shadow: 0 8px 15px rgba(0,0,0,0.6), inset 0 1px 1px rgba(255,255,255,0.2) !important;
+  text-align: center !important;
+  border: 1px solid #FFCA28 !important;
+  min-width: 80px !important;
+  z-index: 20;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-shadow: 1px 1px 1px rgba(0,0,0,0.8) !important;
+  transition: all 0.3s ease;
 }
 
-/* FIX TOTAL UNTUK HP MIRING (Landscape) */
-/* Logika: Jika layar pendek (miring), paksa tinggi buku menyesuaikan layar & aktifkan scroll */
-@media (max-height: 500px) and (orientation: landscape) {
-  #popup-book {
-    padding: 2px !important; /* Kurangi padding luar */
-    align-items: flex-start !important; /* Mulai dari atas */
+.hotspot-name .font-jawa { 
+  font-size: 14px !important;
+  font-weight: normal !important;
+  color: #FFF8E1 !important;
+  margin-top: 2px !important;
+  display: block;
+  line-height: 1 !important;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.9) !important;
+}
+
+@media (min-width: 768px) { 
+  .hotspot-name { font-size: 10px !important; min-width: 90px !important; } 
+  .hotspot-name .font-jawa { font-size: 15px !important; }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .hotspot:hover .hotspot-name {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 20px rgba(0,0,0,0.7), inset 0 1px 1px rgba(255,255,255,0.2) !important;
   }
-  .book-container {
-    margin-top: 5px;
-    max-height: 98vh !important; /* Tinggi maksimal 98% layar */
-    display: flex;
-    flex-direction: column;
-  }
-  .book-content {
-    /* Tinggi konten = tinggi layar dikurangi sedikit space untuk tombol close */
-    height: calc(98vh - 30px) !important;
-  }
-  /* Perkecil elemen di dalam buku saat landscape */
-  .book-page { padding: 1rem !important; }
-  #book-img { height: 80px !important; }
-  #book-title { font-size: 1.2rem !important; }
-  .quiz-input { padding: 0.5rem !important; font-size: 0.9rem !important; }
 }
 
-/* Animasi Masuk Peta */
-.animate-dive-in { animation: diveIn 1.2s ease-out forwards; }
-@keyframes diveIn {
-  0% { transform: scale(1.2); opacity: 0; filter: blur(5px); }
-  100% { transform: scale(1); opacity: 1; filter: blur(0); }
+/* =========================================================
+   4. SISTEM BUKU MEWAH (KERTAS TIDUR & KONTEN MENGAMBANG)
+   ========================================================= */
+#popup-book { perspective: 1500px; }
+
+.book-container {
+  transform: rotateX(12deg);
+  transform-style: preserve-3d;
+  box-shadow: 0 40px 60px rgba(0,0,0,0.8);
+  animation: bookOpen3D 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
 }
 
-/* --- EFEK BACKGROUND KAYU & 3D BUKU --- */
-.bg-wood-css {
-  background-color: #3e2723;
-  /* Membuat pola serat kayu vertikal simpel */
-  background-image: repeating-linear-gradient(to right, rgba(0,0,0,0.1) 0px, rgba(0,0,0,0.1) 2px, transparent 2px, transparent 8px),
-                    linear-gradient(90deg, #4e342e, #3e2723, #4e342e);
+@keyframes bookOpen3D {
+  0% { transform: rotateX(30deg) scale(0.8); opacity: 0; }
+  100% { transform: rotateX(12deg) scale(1); opacity: 1; }
 }
 
-.book-3d-shadow {
-  /* Bayangan tebal biar buku seolah melayang di atas peta */
-  box-shadow: 0 30px 60px rgba(0,0,0,0.8), inset 0 0 15px rgba(0,0,0,0.5);
-  border: 4px solid #5d4037;
+.book-content, .page-left, .page-right {
+  transform-style: preserve-3d;
 }
-/* --- FITUR KUIS: FEEDBACK BUBBLE & CANDI GLOW --- */
+
+.book-container, .book-content {
+  border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px !important;
+}
+
+.page-left {
+  box-shadow: inset -25px 0 25px -15px rgba(0,0,0,0.5) !important;
+  border-right: none !important; 
+}
+.page-right {
+  box-shadow: inset 25px 0 25px -15px rgba(0,0,0,0.4) !important;
+  border-left: none !important; 
+}
+
+/* JURUS MENGAMBANG */
+.floating-item {
+  transform: translateZ(40px) scale(1.02); 
+  box-shadow: 0 15px 25px rgba(0,0,0,0.3); 
+  transition: all 0.3s ease;
+}
+.floating-item:hover {
+  transform: translateZ(50px) scale(1.04) translateY(-2px);
+  box-shadow: 0 20px 30px rgba(0,0,0,0.4);
+}
+
+.pop-up-image {
+  transform: translateZ(50px) rotateX(-5deg); 
+  filter: drop-shadow(0 20px 15px rgba(0,0,0,0.6)) drop-shadow(0 0 2px rgba(255,255,255,0.4));
+  transform-origin: bottom center;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+.pop-up-image:hover {
+  transform: translateZ(70px) rotateX(-5deg) scale(1.15) translateY(-5px);
+  filter: drop-shadow(0 30px 20px rgba(0,0,0,0.8));
+}
+
+/* =========================================================
+   5. ELEMEN BUKU LAINNYA & KUIS
+   ========================================================= */
+.stone-plaque {
+  background: linear-gradient(to bottom, #A1887F, #5D4037);
+  border: 2px solid #3E2723;
+  border-radius: 30px 10px 20px 15px / 15px 20px 10px 25px;
+  color: #FFF3E0; 
+  text-shadow: -1px -1px 0px rgba(0,0,0,0.6), 1px 1px 0px rgba(255,255,255,0.2);
+  box-shadow: 0 6px 10px rgba(0,0,0,0.5), inset 2px 2px 4px rgba(255,255,255,0.2), inset -2px -2px 4px rgba(0,0,0,0.4);
+  letter-spacing: 1px;
+}
+
+.book-banner {
+  background: linear-gradient(135deg, #5c7a52, #3a5332);
+  border: 2px solid #3E2723;
+  border-radius: 8px 2px 8px 2px !important;
+  color: #FFD54F; 
+  text-shadow: 0 0 8px rgba(255, 213, 79, 0.8), 1px 1px 2px rgba(0,0,0,0.9);
+}
+
+.btn-modern-3d {
+  background: linear-gradient(135deg, #FFCA28, #F57F17);
+  color: #3E2723;
+  border: 2px solid #3E2723;
+  border-radius: 8px 3px 8px 3px !important;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  text-shadow: 1px 1px 0px rgba(255,255,255,0.5);
+  transition: all 0.2s ease-in-out;
+  box-shadow: 0 4px 0px #3E2723, 0 10px 15px rgba(0,0,0,0.4), inset 0 2px 4px rgba(255,255,255,0.4);
+  transform: translateY(-2px);
+}
+.btn-modern-3d:hover { filter: brightness(1.1); }
+.btn-modern-3d:active {
+  transform: translate(0px, 2px);
+  box-shadow: 0px 0px 0px #3E2723, -2px 2px 5px rgba(0,0,0,0.5), inset 1px 1px 3px rgba(0,0,0,0.3);
+}
+
+.landscape-bg {
+  background: radial-gradient(circle, rgba(255,243,224,0.8) 0%, rgba(255,243,224,0) 70%);
+  filter: blur(15px);
+}
+
+.quiz-input {
+  box-shadow: inset 0 2px 5px rgba(0,0,0,0.1), 0 4px 0 rgba(0,0,0,0.05);
+  border-radius: 4px !important;
+}
+
 .feedback-bubble {
   position: absolute;
-  right: 8px;
   top: 50%;
   transform: translateY(-50%);
   padding: 4px 10px;
   border-radius: 8px;
   font-weight: bold;
-  font-size: 11px;
   opacity: 0;
   pointer-events: none;
   transition: all 0.3s ease;
   box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 }
 .feedback-bubble.show { opacity: 1; }
+.feedback-correct { background-color: #f0fdf4; color: #166534; border: 1px solid #22c55e; }
+.feedback-wrong { background-color: #fef2f2; color: #991b1b; border: 1px solid #ef4444; }
+.feedback-empty { background-color: #fffbeb; color: #b45309; border: 1px solid #f59e0b; }
 
-.feedback-correct { 
-  background-color: #f0fdf4; color: #166534; border: 1px solid #22c55e; 
-}
-.feedback-wrong { 
-  background-color: #fef2f2; color: #991b1b; border: 1px solid #ef4444; 
+/* =========================================================
+   6. EFEK ANIMASI & SWEETALERT
+   ========================================================= */
+.animate-dive-in { animation: diveIn 1.2s ease-out forwards; }
+@keyframes diveIn {
+  0% { transform: scale(1.2); opacity: 0; filter: blur(5px); }
+  100% { transform: scale(1); opacity: 1; filter: blur(0); }
 }
 
-/* Efek Nyala Candi di Peta */
 .candi-error img { 
   filter: drop-shadow(0 0 12px red) !important; 
   animation: pulseRed 2s infinite;
@@ -190,35 +305,25 @@
 .candi-success img { 
   filter: drop-shadow(0 0 12px #22c55e) !important; 
 }
-
 @keyframes pulseRed {
   0% { filter: drop-shadow(0 0 8px red); }
   50% { filter: drop-shadow(0 0 16px red); }
   100% { filter: drop-shadow(0 0 8px red); }
 }
-/* Feedback Kosong (Kuning Warning) */
-.feedback-empty { 
-  background-color: #fffbeb; color: #b45309; border: 1px solid #f59e0b; 
-}
 
-/* --- MODAL SWEETALERT: KERTAS ABSTRAK KUNO --- */
 .swal-paper {
   background-color: #fdf5e6 !important;
-  /* Tambahkan motif batik tipis di modalnya */
   background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%235d4037' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") !important;
   border: 3px solid #5d4037 !important;
-  /* KUNCI KERTAS ABSTRAK: Border-radius acak biar pinggirannya miring-miring natural */
   border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px !important;
   box-shadow: 12px 12px 0px rgba(62,39,35,0.15) !important;
   color: #3E2723 !important;
 }
-
 .swal-paper-title {
   font-family: 'Playfair Display', serif !important;
   color: #3E2723 !important;
   font-size: 2.2rem !important;
 }
-
 .swal-paper-confirm {
   background-color: #3E2723 !important;
   color: #FFB300 !important;
@@ -232,106 +337,30 @@
   transform: translate(2px, 2px) !important;
   box-shadow: 0px 0px 0px #FFB300 !important;
 }
-/* --- EFEK BUKU POP-UP REALISTIS & MEWAH --- */
 
-/* 1. BENTUK BUKU ABSTRAK (Pinggiran Kertas Kuno) */
-.book-container, .book-content {
-  /* Meminjam border acak dari modal agar tidak lurus kaku */
-  border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px !important;
-}
-
-/* 2. LIPATAN TENGAH BUKU (Spine) - Tanpa Garis Putih */
-.page-left {
-  box-shadow: inset -25px 0 25px -15px rgba(0,0,0,0.5) !important;
-  border-right: none !important; /* Hapus garis kaku */
-}
-.page-right {
-  box-shadow: inset 25px 0 25px -15px rgba(0,0,0,0.4) !important;
-  border-left: none !important; /* Hapus garis kaku */
-}
-
-/* 3. GAMBAR POP-UP (Bayangan jatuh ke tengah) */
-.pop-up-image {
-  /* Bayangan jatuh agak ke kanan bawah karena di halaman kiri */
-  filter: drop-shadow(8px 12px 10px rgba(0,0,0,0.5)) drop-shadow(0 0 1px rgba(255,255,255,0.5));
-  transform-origin: bottom center;
-  transform: perspective(600px) rotateX(4deg) rotateY(2deg) scale(1.05);
-  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-.pop-up-image:hover {
-  transform: perspective(600px) rotateX(0deg) rotateY(0deg) scale(1.15) translateY(-5px) translateX(-2px);
-}
-
-/* 4. DASAR ELEMEN (Warna & Radius Abstrak) */
-.stone-plaque {
-  /* Gradien perunggu/tembaga elegan */
-  background: linear-gradient(to bottom, #A1887F, #5D4037);
-  border: 2px solid #3E2723;
-  border-radius: 30px 10px 20px 15px / 15px 20px 10px 25px;
-  color: #FFF3E0; /* Teks cerah kontras */
-  /* Efek teks diukir ke dalam (engraved) */
-  text-shadow: -1px -1px 0px rgba(0,0,0,0.6), 1px 1px 0px rgba(255,255,255,0.2);
-  /* Bayangan batu 3D */
-  box-shadow: 0 6px 10px rgba(0,0,0,0.5), inset 2px 2px 4px rgba(255,255,255,0.2), inset -2px -2px 4px rgba(0,0,0,0.4);
-  letter-spacing: 1px;
-}
-
-.book-banner {
-  background: linear-gradient(135deg, #5c7a52, #3a5332);
-  border: 2px solid #3E2723;
-  border-radius: 8px 2px 8px 2px !important;
-  color: #FFD54F; 
-  text-shadow: 0 0 8px rgba(255, 213, 79, 0.8), 1px 1px 2px rgba(0,0,0,0.9);
-  transition: transform 0.2s ease;
-}
-
-.btn-modern-3d {
-  /* Emas yang lebih kaya dan premium */
-  background: linear-gradient(135deg, #FFCA28, #F57F17);
-  color: #3E2723;
-  border: 2px solid #3E2723;
-  border-radius: 8px 3px 8px 3px !important;
-  font-weight: 900;
-  text-transform: uppercase;
-  letter-spacing: 1.5px; /* Direnggangkan agar elegan */
-  text-shadow: 1px 1px 0px rgba(255,255,255,0.5);
-  transition: all 0.2s ease-in-out;
-}
-.btn-modern-3d:hover {
-  filter: brightness(1.1); /* Efek menyala pas disentuh */
-}
-
-/* 5. LOGIKA 3D TIMBUL (Bayangan saling mengarah ke tengah/bawah lipatan) */
-
-/* Elemen di Kiri -> Timbul ke arah Kanan */
-.page-left .book-banner, .page-left .stone-plaque {
-  box-shadow: 3px 4px 0px #3E2723, 6px 8px 12px rgba(0,0,0,0.4), inset 1px 1px 3px rgba(255,255,255,0.2);
-  transform: translate(-2px, -2px);
-}
-
-/* Elemen di Kanan -> Timbul ke arah Kiri */
-.page-right .book-banner, .page-right .btn-modern-3d {
-  box-shadow: -4px 5px 0px #3E2723, -8px 10px 15px rgba(0,0,0,0.4), inset 2px 2px 4px rgba(255,255,255,0.4);
-  transform: translate(2px, -2px);
-}
-
-/* Saat Tombol Cek Jawaban Ditekan */
-.page-right .btn-modern-3d:active {
-  transform: translate(-1px, 3px);
-  box-shadow: 0px 0px 0px #3E2723, -2px 2px 5px rgba(0,0,0,0.5), inset 1px 1px 3px rgba(0,0,0,0.3);
-}
-
-/* --- SIDEBAR & HAMBURGER ABSTRAK --- */
+/* =========================================================
+   7. SIDEBAR & NAVIGASI
+   ========================================================= */
 .sidebar-abstrak {
   border-radius: 0 35px 15px 0 / 0 15px 45px 0;
   box-shadow: 5px 0 15px rgba(62,39,35,0.15);
 }
 
 .hamburger-abstrak {
-  /* Tombol hamburger dibikin abstrak estetik */
   border-radius: 12px 5px 15px 4px / 5px 15px 4px 12px !important;
 }
 
-/* Menghilangkan panah bawaan HTML pada fitur Dropdown */
 details > summary { list-style: none; }
 details > summary::-webkit-details-marker { display: none; }
+
+@media (max-height: 500px) and (orientation: landscape) {
+  #popup-book {
+    padding: 2px !important; 
+    align-items: flex-start !important; 
+  }
+  .book-container {
+    margin-top: 5px;
+    transform: scale(0.85); 
+    transform-origin: top center;
+  }
+}
