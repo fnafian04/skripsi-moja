@@ -1,27 +1,32 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="id">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Pasinaon Aksara Jawa</title>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Javanese&family=Playfair+Display:ital,wght@0,700;1,900&display=swap" rel="stylesheet" />
-    
+
     <style>
       /* --- Kustomisasi Efek Mewah --- */
 
       .bg-batik-dark {
         background-color: #2c1e1a;
-        background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23d4af37' fill-opacity='0.15'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        /* BATIK BARU: Motif "Sekar Jagad" Seamless (Nyambung Terus). 
+           Pola bunga dan sulur yang saling terhubung, memberikan kesan mewah dan penuh. */
+        background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%23d4af37' stroke-width='1' stroke-opacity='0.2'%3E%3Cpath d='M0 0c10 0 15 5 15 15s-5 15-15 15M100 0c-10 0-15 5-15 15s5 15 15 15M0 100c10 0 15-5 15-15s-5-15-15-15M100 100c-10 0-15-5-15-15s5-15 15-15M50 50c-10 0-15-5-15-15s5-15 15-15 15 5 15 15-5 15-15 15zM50 50c0 10-5 15-15 15s-15-5-15-15M50 50c0-10 5-15 15-15s15 5 15 15M50 50c10 0 15 5 15 15s-5 15-15 15M50 50c-10 0-15 5-15 15s5 15 15 15'/%3E%3Cpath d='M25 25c5 5 10 0 10-5s-5-10-10-5-10 0-5 5 0 10 5 5zM75 75c5 5 10 0 10-5s-5-10-10-5-10 0-5 5 0 10 5 5zM25 75c-5 5-10 0-10-5s5-10 10-5 10 0 5 5 0 10-5 5zM75 25c-5 5-10 0-10-5s5-10 10-5 10 0 5 5 0 10-5 5z'/%3E%3C/g%3E%3C/svg%3E");
+        /* Membuat pola berulang dengan mulus */
+        background-repeat: repeat;
+        background-size: 100px 100px;
       }
 
       /* Kotak Megah */
       .majestic-box {
         background: linear-gradient(135deg, #fff3e0, #e6cca0);
-        border: 6px solid #3E2723;
+        border: 6px solid #3e2723;
         border-radius: 16px;
-        outline: 3px solid #D4AF37;
+        outline: 3px solid #d4af37;
         outline-offset: -14px;
-        box-shadow: 0 20px 40px rgba(0,0,0,0.8), inset 0 0 40px rgba(62,39,35,0.25);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8), inset 0 0 40px rgba(62, 39, 35, 0.25);
         transition: transform 0.4s ease;
       }
 
@@ -29,55 +34,32 @@
         transform: scale(1.02);
       }
 
-      /* Teks Timbul dengan Efek Nyala Emas dari Belakang (Glow) */
+      /* Teks Timbul dengan Efek Nyala Emas Permanen (Glow Solid) */
       .text-glow-gold {
-        color: #3E2723;
-        animation: glowPulse 2.5s infinite alternate ease-in-out;
+        color: #3e2723;
+        text-shadow: 1px 1px 0px #d4af37, 2px 2px 0px #8d6e63, 4px 4px 4px rgba(0, 0, 0, 0.6), 0 0 25px rgba(255, 179, 0, 0.8), 0 0 45px rgba(212, 175, 55, 0.6);
       }
 
-      @keyframes glowPulse {
-        0% {
-          text-shadow: 
-            1px 1px 0px #D4AF37, 
-            2px 2px 0px #8D6E63, 
-            4px 4px 4px rgba(0,0,0,0.6),
-            0 0 10px rgba(255, 179, 0, 0.2);
-        }
-        100% {
-          text-shadow: 
-            1px 1px 0px #D4AF37, 
-            2px 2px 0px #8D6E63, 
-            4px 4px 4px rgba(0,0,0,0.6),
-            0 0 25px rgba(255, 179, 0, 0.9),
-            0 0 50px rgba(212, 175, 55, 0.6);
-        }
-      }
-      
       .text-jawa-embossed {
-         color: #5D4037;
-         text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.7), -1px -1px 1px rgba(0,0,0,0.2);
+        color: #5d4037;
+        text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.7), -1px -1px 1px rgba(0, 0, 0, 0.2);
       }
     </style>
   </head>
-  
+
   <body class="bg-batik-dark font-sans h-[100dvh] w-full flex items-center justify-center overflow-hidden cursor-pointer" onclick="location.href='beranda.html'">
-    
     <div class="majestic-box relative text-center p-8 md:p-16 mx-5 w-[90%] max-w-2xl flex flex-col items-center justify-center">
-      
-      <h1 class="font-serif text-4xl md:text-6xl font-black text-glow-gold mb-3 md:mb-4 leading-tight tracking-wide">
-        Pasinaon<br/>Aksara Jawa
-      </h1>
-      
-      <div class="font-jawa text-jawa-embossed text-2xl md:text-4xl mb-8 md:mb-12 opacity-95">
-        ꦥꦱꦶꦤꦲꦺꦴꦤ꧀ ꦄꦏ꧀ꦱꦫ ꦗꦮ
-      </div>
-      
+      <h1 class="font-serif text-4xl md:text-6xl font-black text-glow-gold mb-3 md:mb-4 leading-tight tracking-wide">Pasinaon<br />Aksara Jawa</h1>
+
+      <div class="font-jawa text-jawa-embossed text-2xl md:text-4xl mb-8 md:mb-12 opacity-95">ꦥꦱꦶꦤꦲꦺꦴꦤ꧀ꦄꦏ꧀ꦱꦫꦗꦮ</div>
+
       <div class="mt-2">
-        <span class="bg-[#3E2723] hover:bg-[#4E342E] transition-colors duration-300 text-[#FFB300] inline-block px-6 md:px-10 py-2.5 md:py-4 rounded-full font-bold text-xs md:text-base tracking-[0.2em] shadow-[0_8px_20px_rgba(0,0,0,0.5)] border-2 md:border-4 border-[#D4AF37]">
-          KLIK UNTUK MEMULAI ꧈
+        <span
+          class="bg-[#3E2723] text-[#FFB300] inline-block px-6 md:px-10 py-2.5 md:py-4 rounded-full font-bold text-xs md:text-base tracking-[0.2em] shadow-[0_8px_20px_rgba(0,0,0,0.5)] border-2 md:border-4 border-[#D4AF37] transition-all duration-200 active:scale-95 active:shadow-[0_2px_10px_rgba(0,0,0,0.5)]"
+        >
+          KLIK UNTUK MEMULAI
         </span>
       </div>
-
     </div>
 
     <script type="module" src="/src/main.js"></script>

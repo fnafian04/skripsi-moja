@@ -5,10 +5,13 @@
   --font-sans: "Quicksand", sans-serif;
 }
 
-/* Background Motif Batik SVG */
+/* Background Motif Batik "Sekar Jagad" Seamless (Versi Terang untuk Konten) */
 .bg-batik {
   background-color: #fff3e0;
-  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%235d4037' fill-opacity='0.08'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  /* Motif Sekar Jagad yang lembut agar teks tetap mudah dibaca */
+  background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%235d4037' stroke-width='1' stroke-opacity='0.06'%3E%3Cpath d='M0 0c10 0 15 5 15 15s-5 15-15 15M100 0c-10 0-15 5-15 15s5 15 15 15M0 100c10 0 15-5 15-15s-5-15-15-15M100 100c-10 0-15-5-15-15s5-15 15-15M50 50c-10 0-15-5-15-15s5-15 15-15 15 5 15 15-5 15-15 15zM50 50c0 10-5 15-15 15s-15-5-15-15M50 50c0-10 5-15 15-15s15 5 15 15M50 50c10 0 15 5 15 15s-5 15-15 15M50 50c-10 0-15 5-15 15s5 15 15 15'/%3E%3Cpath d='M25 25c5 5 10 0 10-5s-5-10-10-5-10 0-5 5 0 10 5 5zM75 75c5 5 10 0 10-5s-5-10-10-5-10 0-5 5 0 10 5 5zM25 75c-5 5-10 0-10-5s5-10 10-5 10 0 5 5 0 10-5 5zM75 25c-5 5-10 0-10-5s5-10 10-5 10 0 5 5 0 10-5 5z'/%3E%3C/g%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 80px 80px;
 }
 .font-jawa { font-family: 'Noto Sans Javanese', sans-serif; }
 
@@ -88,10 +91,19 @@
   filter: drop-shadow(0 8px 6px rgba(0,0,0,0.5));
 }
 
-/* Efek Dipencet / Active (mendem ke dalam kertas peta) */
+/* Efek Dipencet / Active (Bisa untuk HP & Laptop) */
 .hotspot:active img {
   transform: scale(0.95) translateY(2px);
   filter: drop-shadow(0 1px 2px rgba(0,0,0,0.6));
+}
+
+/* JURUS ANTI-NYANGKUT: Efek Hover HANYA jalan di perangkat yang punya mouse (Laptop/PC) */
+@media (hover: hover) and (pointer: fine) {
+  .hotspot:hover { z-index: 30; }
+  .hotspot:hover img {
+    transform: scale(1.08) translateY(-2px);
+    filter: drop-shadow(0 8px 6px rgba(0,0,0,0.5));
+  }
 }
 
 .edit-active img { filter: drop-shadow(0 0 10px red) !important; transform: scale(1.1); }
