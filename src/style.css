@@ -245,19 +245,23 @@
   filter: drop-shadow(0 60px 35px rgba(0, 0, 0, 0.9));
 }
 
-/* --- KOTAK PENJELASAN & SOAL (BERDIRI MAKIN TIMBUL!) --- */
+/* --- KOTAK PENJELASAN & SOAL (BERDIRI BRUTAL!) --- */
 .floating-item {
   position: relative;
   z-index: 10;
   transform-origin: bottom center;
-  transform: translateZ(55px) rotateX(-30deg);
-  box-shadow: 0 35px 40px rgba(0, 0, 0, 0.4);
+  /* Z ditarik drastis dari 55px ke 80px! */
+  transform: translateZ(80px) rotateX(-30deg); 
+  /* Bayangan lebih dalam, lebar, dan gelap */
+  box-shadow: 0 50px 60px rgba(0,0,0,0.5); 
   transition: all 0.3s ease;
 }
 
 .floating-item:hover {
-  transform: translateZ(75px) rotateX(-30deg) translateY(-5px);
-  box-shadow: 0 45px 55px rgba(0, 0, 0, 0.5);
+  /* Pas di-hover makin menggila ditarik ke 110px! */
+  transform: translateZ(110px) rotateX(-30deg) translateY(-8px);
+  /* Bayangan super jauh */
+  box-shadow: 0 70px 80px rgba(0,0,0,0.6);
 }
 
 
