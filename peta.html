@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="id">
   <head>
     <meta charset="UTF-8" />
@@ -8,23 +8,40 @@
   </head>
   <body class="bg-[#FFF3E0] font-sans overflow-hidden flex flex-col h-[100dvh]">
     <header class="lg:hidden bg-[#3E2723] text-white p-3 flex-none relative z-[70] shadow-md flex justify-between items-center">
-      <button id="hamburger" class="px-3 py-1 bg-[#FFB300] text-[#3E2723] rounded-md shadow-sm text-xl font-bold leading-none hover:bg-yellow-400 transition">☰</button>
-      <a href="/index.html" class="font-serif text-lg hover:scale-105 hover:text-[#FFB300] transition-transform duration-300">Pasinaon📜</a>
+      <button id="hamburger" class="hamburger-abstrak px-3 py-1 bg-[#FFB300] text-[#3E2723] shadow-sm text-xl font-bold leading-none hover:bg-yellow-400 transition transform hover:scale-105">☰</button>
+      <a href="/index.html" class="font-serif text-lg font-bold hover:scale-105 hover:text-[#FFB300] transition-transform duration-300">Pasinaon Autocorrect 📜</a>
     </header>
 
     <div id="sidebar-overlay" class="fixed inset-0 bg-black/50 z-[55] hidden"></div>
 
     <div class="flex flex-1 overflow-hidden relative">
-      <aside id="sidebar" class="fixed lg:static inset-y-0 left-0 w-64 bg-[#F5E6CA] border-r-8 border-[#3E2723] z-[60] transform -translate-x-full lg:translate-x-0 transition-transform duration-300 flex flex-col">
-        <a href="/index.html" class="block p-5 bg-[#3E2723] text-[#FFB300] text-center font-serif text-2xl transition-all duration-300 border-b-4 border-[#3E2723]">Caraka</a>
-        <nav class="flex-1 p-3 space-y-2 overflow-y-auto text-[#5D4037] font-semibold text-sm">
-          <p class="p-2 text-[10px] uppercase opacity-50 tracking-widest">Utama</p>
-          <a href="#" class="block p-2.5 hover:bg-[#D7CCC8] rounded-xl">1. Pengenalan Aksara Jawa</a>
-          <a href="legena.html" class="block p-2.5 hover:bg-[#D7CCC8] rounded-xl">2. Aksara Legena (Menebali)</a>
-          <a href="#" class="block p-2.5 hover:bg-[#D7CCC8] rounded-xl">3. Pasangan Aksara (Menebali)</a>
-          <p class="p-2 text-[10px] uppercase opacity-50 tracking-widest">Lanjut</p>
-          <button class="w-full text-left p-2.5 hover:bg-[#D7CCC8] rounded-xl">4. Sandhangan</button>
-          <a href="peta.html" class="block p-3 bg-[#FFB300] text-[#3E2723] rounded-xl shadow-md mt-4 text-center font-bold">5. Latihan Pasinaon ⚔️</a>
+      <aside
+        id="sidebar"
+        class="sidebar-abstrak fixed lg:static inset-y-0 left-0 w-64 bg-[#F5E6CA] border-r-4 border-[#3E2723] z-[60] transform -translate-x-full lg:translate-x-0 transition-transform duration-300 flex flex-col overflow-hidden"
+      >
+      <a href="/index.html" class="hidden lg:block p-5 bg-[#3E2723] text-[#FFB300] text-center font-serif transition-all duration-300 border-b-4 border-[#3E2723]">
+        <span class="text-2xl font-bold block leading-tight">Pasinaon</span>
+        <span class="text-sm font-medium tracking-widest opacity-90">AUTOCORRECT</span>
+      </a>
+
+        <nav class="flex-1 p-3 space-y-2 overflow-y-auto text-[#5D4037] font-bold text-sm">
+          <a href="#" class="block p-3 hover:bg-[#D7CCC8] rounded-xl transition">Pengenalan Aksara Jawa</a>
+          <a href="legena.html" class="block p-3 hover:bg-[#D7CCC8] rounded-xl transition">Aksara Legena</a>
+          <a href="#" class="block p-3 hover:bg-[#D7CCC8] rounded-xl transition">Pasangan Aksara Legena</a>
+
+          <details class="group">
+            <summary class="p-3 hover:bg-[#D7CCC8] rounded-xl cursor-pointer flex justify-between items-center transition">
+              Sandhangan
+              <span class="transition-transform duration-300 group-open:rotate-180 text-xs">▼</span>
+            </summary>
+            <div class="pl-6 pb-2 space-y-1 mt-1 text-xs font-semibold">
+              <a href="#" class="block p-2 hover:text-[#3E2723] hover:bg-[#D7CCC8]/70 rounded-lg transition">Sandhangan Swara</a>
+              <a href="#" class="block p-2 hover:text-[#3E2723] hover:bg-[#D7CCC8]/70 rounded-lg transition">Sandhangan Wyanjana</a>
+              <a href="#" class="block p-2 hover:text-[#3E2723] hover:bg-[#D7CCC8]/70 rounded-lg transition">Sandhangan Panyigeg Wanda</a>
+            </div>
+          </details>
+
+          <a href="peta.html" class="block p-3 hover:bg-[#D7CCC8] rounded-xl transition">Latihan Pasinaon</a>
         </nav>
       </aside>
 
@@ -70,68 +87,70 @@
       </main>
     </div>
 
-    <div id="popup-book" class="fixed inset-0 z-[100] hidden flex items-center justify-center p-2 md:p-8 bg-black/70 backdrop-blur-sm">
-    <div class="book-container w-full max-w-5xl bg-wood-css p-2 md:p-5 rounded-xl md:rounded-2xl book-3d-shadow relative">
-      <button onclick="closeQuiz()" class="absolute -top-3 -right-3 md:-top-5 md:-right-5 bg-red-800 text-[#FFB300] px-3 py-1 md:px-4 md:py-2 rounded-full z-[110] shadow-lg font-bold border-2 border-[#FFB300]">✖</button>
-      
-      <div class="flex flex-row h-[75vh] md:h-[450px] book-content rounded-xl overflow-hidden shadow-inner bg-[#fdf5e6]">
-        
-        <div class="flex-1 w-1/2 book-page p-3 md:p-5 flex flex-col items-center border-r-2 border-[#3E2723]/10 overflow-y-auto relative">
-          
-          <div class="book-banner w-11/12 py-1 md:py-2 text-center rounded-sm mb-3 z-10">
-            <h2 id="book-title" class="text-xs md:text-2xl font-serif font-bold tracking-wide"></h2>
-          </div>
-          
-          <p id="book-desc" class="text-[9px] md:text-[13px] text-justify text-[#3E2723] leading-relaxed mb-4 px-2 font-medium font-serif"></p>
-          
-          <div class="relative w-full flex-1 flex flex-col items-center justify-end mt-auto pb-4 md:pb-6">
-            <div class="landscape-bg absolute bottom-4 md:bottom-6 w-3/4 h-24 md:h-40 mx-auto opacity-80"></div>
-            <img id="book-img" src="" class="h-20 md:h-36 object-contain relative z-10 drop-shadow-[0_10px_10px_rgba(0,0,0,0.6)] hover:scale-105 transition-transform duration-500" />
-            
-            <div class="stone-plaque px-3 py-1 md:px-5 md:py-1.5 mt-2 absolute -bottom-1 md:-bottom-2 z-20">
-              <p id="book-lokasi" class="text-[7px] md:text-[10px] font-bold uppercase tracking-widest text-center m-0 leading-none"></p>
-            </div>
-          </div>
-        </div>
+    <div id="popup-book" class="fixed inset-0 z-[100] hidden flex items-center justify-center p-2 md:p-6 bg-black/70 backdrop-blur-sm">
+      <div class="book-container w-full max-w-5xl bg-wood-css p-2 md:p-4 rounded-xl md:rounded-2xl book-3d-shadow relative flex flex-col max-h-[95vh]">
+        <button onclick="closeQuiz()" class="absolute -top-3 -right-3 md:-top-5 md:-right-5 bg-red-800 text-[#FFB300] px-3 py-1 md:px-4 md:py-2 rounded-full z-[110] shadow-lg font-bold border-2 border-[#FFB300]">✖</button>
 
-        <div class="flex-1 w-1/2 book-page p-3 md:p-5 flex flex-col bg-[#fdf5e6]/50 overflow-y-auto">
-          
-          <div class="book-banner w-3/4 mx-auto py-1 md:py-1.5 text-center rounded-full mb-2 md:mb-3 shadow-md flex-none">
-            <h3 class="font-serif text-[10px] md:text-lg font-bold">Latihan Soal</h3>
-          </div>
-          
-          <p class="text-[8px] md:text-xs text-center italic text-[#5D4037] mb-2 md:mb-4 font-serif flex-none px-2">
-            "Isilah kalimat berikut dengan jawaban yang benar!"
-          </p>
-          
-          <div class="space-y-3 pr-1 pb-1 flex-none">
-            <div>
-              <label id="q1-text" class="block text-[9px] md:text-[13px] font-bold mb-1 text-[#3E2723] font-serif"></label>
-              <div class="relative flex items-center">
-                <input id="ans1" type="text" class="quiz-input w-full p-1.5 md:p-3 pr-14 md:pr-24 rounded-lg border-2 border-[#5d4037]/30 transition-all outline-none text-[10px] md:text-sm bg-white focus:border-[#5c7a52] font-serif" placeholder="Ketik jawaban...">
-                <div id="feedback1" class="feedback-bubble text-[8px] md:text-[11px] right-1 md:right-2"></div>
-              </div>
+        <div class="flex flex-row flex-1 min-h-0 book-content rounded-xl overflow-hidden shadow-inner bg-[#fdf5e6]">
+          <div class="flex-1 w-1/2 book-page p-3 md:p-5 flex flex-col items-center border-r-2 border-[#3E2723]/10 overflow-y-auto relative">
+            <div class="book-banner w-11/12 py-1 md:py-2 text-center rounded-sm mb-3 z-10 flex-none">
+              <h2 id="book-title" class="text-xs md:text-2xl font-serif font-bold tracking-wide"></h2>
             </div>
-            
-            <div>
-              <label id="q2-text" class="block text-[9px] md:text-[13px] font-bold mb-1 text-[#3E2723] font-serif"></label>
-              <div class="relative flex items-center">
-                <input id="ans2" type="text" class="quiz-input w-full p-1.5 md:p-3 pr-14 md:pr-24 rounded-lg border-2 border-[#5d4037]/30 transition-all outline-none text-[10px] md:text-sm bg-white focus:border-[#5c7a52] font-serif" placeholder="Ketik jawaban...">
-                <div id="feedback2" class="feedback-bubble text-[8px] md:text-[11px] right-1 md:right-2"></div>
+
+            <p id="book-desc" class="text-[9px] md:text-[13px] text-justify text-[#3E2723] leading-relaxed mb-4 px-2 font-medium font-serif flex-none"></p>
+
+            <div class="relative w-full flex-none flex flex-col items-center justify-end mt-auto pt-2 pb-4 md:pb-6">
+              <div class="landscape-bg absolute bottom-4 md:bottom-6 w-3/4 h-24 md:h-40 mx-auto opacity-80"></div>
+              <img id="book-img" src="" class="h-20 md:h-36 object-contain relative z-10 drop-shadow-[0_10px_10px_rgba(0,0,0,0.6)] hover:scale-105 transition-transform duration-500" />
+
+              <div class="stone-plaque px-3 py-1 md:px-5 md:py-1.5 mt-2 absolute -bottom-1 md:-bottom-2 z-20">
+                <p id="book-lokasi" class="text-[7px] md:text-[10px] font-bold uppercase tracking-widest text-center m-0 leading-none"></p>
               </div>
             </div>
           </div>
-          
-          <div class="pt-3 mt-auto flex-none">
-            <button onclick="checkAllAnswers()" class="btn-modern-3d w-full py-2 md:py-3 text-[10px] md:text-sm font-serif">
-              Cek Jawaban ✅
-            </button>
+
+          <div class="flex-1 w-1/2 book-page p-3 md:p-5 flex flex-col bg-[#fdf5e6]/50 overflow-y-auto">
+            <div class="book-banner w-3/4 mx-auto py-1 md:py-1.5 text-center rounded-full mb-2 md:mb-3 shadow-md flex-none">
+              <h3 class="font-serif text-[10px] md:text-lg font-bold">Latihan Soal</h3>
+            </div>
+
+            <p class="text-[8px] md:text-xs text-center italic text-[#5D4037] mb-2 md:mb-4 font-serif flex-none px-2">"Isilah kalimat berikut dengan jawaban yang benar!"</p>
+
+            <div class="space-y-3 pr-1 pb-1 flex-none">
+              <div>
+                <label id="q1-text" class="block text-[9px] md:text-[13px] font-bold mb-1 text-[#3E2723] font-serif"></label>
+                <div class="relative flex items-center">
+                  <input
+                    id="ans1"
+                    type="text"
+                    class="quiz-input w-full p-1.5 md:p-3 pr-14 md:pr-24 rounded-lg border-2 border-[#5d4037]/30 transition-all outline-none text-[10px] md:text-sm bg-white focus:border-[#5c7a52] font-serif"
+                    placeholder="Ketik jawaban..."
+                  />
+                  <div id="feedback1" class="feedback-bubble text-[8px] md:text-[11px] right-1 md:right-2"></div>
+                </div>
+              </div>
+
+              <div>
+                <label id="q2-text" class="block text-[9px] md:text-[13px] font-bold mb-1 text-[#3E2723] font-serif"></label>
+                <div class="relative flex items-center">
+                  <input
+                    id="ans2"
+                    type="text"
+                    class="quiz-input w-full p-1.5 md:p-3 pr-14 md:pr-24 rounded-lg border-2 border-[#5d4037]/30 transition-all outline-none text-[10px] md:text-sm bg-white focus:border-[#5c7a52] font-serif"
+                    placeholder="Ketik jawaban..."
+                  />
+                  <div id="feedback2" class="feedback-bubble text-[8px] md:text-[11px] right-1 md:right-2"></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="pt-3 mt-auto flex-none pb-2">
+              <button onclick="checkAllAnswers()" class="btn-modern-3d w-full py-2 md:py-3 text-[10px] md:text-sm font-serif">Cek Jawaban ✅</button>
+            </div>
           </div>
         </div>
-
       </div>
     </div>
-  </div>
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script type="module" src="/src/main.js"></script>

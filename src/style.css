@@ -257,3 +257,19 @@
   transform: translateY(4px);
   box-shadow: 0 0px 0px #3E2723, 0 2px 3px rgba(0,0,0,0.2);
 }
+
+/* --- SIDEBAR & HAMBURGER ABSTRAK --- */
+.sidebar-abstrak {
+  /* Bikin ujung kanan sidebar melengkung natural tidak kaku */
+  border-radius: 0 35px 15px 0 / 0 15px 45px 0;
+  box-shadow: 5px 0 15px rgba(62,39,35,0.15);
+}
+
+.hamburger-abstrak {
+  /* Tombol hamburger dibikin mencong-mencong estetik */
+  border-radius: 12px 5px 15px 4px / 5px 15px 4px 12px;
+}
+
+/* Menghilangkan panah bawaan HTML pada fitur Dropdown */
+details > summary { list-style: none; }
+details > summary::-webkit-details-marker { display: none; }
