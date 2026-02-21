@@ -76,9 +76,24 @@
   .hotspot-name .font-jawa { @apply text-[13px]; }
 }
 
-/* EFEK HOVER & EDIT MODE */
+/* Gambar candi diberi shadow halus biar timbul dari peta */
+.hotspot img {
+  transition: all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
+  filter: drop-shadow(0 4px 4px rgba(0,0,0,0.4));
+}
+/* Efek Hover (sedikit membesar dan melayang naik) */
 .hotspot:hover { z-index: 30; }
-.hotspot:hover img { transform: scale(1.05); }
+.hotspot:hover img {
+  transform: scale(1.08) translateY(-2px);
+  filter: drop-shadow(0 8px 6px rgba(0,0,0,0.5));
+}
+
+/* Efek Dipencet / Active (mendem ke dalam kertas peta) */
+.hotspot:active img {
+  transform: scale(0.95) translateY(2px);
+  filter: drop-shadow(0 1px 2px rgba(0,0,0,0.6));
+}
+
 .edit-active img { filter: drop-shadow(0 0 10px red) !important; transform: scale(1.1); }
 
 /* --- PERBAIKAN POP-UP BOOK & LANDSCAPE --- */
@@ -293,3 +308,18 @@
   transform: translate(-1px, 3px);
   box-shadow: 0px 0px 0px #3E2723, -2px 2px 5px rgba(0,0,0,0.5), inset 1px 1px 3px rgba(0,0,0,0.3);
 }
+
+/* --- SIDEBAR & HAMBURGER ABSTRAK --- */
+.sidebar-abstrak {
+  border-radius: 0 35px 15px 0 / 0 15px 45px 0;
+  box-shadow: 5px 0 15px rgba(62,39,35,0.15);
+}
+
+.hamburger-abstrak {
+  /* Tombol hamburger dibikin abstrak estetik */
+  border-radius: 12px 5px 15px 4px / 5px 15px 4px 12px !important;
+}
+
+/* Menghilangkan panah bawaan HTML pada fitur Dropdown */
+details > summary { list-style: none; }
+details > summary::-webkit-details-marker { display: none; }
