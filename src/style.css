@@ -8,8 +8,8 @@
 /* =========================================================
    1. PENGATURAN UMUM & BACKGROUND BATIK
    ========================================================= */
-.font-jawa { 
-  font-family: 'Noto Sans Javanese', sans-serif; 
+.font-jawa {
+  font-family: 'Noto Sans Javanese', sans-serif;
 }
 
 .bg-batik {
@@ -63,20 +63,23 @@
   scrollbar-width: thin;
   scrollbar-color: #3E2723 transparent;
 }
+
 @media (min-width: 1024px) {
-  .map-container-scroll { padding: 2.5rem; }
+  .map-container-scroll {
+    padding: 2.5rem;
+  }
 }
 
 .map-wrapper {
   position: relative;
   display: inline-block;
   flex-shrink: 0;
-  margin: auto; 
+  margin: auto;
 }
 
 .map-image {
   display: block;
-  min-width: 800px; 
+  min-width: 800px;
   width: 100%;
   height: auto;
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6), 0 0 0 8px rgba(93, 64, 55, 0.2);
@@ -85,12 +88,15 @@
 }
 
 @media (min-width: 1024px) {
-  .map-image { min-width: unset; max-width: 900px; }
+  .map-image {
+    min-width: unset;
+    max-width: 900px;
+  }
 }
 
 .hotspot {
   position: absolute;
-  transform: translate(-50%, -50%); 
+  transform: translate(-50%, -50%);
   z-index: 10;
   display: flex;
   flex-direction: column;
@@ -105,19 +111,22 @@
 .hotspot img {
   transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   transform: scale(1.25) translateY(-12px);
-  filter: drop-shadow(0 15px 10px rgba(0,0,0,0.7)) drop-shadow(0 4px 4px rgba(0,0,0,0.5));
+  filter: drop-shadow(0 15px 10px rgba(0, 0, 0, 0.7)) drop-shadow(0 4px 4px rgba(0, 0, 0, 0.5));
 }
 
 .hotspot:active img {
   transform: scale(1) translateY(2px);
-  filter: drop-shadow(0 2px 3px rgba(0,0,0,0.8));
+  filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.8));
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .hotspot:hover { z-index: 50; }
+  .hotspot:hover {
+    z-index: 50;
+  }
+
   .hotspot:hover img {
     transform: scale(1.4) translateY(-18px);
-    filter: drop-shadow(0 25px 20px rgba(0,0,0,0.6));
+    filter: drop-shadow(0 25px 20px rgba(0, 0, 0, 0.6));
   }
 }
 
@@ -131,7 +140,7 @@
   font-weight: 800 !important;
   padding: 4px 8px !important;
   border-radius: 6px !important;
-  box-shadow: 0 8px 15px rgba(0,0,0,0.6), inset 0 1px 1px rgba(255,255,255,0.2) !important;
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.6), inset 0 1px 1px rgba(255, 255, 255, 0.2) !important;
   text-align: center !important;
   border: 1px solid #FFCA28 !important;
   min-width: 80px !important;
@@ -140,194 +149,273 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  text-shadow: 1px 1px 1px rgba(0,0,0,0.8) !important;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.8) !important;
   transition: all 0.3s ease;
 }
 
-.hotspot-name .font-jawa { 
+.hotspot-name .font-jawa {
   font-size: 14px !important;
   font-weight: normal !important;
   color: #FFF8E1 !important;
   margin-top: 2px !important;
   display: block;
   line-height: 1 !important;
-  text-shadow: 1px 1px 2px rgba(0,0,0,0.9) !important;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.9) !important;
 }
 
-@media (min-width: 768px) { 
-  .hotspot-name { font-size: 10px !important; min-width: 90px !important; } 
-  .hotspot-name .font-jawa { font-size: 15px !important; }
+@media (min-width: 768px) {
+  .hotspot-name {
+    font-size: 10px !important;
+    min-width: 90px !important;
+  }
+
+  .hotspot-name .font-jawa {
+    font-size: 15px !important;
+  }
 }
 
 @media (hover: hover) and (pointer: fine) {
   .hotspot:hover .hotspot-name {
     transform: translateY(-5px);
-    box-shadow: 0 12px 20px rgba(0,0,0,0.7), inset 0 1px 1px rgba(255,255,255,0.2) !important;
+    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.7), inset 0 1px 1px rgba(255, 255, 255, 0.2) !important;
   }
 }
 
 /* =========================================================
    4. SISTEM BUKU MEWAH (ANTI-CLIPPING & SUPER 3D)
    ========================================================= */
-   #popup-book { perspective: 1000px; }
+#popup-book {
+  perspective: 1000px;
+}
 
-   .book-container {
-     transform: rotateX(30deg);
-     transform-style: preserve-3d;
-     /* KUNCI 1: Paksa overflow terlihat agar candi bisa tembus keluar buku */
-     overflow: visible !important; 
-     box-shadow: 0 40px 60px rgba(0,0,0,0.8);
-     animation: bookOpen3D 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-   }
-   
-   @keyframes bookOpen3D {
-     0% { transform: rotateX(45deg) scale(0.8); opacity: 0; }
-     100% { transform: rotateX(30deg) scale(1); opacity: 1; }
-   }
-   
-   /* KUNCI 2: Semua halaman harus mendukung ruang 3D dan tidak memotong konten */
-   .book-content, .page-left, .page-right {
-     transform-style: preserve-3d !important;
-     overflow: visible !important; 
-   }
-   
-   .book-container, .book-content {
-     border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px !important;
-   }
-   
-   .page-left {
-     box-shadow: inset -25px 0 35px -15px rgba(0,0,0,0.6) !important;
-     border-right: none !important; 
-   }
-   .page-right {
-     box-shadow: inset 25px 0 35px -15px rgba(0,0,0,0.5) !important;
-     border-left: none !important; 
-   }
-   
-   /* --- GAMBAR CANDI (PALING TEGAK, KELUAR BUKU & PALING DEPAN!) --- */
-   .pop-up-image {
-     transform-origin: bottom center;
-     /* Tetap 90px biar paling depan menembus tumpukan lain */
-     transform: translateZ(90px) rotateX(-30deg) scale(1.35);
-     z-index: 100 !important; 
-     filter: drop-shadow(0 40px 25px rgba(0,0,0,0.7));
-     transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-     position: relative; 
-   }
-   .pop-up-image:hover {
-     transform: translateZ(120px) rotateX(-30deg) scale(1.5) translateY(-15px);
-     filter: drop-shadow(0 60px 35px rgba(0,0,0,0.9));
-   }
-   
-   /* --- KOTAK PENJELASAN & SOAL (BERDIRI MAKIN TIMBUL!) --- */
-   .floating-item {
-     position: relative; 
-     z-index: 10;
-     transform-origin: bottom center;
-     transform: translateZ(55px) rotateX(-30deg); 
-     box-shadow: 0 35px 40px rgba(0,0,0,0.4); 
-     transition: all 0.3s ease;
-   }
-   .floating-item:hover {
-     transform: translateZ(75px) rotateX(-30deg) translateY(-5px);
-     box-shadow: 0 45px 55px rgba(0,0,0,0.5);
-   }
-   
-   
-   /* =========================================================
+.book-container {
+  transform: rotateX(30deg);
+  transform-style: preserve-3d;
+  /* KUNCI 1: Paksa overflow terlihat agar candi bisa tembus keluar buku */
+  overflow: visible !important;
+  box-shadow: 0 40px 60px rgba(0, 0, 0, 0.8);
+  animation: bookOpen3D 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+@keyframes bookOpen3D {
+  0% {
+    transform: rotateX(45deg) scale(0.8);
+    opacity: 0;
+  }
+
+  100% {
+    transform: rotateX(30deg) scale(1);
+    opacity: 1;
+  }
+}
+
+/* KUNCI 2: Semua halaman harus mendukung ruang 3D dan tidak memotong konten */
+.book-content, .page-left, .page-right {
+  transform-style: preserve-3d !important;
+  overflow: visible !important;
+}
+
+.book-container, .book-content {
+  border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px !important;
+}
+
+.page-left {
+  box-shadow: inset -25px 0 35px -15px rgba(0, 0, 0, 0.6) !important;
+  border-right: none !important;
+}
+
+.page-right {
+  box-shadow: inset 25px 0 35px -15px rgba(0, 0, 0, 0.5) !important;
+  border-left: none !important;
+}
+
+/* --- GAMBAR CANDI (PALING TEGAK, KELUAR BUKU & PALING DEPAN!) --- */
+.pop-up-image {
+  transform-origin: bottom center;
+  /* Tetap 90px biar paling depan menembus tumpukan lain */
+  transform: translateZ(90px) rotateX(-30deg) scale(1.35);
+  z-index: 100 !important;
+  filter: drop-shadow(0 40px 25px rgba(0, 0, 0, 0.7));
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position: relative;
+}
+
+.pop-up-image:hover {
+  transform: translateZ(120px) rotateX(-30deg) scale(1.5) translateY(-15px);
+  filter: drop-shadow(0 60px 35px rgba(0, 0, 0, 0.9));
+}
+
+/* --- KOTAK PENJELASAN & SOAL (BERDIRI MAKIN TIMBUL!) --- */
+.floating-item {
+  position: relative;
+  z-index: 10;
+  transform-origin: bottom center;
+  transform: translateZ(55px) rotateX(-30deg);
+  box-shadow: 0 35px 40px rgba(0, 0, 0, 0.4);
+  transition: all 0.3s ease;
+}
+
+.floating-item:hover {
+  transform: translateZ(75px) rotateX(-30deg) translateY(-5px);
+  box-shadow: 0 45px 55px rgba(0, 0, 0, 0.5);
+}
+
+
+/* =========================================================
       5. ELEMEN BUKU LAINNYA (JUDUL, TOMBOL, LOKASI)
       ========================================================= */
-   
-   /* --- JUDUL (NEMPEL KERTAS TAPI TEBAL BALOK 3D) --- */
-   .book-banner {
-     background: linear-gradient(135deg, #5c7a52, #3a5332);
-     border: 2px solid #3E2723;
-     border-radius: 8px 2px 8px 2px !important;
-     color: #FFD54F; 
-     /* Ditarik sedikit Z-nya, tanpa rotasi, dikasih bayangan balok super tebal */
-     transform: translateZ(10px);
-     box-shadow: 0 8px 0px #221310, 0 15px 20px rgba(0,0,0,0.5) !important;
-     text-shadow: 0 0 8px rgba(255, 213, 79, 0.8), 1px 1px 2px rgba(0,0,0,0.9);
-   }
-   
-   .stone-plaque {
-     background: linear-gradient(to bottom, #A1887F, #5D4037);
-     border: 2px solid #3E2723;
-     border-radius: 30px 10px 20px 15px / 15px 20px 10px 25px;
-     color: #FFF3E0; 
-     transform: translateZ(5px); /* Nempel kertas tapi sedikit bervolume */
-     text-shadow: -1px -1px 0px rgba(0,0,0,0.6), 1px 1px 0px rgba(255,255,255,0.2);
-     box-shadow: 0 6px 0px #2E1B15, 0 10px 15px rgba(0,0,0,0.5);
-     letter-spacing: 1px;
-   }
-   
-   .btn-modern-3d {
-     background: linear-gradient(135deg, #FFCA28, #F57F17);
-     color: #3E2723;
-     border: 2px solid #3E2723;
-     border-radius: 8px 3px 8px 3px !important;
-     font-weight: 900;
-     text-transform: uppercase;
-     letter-spacing: 1.5px;
-     text-shadow: 1px 1px 0px rgba(255,255,255,0.5);
-     transition: all 0.2s ease-in-out;
-     box-shadow: 0 6px 0px #3E2723, 0 12px 15px rgba(0,0,0,0.4), inset 0 2px 4px rgba(255,255,255,0.4) !important;
-   }
-   .btn-modern-3d:hover { filter: brightness(1.1); }
-   .btn-modern-3d:active {
-     transform: translateY(4px);
-     box-shadow: 0 0px 0px #3E2723, -2px 2px 5px rgba(0,0,0,0.5), inset 1px 1px 3px rgba(0,0,0,0.3) !important;
-   }
-   
-   .landscape-bg {
-     background: radial-gradient(circle, rgba(255,243,224,0.8) 0%, rgba(255,243,224,0) 70%);
-     filter: blur(15px);
-   }
-   
-   .quiz-input {
-     box-shadow: inset 0 2px 5px rgba(0,0,0,0.1), 0 4px 0 rgba(0,0,0,0.05);
-     border-radius: 4px !important;
-   }
-   
-   /* Feedback Bubble */
-   .feedback-bubble {
-     position: absolute;
-     top: 50%;
-     transform: translateY(-50%);
-     padding: 4px 10px;
-     border-radius: 8px;
-     font-weight: bold;
-     opacity: 0;
-     pointer-events: none;
-     transition: all 0.3s ease;
-     box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-   }
-   .feedback-bubble.show { opacity: 1; }
-   .feedback-correct { background-color: #f0fdf4; color: #166534; border: 1px solid #22c55e; }
-   .feedback-wrong { background-color: #fef2f2; color: #991b1b; border: 1px solid #ef4444; }
-   .feedback-empty { background-color: #fffbeb; color: #b45309; border: 1px solid #f59e0b; }
+
+/* --- JUDUL (NEMPEL KERTAS TAPI TEBAL BALOK 3D) --- */
+.book-banner {
+  background: linear-gradient(135deg, #5c7a52, #3a5332);
+  border: 2px solid #3E2723;
+  border-radius: 8px 2px 8px 2px !important;
+  color: #FFD54F;
+  /* Ditarik sedikit Z-nya, tanpa rotasi, dikasih bayangan balok super tebal */
+  transform: translateZ(10px);
+  box-shadow: 0 8px 0px #221310, 0 15px 20px rgba(0, 0, 0, 0.5) !important;
+  text-shadow: 0 0 8px rgba(255, 213, 79, 0.8), 1px 1px 2px rgba(0, 0, 0, 0.9);
+}
+
+.stone-plaque {
+  background: linear-gradient(to bottom, #A1887F, #5D4037);
+  border: 2px solid #3E2723;
+  border-radius: 30px 10px 20px 15px / 15px 20px 10px 25px;
+  color: #FFF3E0;
+  transform: translateZ(5px);
+  /* Nempel kertas tapi sedikit bervolume */
+  text-shadow: -1px -1px 0px rgba(0, 0, 0, 0.6), 1px 1px 0px rgba(255, 255, 255, 0.2);
+  box-shadow: 0 6px 0px #2E1B15, 0 10px 15px rgba(0, 0, 0, 0.5);
+  letter-spacing: 1px;
+}
+
+.btn-modern-3d {
+  background: linear-gradient(135deg, #FFCA28, #F57F17);
+  color: #3E2723;
+  border: 2px solid #3E2723;
+  border-radius: 8px 3px 8px 3px !important;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  text-shadow: 1px 1px 0px rgba(255, 255, 255, 0.5);
+  transition: all 0.2s ease-in-out;
+  box-shadow: 0 6px 0px #3E2723, 0 12px 15px rgba(0, 0, 0, 0.4), inset 0 2px 4px rgba(255, 255, 255, 0.4) !important;
+}
+
+.btn-modern-3d:hover {
+  filter: brightness(1.1);
+}
+
+.btn-modern-3d:active {
+  transform: translateY(4px);
+  box-shadow: 0 0px 0px #3E2723, -2px 2px 5px rgba(0, 0, 0, 0.5), inset 1px 1px 3px rgba(0, 0, 0, 0.3) !important;
+}
+
+.landscape-bg {
+  background: radial-gradient(circle, rgba(255, 243, 224, 0.8) 0%, rgba(255, 243, 224, 0) 70%);
+  filter: blur(15px);
+}
+
+.quiz-input {
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1), 0 4px 0 rgba(0, 0, 0, 0.05);
+  border-radius: 4px !important;
+}
+
+/* Feedback Bubble */
+.feedback-bubble {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 4px 10px;
+  border-radius: 8px;
+  font-weight: bold;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.feedback-bubble.show {
+  opacity: 1;
+}
+
+.feedback-correct {
+  background-color: #f0fdf4;
+  color: #166534;
+  border: 1px solid #22c55e;
+}
+
+.feedback-wrong {
+  background-color: #fef2f2;
+  color: #991b1b;
+  border: 1px solid #ef4444;
+}
+
+.feedback-empty {
+  background-color: #fffbeb;
+  color: #b45309;
+  border: 1px solid #f59e0b;
+}
+
+/* --- TOMBOL X (ANTI TERTINDAS & MELAYANG PALING TINGGI) --- */
+.btn-close-3d {
+  /* Kita angkat 100px ke atas kertas, mengalahkan semua teks dan candi! */
+  transform: translateZ(100px);
+  transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  z-index: 200;
+}
+
+.btn-close-3d:hover {
+  /* Pas disentuh, dia membesar tapi tetap di ketinggian 100px */
+  transform: translateZ(100px) scale(1.15);
+  box-shadow: 0 15px 20px rgba(0, 0, 0, 0.6);
+  background-color: #991b1b;
+  /* Makin merah cerah pas disorot */
+}
 
 
 /* =========================================================
    6. EFEK ANIMASI & SWEETALERT
    ========================================================= */
-.animate-dive-in { animation: diveIn 1.2s ease-out forwards; }
-@keyframes diveIn {
-  0% { transform: scale(1.2); opacity: 0; filter: blur(5px); }
-  100% { transform: scale(1); opacity: 1; filter: blur(0); }
+.animate-dive-in {
+  animation: diveIn 1.2s ease-out forwards;
 }
 
-.candi-error img { 
-  filter: drop-shadow(0 0 12px red) !important; 
+@keyframes diveIn {
+  0% {
+    transform: scale(1.2);
+    opacity: 0;
+    filter: blur(5px);
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 1;
+    filter: blur(0);
+  }
+}
+
+.candi-error img {
+  filter: drop-shadow(0 0 12px red) !important;
   animation: pulseRed 2s infinite;
 }
-.candi-success img { 
-  filter: drop-shadow(0 0 12px #22c55e) !important; 
+
+.candi-success img {
+  filter: drop-shadow(0 0 12px #22c55e) !important;
 }
+
 @keyframes pulseRed {
-  0% { filter: drop-shadow(0 0 8px red); }
-  50% { filter: drop-shadow(0 0 16px red); }
-  100% { filter: drop-shadow(0 0 8px red); }
+  0% {
+    filter: drop-shadow(0 0 8px red);
+  }
+
+  50% {
+    filter: drop-shadow(0 0 16px red);
+  }
+
+  100% {
+    filter: drop-shadow(0 0 8px red);
+  }
 }
 
 .swal-paper {
@@ -335,14 +423,16 @@
   background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%235d4037' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") !important;
   border: 3px solid #5d4037 !important;
   border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px !important;
-  box-shadow: 12px 12px 0px rgba(62,39,35,0.15) !important;
+  box-shadow: 12px 12px 0px rgba(62, 39, 35, 0.15) !important;
   color: #3E2723 !important;
 }
+
 .swal-paper-title {
   font-family: 'Playfair Display', serif !important;
   color: #3E2723 !important;
   font-size: 2.2rem !important;
 }
+
 .swal-paper-confirm {
   background-color: #3E2723 !important;
   color: #FFB300 !important;
@@ -352,6 +442,7 @@
   box-shadow: 3px 3px 0px #FFB300 !important;
   transition: all 0.2s !important;
 }
+
 .swal-paper-confirm:active {
   transform: translate(2px, 2px) !important;
   box-shadow: 0px 0px 0px #FFB300 !important;
@@ -362,38 +453,64 @@
    ========================================================= */
 .sidebar-abstrak {
   border-radius: 0 35px 15px 0 / 0 15px 45px 0;
-  box-shadow: 5px 0 15px rgba(62,39,35,0.15);
+  box-shadow: 5px 0 15px rgba(62, 39, 35, 0.15);
 }
 
 .hamburger-abstrak {
   border-radius: 12px 5px 15px 4px / 5px 15px 4px 12px !important;
 }
 
-details > summary { list-style: none; }
-details > summary::-webkit-details-marker { display: none; }
+details>summary {
+  list-style: none;
+}
+
+details>summary::-webkit-details-marker {
+  display: none;
+}
 
 @media (max-height: 500px) and (orientation: landscape) {
   #popup-book {
-    padding: 2px !important; 
-    align-items: flex-start !important; 
+    padding: 2px !important;
+    align-items: flex-start !important;
   }
+
   .book-container {
     margin-top: 5px;
-    transform: scale(0.85); 
+    transform: scale(0.85);
     transform-origin: top center;
   }
 }
 
-/* --- TOMBOL X (ANTI TERTINDAS & MELAYANG PALING TINGGI) --- */
-.btn-close-3d {
-  /* Kita angkat 100px ke atas kertas, mengalahkan semua teks dan candi! */
-  transform: translateZ(100px); 
-  transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  z-index: 200;
+/* =========================================================
+   8. FIX SCROLL LAYAR KECIL (SCROLL ATAS-BAWAH & KANAN-KIRI)
+   ========================================================= */
+#popup-book {
+  /* Ubah flex start biar sisi kiri dan atas nggak kepotong pas di-scroll */
+  align-items: flex-start !important; 
+  justify-content: flex-start !important; 
+  /* Nyalakan scroll dua arah (vertikal & horizontal) */
+  overflow-y: auto !important; 
+  overflow-x: auto !important; 
+  padding: 3rem 2rem !important;
 }
-.btn-close-3d:hover {
-  /* Pas disentuh, dia membesar tapi tetap di ketinggian 100px */
-  transform: translateZ(100px) scale(1.15); 
-  box-shadow: 0 15px 20px rgba(0,0,0,0.6);
-  background-color: #991b1b; /* Makin merah cerah pas disorot */
+
+.book-container {
+  height: auto !important; 
+  min-height: 80vh;
+  /* PAKSA LEBAR MINIMAL BUKU (Biar lega dan munculin scroll kanan-kiri di HP) */
+  min-width: 750px !important; 
+  /* Margin auto otomatis menengahkan buku kalau layarnya besar (kayak laptop) */
+  margin: auto; 
+  margin-bottom: 5rem !important; 
+}
+
+/* PAKSA TETAP 2 HALAMAN KIRI-KANAN */
+.book-content {
+  flex-direction: row !important; 
+}
+
+.page-left, .page-right {
+  width: 50% !important; 
+  flex: 1 !important;
+  overflow: visible !important; /* Biar 3D Candi tetep nembus bebas */
 }
