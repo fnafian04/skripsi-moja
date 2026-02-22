@@ -245,23 +245,20 @@
   filter: drop-shadow(0 60px 35px rgba(0, 0, 0, 0.9));
 }
 
-/* --- KOTAK PENJELASAN & SOAL (BERDIRI BRUTAL!) --- */
+/* --- KOTAK PENJELASAN & SOAL (BERDIRI PAS, GA NABRAK JUDUL!) --- */
 .floating-item {
   position: relative;
   z-index: 10;
   transform-origin: bottom center;
-  /* Z ditarik drastis dari 55px ke 80px! */
-  transform: translateZ(80px) rotateX(-30deg); 
-  /* Bayangan lebih dalam, lebar, dan gelap */
-  box-shadow: 0 50px 60px rgba(0,0,0,0.5); 
+  /* translateY dihapus, Z disesuaikan biar aman */
+  transform: translateZ(60px) rotateX(-20deg); 
+  box-shadow: 0 35px 45px rgba(0,0,0,0.4); 
   transition: all 0.3s ease;
 }
 
 .floating-item:hover {
-  /* Pas di-hover makin menggila ditarik ke 110px! */
-  transform: translateZ(110px) rotateX(-30deg) translateY(-8px);
-  /* Bayangan super jauh */
-  box-shadow: 0 70px 80px rgba(0,0,0,0.6);
+  transform: translateZ(85px) translateY(-5px) rotateX(-20deg);
+  box-shadow: 0 50px 60px rgba(0,0,0,0.5);
 }
 
 
@@ -486,35 +483,35 @@ details>summary::-webkit-details-marker {
 }
 
 /* =========================================================
-   8. FIX SCROLL LAYAR KECIL (SCROLL ATAS-BAWAH & KANAN-KIRI)
+   8. JURUS PAMUNGKAS SCROLL HP (KIRI AMAN, KANAN-BAWAH PAS!)
    ========================================================= */
-#popup-book {
-  /* Ubah flex start biar sisi kiri dan atas nggak kepotong pas di-scroll */
-  align-items: flex-start !important; 
-  justify-content: flex-start !important; 
-  /* Nyalakan scroll dua arah (vertikal & horizontal) */
-  overflow-y: auto !important; 
-  overflow-x: auto !important; 
-  padding: 3rem 2rem !important;
-}
-
-.book-container {
-  height: auto !important; 
-  min-height: 80vh;
-  /* PAKSA LEBAR MINIMAL BUKU (Biar lega dan munculin scroll kanan-kiri di HP) */
-  min-width: 750px !important; 
-  /* Margin auto otomatis menengahkan buku kalau layarnya besar (kayak laptop) */
-  margin: auto; 
-  margin-bottom: 5rem !important; 
-}
-
-/* PAKSA TETAP 2 HALAMAN KIRI-KANAN */
-.book-content {
-  flex-direction: row !important; 
-}
-
-.page-left, .page-right {
-  width: 50% !important; 
-  flex: 1 !important;
-  overflow: visible !important; /* Biar 3D Candi tetep nembus bebas */
-}
+   #popup-book {
+    /* Mode Laptop: Tetap elegan di tengah */
+    align-items: center !important; 
+    justify-content: center !important; 
+    overflow: auto !important; 
+    padding: 2rem !important; 
+  }
+  
+  .book-container {
+    height: auto !important; 
+    min-height: 80vh;
+    min-width: 750px !important; 
+    margin: auto; 
+  }
+  
+  .book-content { flex-direction: row !important; }
+  .page-left, .page-right { width: 50% !important; flex: 1 !important; overflow: visible !important; }
+  
+  /* KHUSUS HP: Matikan total Flexbox biar kiri ga ditelan layar! */
+  @media (max-width: 800px) {
+    #popup-book {
+      display: block !important; /* Paksa jadi block murni (anti-tengah) */
+      padding: 1rem !important; /* Padding dikurangi drastis biar ga sisa ruang lebay */
+      overflow-x: auto !important;
+    }
+    .book-container {
+      display: inline-block !important; /* Biar nempel pas dari titik 0 sebelah kiri */
+      margin: 0 !important; /* Buang semua margin sialan itu */
+    }
+  }
