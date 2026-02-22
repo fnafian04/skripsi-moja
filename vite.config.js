@@ -8,6 +8,7 @@ export default defineConfig({
       input: {
         main: "index.html",
         beranda: "beranda.html",
+        beranda_pasinaon: "beranda-pasinaon.html",
         peta: "peta.html",
       },
     },
