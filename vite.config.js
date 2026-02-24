@@ -10,6 +10,7 @@ export default defineConfig({
         beranda: "beranda.html",
         beranda_pasinaon: "beranda-pasinaon.html",
         peta: "peta.html",
+        legena: "legena.html",
       },
     },
   },

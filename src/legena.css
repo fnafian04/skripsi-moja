@@ -1,0 +1,276 @@
+/* =========================================================
+   SISTEM BUKU 3D (DIKLONING 100% DARI PETA)
+   ========================================================= */
+   .book-container {
+    transform: rotateX(20deg); 
+    transform-style: preserve-3d;
+    border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px !important;
+    min-width: 750px !important; 
+    margin: auto;
+  }
+  
+  .book-content {
+    flex-direction: row !important;
+    border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px !important;
+    transform-style: preserve-3d !important;
+  }
+  
+  .page-left, .page-right {
+    width: 50% !important;
+    flex: 1 !important;
+    overflow-y: auto !important;
+  }
+  
+  .page-left {
+    box-shadow: inset -25px 0 35px -15px rgba(0, 0, 0, 0.6) !important;
+    border-right: none !important;
+  }
+  
+  .page-right {
+    box-shadow: inset 25px 0 35px -15px rgba(0, 0, 0, 0.5) !important;
+    border-left: none !important;
+  }
+  
+  /* JURUS PAMUNGKAS SCROLL HP */
+  @media (max-width: 800px) {
+    #main-scroll-area {
+      display: block !important;
+      overflow-x: auto !important;
+      padding: 1rem !important;
+    }
+    .book-container {
+      display: inline-block !important;
+      margin: 0 !important;
+      height: auto !important;
+      min-height: 80vh !important;
+    }
+  }
+  
+  /* =========================================================
+     BANNER & TOMBOL MODERN
+     ========================================================= */
+  .book-banner {
+    background: linear-gradient(135deg, #5c7a52, #3a5332);
+    border: 2px solid #3E2723;
+    border-radius: 8px 2px 8px 2px !important;
+    color: #FFD54F;
+    transform: translateZ(10px);
+    box-shadow: 0 8px 0px #221310, 0 15px 20px rgba(0, 0, 0, 0.5) !important;
+    text-shadow: 0 0 8px rgba(255, 213, 79, 0.8), 1px 1px 2px rgba(0, 0, 0, 0.9);
+  }
+  
+  .btn-modern-3d {
+    background: linear-gradient(135deg, #FFCA28, #F57F17);
+    color: #3E2723;
+    border: 2px solid #3E2723;
+    border-radius: 8px 3px 8px 3px !important;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    text-shadow: 1px 1px 0px rgba(255, 255, 255, 0.5);
+    transition: all 0.2s ease-in-out;
+    box-shadow: 0 6px 0px #3E2723, 0 12px 15px rgba(0, 0, 0, 0.4) !important;
+  }
+  
+  .btn-modern-3d:hover { filter: brightness(1.1); }
+  .btn-modern-3d:active {
+    transform: translateY(4px);
+    box-shadow: 0 0px 0px #3E2723, -2px 2px 5px rgba(0, 0, 0, 0.5) !important;
+  }
+  
+  /* TOMBOL X MERAH */
+  .btn-close-3d {
+    transform: translateZ(100px);
+    transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    z-index: 200;
+  }
+  .btn-close-3d:hover {
+    transform: translateZ(100px) scale(1.15);
+    box-shadow: 0 15px 20px rgba(0, 0, 0, 0.6);
+    background-color: #991b1b;
+  }
+  
+ /* WATERMARK ABU-ABU BUAT MENEBALI */
+.watermark-aksara {
+    /* Dibuat abu-abu dan transparan 25%, bebas error */
+    opacity: 0.25;
+    filter: grayscale(100%);
+  }
+
+  /* Disabled button state */
+.btn-modern-3d:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none !important;
+    box-shadow: 0 6px 0px #3E2723 !important;
+  }
+
+  /* =========================================================
+   CUSTOM CHECKBOX GAYA KERATON
+   ========================================================= */
+.aksara-checkbox {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 22px;
+    height: 22px;
+    border: 2px solid #5D4037;
+    border-radius: 6px;
+    background-color: #fdf5e6;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.2s ease-in-out;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+  }
+  
+  .aksara-checkbox:checked {
+    background-color: #3a5332; /* Hijau Keraton */
+    border-color: #221310;
+  }
+  
+  .aksara-checkbox:checked::after {
+    content: '✔';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #FFD54F; /* Kuning Emas */
+    font-weight: 900;
+    font-size: 14px;
+  }
+  
+/* =========================================================
+   SISTEM KARTU AKSARA (TIMBUL SAAT DIPILIH)
+   ========================================================= */
+/* Tampilan awal (biasa aja/rata) */
+.aksara-card {
+    border: 2px solid rgba(62, 39, 35, 0.2);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+  
+  /* Tampilan pas diteken/dipilih (Timbul ke atas persis kayak Banner) */
+  .aksara-card-selected {
+    border: 2px solid #3E2723 !important;
+    box-shadow: 0 6px 0px #3E2723, 0 12px 15px rgba(0, 0, 0, 0.3) !important;
+    transform: translateY(-6px) !important;
+    background-color: #FFF8E1 !important; /* Warnanya agak menguning dikit biar makin spesial */
+  }
+
+  /* =========================================================
+   EFEK BUKU MIRING 3D (PERSIS KAYAK DI PETA)
+   ========================================================= */
+.book-container {
+  transform: rotateX(30deg); /* Kemiringan buku */
+  transform-style: preserve-3d;
+  box-shadow: 0 40px 60px rgba(0, 0, 0, 0.8) !important;
+  border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px !important; /* Efek kertas melengkung */
+  background-color: #5D4037 !important; /* Warna cover kayu */
+}
+
+.book-content {
+  transform-style: preserve-3d !important;
+  border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px !important;
+}
+
+/* Bayangan lipatan tengah buku */
+.page-left {
+  box-shadow: inset -25px 0 35px -15px rgba(0, 0, 0, 0.6) !important;
+}
+
+.page-right {
+  box-shadow: inset 25px 0 35px -15px rgba(0, 0, 0, 0.5) !important;
+}
+
+/* Bikin Banner Judul ikutan melayang 3D dikit (opsional tapi keren) */
+.book-banner {
+  transform: translateZ(10px);
+  box-shadow: 0 8px 0px #221310, 0 15px 20px rgba(0, 0, 0, 0.4) !important;
+}
+
+/* =========================================================
+   EFEK CHECKBOX TIMBUL SAAT DICENTANG
+   ========================================================= */
+   .checkbox-label {
+    transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+  
+  .checkbox-label:has(.aksara-checkbox:checked) {
+    transform: translateY(-4px) !important;
+    box-shadow: 0 4px 0px rgba(93, 64, 55, 0.3), 0 8px 10px rgba(0, 0, 0, 0.2) !important;
+    background-color: #FFF8E1 !important;
+    border-color: #5D4037 !important;
+  }
+
+/* =========================================================
+   EFEK BUKU MIRING 3D (PERSIS KAYAK DI PETA)
+   ========================================================= */
+   .book-container {
+    transform: rotateX(30deg);
+    transform-style: preserve-3d;
+    /* Bayangan super tebal buat ngasih ilusi buku tebal */
+    box-shadow: 0 40px 60px rgba(0, 0, 0, 0.8), 0 15px 25px rgba(0, 0, 0, 0.6) !important;
+    /* Samain lengkungan cover sama kertasnya biar rapi! */
+    border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px !important;
+    /* Warna cover buku abu-abu kecoklatan yang nongol jadi pinggiran */
+    background-color: #4b433c !important; 
+  }
+  
+  .book-content {
+    transform-style: preserve-3d !important;
+    border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px !important;
+  }
+  
+  /* Bayangan lipatan tengah buku */
+  .page-left {
+    box-shadow: inset -25px 0 35px -15px rgba(0, 0, 0, 0.6) !important;
+  }
+  
+  .page-right {
+    box-shadow: inset 25px 0 35px -15px rgba(0, 0, 0, 0.5) !important;
+  }
+  
+  /* Bikin Banner Judul ikutan melayang 3D dikit */
+  .book-banner {
+    transform: translateZ(10px);
+    box-shadow: 0 8px 0px #221310, 0 15px 20px rgba(0, 0, 0, 0.4) !important;
+  }
+  
+  /* =========================================================
+     EFEK CHECKBOX TIMBUL SAAT DICENTANG
+     ========================================================= */
+  .checkbox-label {
+    transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+  
+  .checkbox-label:has(.aksara-checkbox:checked) {
+    transform: translateY(-4px) !important;
+    box-shadow: 0 4px 0px rgba(93, 64, 55, 0.3), 0 8px 10px rgba(0, 0, 0, 0.2) !important;
+    background-color: #FFF8E1 !important;
+    border-color: #5D4037 !important;
+  }
+
+ /* =========================================================
+   EFEK ANIMASI BALIK HALAMAN (LEBIH SMOOTH & ELEGAN)
+   ========================================================= */
+.flip-out-next { animation: flipOutNextAnim 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
+.flip-in-next { animation: flipInNextAnim 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
+.flip-out-prev { animation: flipOutPrevAnim 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
+.flip-in-prev { animation: flipInPrevAnim 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
+
+@keyframes flipOutNextAnim {
+  0% { transform: perspective(1000px) rotateY(0deg) translateX(0); opacity: 1; }
+  100% { transform: perspective(1000px) rotateY(-15deg) translateX(-20px) scale(0.98); opacity: 0; }
+}
+@keyframes flipInNextAnim {
+  0% { transform: perspective(1000px) rotateY(15deg) translateX(20px) scale(0.98); opacity: 0; }
+  100% { transform: perspective(1000px) rotateY(0deg) translateX(0) scale(1); opacity: 1; }
+}
+
+@keyframes flipOutPrevAnim {
+  0% { transform: perspective(1000px) rotateY(0deg) translateX(0); opacity: 1; }
+  100% { transform: perspective(1000px) rotateY(15deg) translateX(20px) scale(0.98); opacity: 0; }
+}
+@keyframes flipInPrevAnim {
+  0% { transform: perspective(1000px) rotateY(-15deg) translateX(-20px) scale(0.98); opacity: 0; }
+  100% { transform: perspective(1000px) rotateY(0deg) translateX(0) scale(1); opacity: 1; }
+}
