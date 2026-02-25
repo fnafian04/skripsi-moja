@@ -105,16 +105,16 @@
     box-shadow: 0 6px 0px #3E2723 !important;
   }
 
-  /* =========================================================
-   CUSTOM CHECKBOX GAYA KERATON
+/* =========================================================
+   CUSTOM CHECKBOX GAYA KERATON (Diperkecil)
    ========================================================= */
-.aksara-checkbox {
+   .aksara-checkbox {
     appearance: none;
     -webkit-appearance: none;
-    width: 22px;
-    height: 22px;
+    width: 18px; /* Tadinya 22px */
+    height: 18px; /* Tadinya 22px */
     border: 2px solid #5D4037;
-    border-radius: 6px;
+    border-radius: 5px;
     background-color: #fdf5e6;
     cursor: pointer;
     position: relative;
@@ -123,7 +123,7 @@
   }
   
   .aksara-checkbox:checked {
-    background-color: #3a5332; /* Hijau Keraton */
+    background-color: #3a5332; 
     border-color: #221310;
   }
   
@@ -133,9 +133,9 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    color: #FFD54F; /* Kuning Emas */
+    color: #FFD54F; 
     font-weight: 900;
-    font-size: 14px;
+    font-size: 12px; /* Tadinya 14px */
   }
   
 /* =========================================================

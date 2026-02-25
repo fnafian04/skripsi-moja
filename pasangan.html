@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pasangan Aksara Legena</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+  </head>
+  <body class="bg-[#FFF3E0] font-sans overflow-hidden flex h-[100dvh]">
+
+    <aside id="sidebar" class="sidebar-abstrak fixed lg:static inset-y-0 left-0 w-64 bg-[#F5E6CA] border-r-4 border-[#3E2723] z-[90] transform -translate-x-full lg:translate-x-0 transition-transform duration-300 flex flex-col overflow-hidden">
+      <a href="/index.html" class="hidden lg:block p-5 bg-[#3E2723] text-[#FFB300] text-center font-serif transition-all duration-300 border-b-4 border-[#3E2723]">
+        <span class="text-2xl font-bold block leading-tight">Pasinaon</span>
+        <span class="text-sm font-medium tracking-widest opacity-90">ꦄꦏ꧀ꦱꦫ ꦗꦮ</span>
+      </a>
+      <nav class="flex-1 p-3 pt-20 lg:pt-4 space-y-2 overflow-y-auto text-[#5D4037] font-bold text-sm">
+        <a href="#" class="block p-3 hover:bg-[#D7CCC8] rounded-xl transition">Pengenalan Aksara Jawa</a>
+        <a href="legena.html" class="block p-3 hover:bg-[#D7CCC8] rounded-xl transition">Aksara Legena</a>
+        
+        <a href="pasangan.html" class="block p-3 bg-[#FFB300] text-[#3E2723] shadow-md rounded-xl transition">Pasangan Aksara Legena</a>
+        
+        <details class="group">
+          <summary class="p-3 hover:bg-[#D7CCC8] rounded-xl cursor-pointer flex justify-between items-center transition">
+            Sandhangan <span class="transition-transform duration-300 group-open:rotate-180 text-xs">▼</span>
+          </summary>
+          <div class="pl-6 pb-2 space-y-1 mt-1 text-xs font-semibold">
+            <a href="#" class="block p-2 hover:text-[#3E2723] hover:bg-[#D7CCC8]/70 rounded-lg transition">Sandhangan Swara</a>
+            <a href="#" class="block p-2 hover:text-[#3E2723] hover:bg-[#D7CCC8]/70 rounded-lg transition">Sandhangan Wyanjana</a>
+            <a href="#" class="block p-2 hover:text-[#3E2723] hover:bg-[#D7CCC8]/70 rounded-lg transition">Sandhangan Panyigeg Wanda</a>
+          </div>
+        </details>
+        <a href="peta.html" class="block p-3 hover:bg-[#D7CCC8] rounded-xl transition">Latihan Pasinaon</a>
+      </nav>
+    </aside>
+
+    <div class="flex-1 flex flex-col h-full overflow-y-auto overflow-x-hidden relative w-full">
+      <header class="lg:hidden relative bg-[#3E2723] text-white p-3 flex-none w-full shadow-md flex justify-between items-center z-[100]">
+        <button id="hamburger" class="hamburger-abstrak px-3 py-1 bg-[#FFB300] text-[#3E2723] shadow-sm text-xl font-bold leading-none hover:bg-yellow-400 transition transform hover:scale-105">☰</button>
+        <a href="/index.html" class="font-serif text-lg font-bold hover:scale-105 hover:text-[#FFB300] transition-transform duration-300">Pasangan Legena 📜</a>
+      </header>
+
+      <main id="main-scroll-area" class="flex-1 bg-batik relative overflow-auto block w-full">
+        <div style="display: flex; min-height: 100%; min-width: 100%; width: max-content; padding: 2rem 1.5rem; align-items: center; justify-content: center; margin: 0 auto; perspective: 1000px;">
+          <div class="book-container w-full max-w-4xl p-2 md:p-3 relative flex flex-col h-[80vh] lg:h-[480px] flex-shrink-0" style="min-width: 680px;">
+            <div id="book-layout" class="book-content flex flex-row flex-1 overflow-hidden bg-[#fdf5e6]">
+              </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <div id="canvas-modal" class="fixed inset-0 z-[100] hidden overflow-y-auto bg-black/80 backdrop-blur-sm">
+      <div style="display: flex; min-height: 100%; align-items: flex-start; justify-content: center; padding: 3rem 1rem;">
+        <div class="bg-[#fdf5e6] relative border-4 border-[#3E2723] flex flex-col items-center" style="margin: auto; padding: 2.5rem; border-radius: 1.5rem; width: 100%; max-width: 650px; box-shadow: 0 20px 50px rgba(0,0,0,0.8);">
+          <button onclick="closeCanvas()" class="btn-close-3d cursor-pointer" style="position: absolute; top: -20px; right: -20px; background-color: #991b1b; color: #FFB300; width: 45px; height: 45px; display: flex; align-items: center; justify-content: center; border-radius: 50%; font-weight: 900; border: 2px solid #FFB300; font-size: 20px; z-index: 50; box-shadow: 0 4px 10px rgba(0,0,0,0.4);">✖</button>
+          
+          <div class="book-banner text-center z-10" style="padding: 0.5rem 2rem; border-radius: 0.75rem; margin-bottom: 2rem;">
+            <h2 class="font-serif font-bold tracking-wide" style="font-size: 1.25rem;">Latihan Nebali Pasangan</h2>
+          </div>
+          
+          <div id="canvas-container" style="display: flex; flex-direction: row; flex-wrap: wrap; justify-content: center; align-items: center; gap: 2rem; width: 100%; margin-bottom: 2rem;"></div>
+
+          <div style="display: flex; flex-direction: row; justify-content: center; gap: 1.5rem; width: 100%;">
+             <button onclick="clearCanvas()" class="btn-modern-3d font-bold shadow-md cursor-pointer" style="flex: 1; padding: 0.875rem; border-radius: 0.75rem; font-size: 0.875rem; background: linear-gradient(135deg, #ef4444, #b91c1c); color: white; border-bottom: 4px solid #7f1d1d; text-shadow: none;">↺ BALENI</button>
+             <button onclick="checkCanvas()" class="btn-modern-3d font-bold shadow-md cursor-pointer" style="flex: 1; padding: 0.875rem; border-radius: 0.75rem; font-size: 0.875rem; background: linear-gradient(135deg, #22c55e, #15803d); color: white; border-bottom: 4px solid #14532d; text-shadow: none;">✅ CEK HASIL</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script type="module" src="/src/main.js"></script>
+    <script type="module" src="/src/pasangan.js"></script>
+  </body>
+</html>
