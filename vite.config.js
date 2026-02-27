@@ -11,6 +11,7 @@ export default defineConfig({
         beranda_pasinaon: "beranda-pasinaon.html",
         peta: "peta.html",
         legena: "legena.html",
+        pasangan: "pasangan.html",
       },
     },
   },
