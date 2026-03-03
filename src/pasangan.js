@@ -13,6 +13,9 @@ const bookLayout = document.getElementById('book-layout');
 let checkedAksaraIds = new Set(); 
 let savedDrawings = {}; 
 
+// Array untuk menandai halaman yang sudah diselesaikan (berhasil menebali)
+let completedPages = new Array(pasanganData.length).fill(false);
+
 window.selectAksaraCard = (el) => {
   document.querySelectorAll('.aksara-card').forEach(card => card.classList.remove('aksara-card-selected'));
   el.classList.add('aksara-card-selected');
@@ -73,11 +76,11 @@ function renderBook() {
       
       <div class="w-full flex justify-between items-center mt-auto pt-3 border-t border-dashed border-[#5D4037]/30 flex-shrink-0">
         <button onclick="prevPage()" class="btn-modern-3d text-[9px] md:text-[11px] font-bold tracking-wider" style="padding: 6px 16px;" ${currentPage === 0 ? 'disabled' : ''}>
-          <span style="display: flex; gap: 4px; align-items: center;"><span>⬅</span><span>MBURI</span></span>
+          <span style="display: flex; gap: 4px; align-items: center;"><span>⬅</span><span>BALENI</span></span>
         </button>
         <span class="text-[#3E2723] font-bold text-[9px] md:text-[11px]">Hal ${currentPage + 1}/4</span>
-        <button onclick="nextPage()" class="btn-modern-3d text-[9px] md:text-[11px] font-bold tracking-wider" style="padding: 6px 16px;" ${currentPage === pasanganData.length-1 ? 'disabled' : ''}>
-          <span style="display: flex; gap: 4px; align-items: center;"><span>MAJU</span><span>➡</span></span>
+        <button onclick="nextPage()" class="btn-modern-3d text-[9px] md:text-[11px] font-bold tracking-wider" style="padding: 6px 16px;" ${currentPage === pasanganData.length-1 || !completedPages[currentPage] ? 'disabled' : ''}>
+          <span style="display: flex; gap: 4px; align-items: center;"><span>LANJUT</span><span>➡</span></span>
         </button>
       </div>
     </div>
@@ -100,7 +103,7 @@ window.prevPage = () => {
 };
 
 window.nextPage = () => { 
-  if(currentPage < pasanganData.length-1) { 
+  if(currentPage < pasanganData.length-1 && completedPages[currentPage]) { 
     bookLayout.classList.add('flip-out-next');
     setTimeout(() => {
       currentPage++; 
@@ -271,12 +274,15 @@ window.checkCanvas = () => {
       savedDrawings[checkedBoxes[i].value] = cvs.toDataURL();
     });
 
+    // Tandai halaman ini sebagai selesai
+    completedPages[currentPage] = true;
+
     Swal.fire({icon: 'success', title: 'Sae Pisann! ✨', text: 'Tulisanmu apik lan rapi, mantepp!', confirmButtonColor: '#3E2723', customClass: { popup: "swal-paper", confirmButton: "swal-paper-confirm" }}).then(() => { 
       closeCanvas(); 
       if(currentPage < pasanganData.length - 1) {
         nextPage();
       } else {
-        Swal.fire({icon: 'success', title: 'Mantepp!', text: 'Sampeyan wis ngrampungake halaman kabeh pasangan aksara!', confirmButtonColor: '#3E2723', customClass: { popup: "swal-paper", confirmButton: "swal-paper-confirm" }});
+        Swal.fire({icon: 'success', title: 'Mantepp!', text: 'Sampeyan wis ngrampungake kabeh pasangan aksara!', confirmButtonColor: '#3E2723', customClass: { popup: "swal-paper", confirmButton: "swal-paper-confirm" }});
       }
     });
   }
