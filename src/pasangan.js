@@ -277,12 +277,27 @@ window.checkCanvas = () => {
     // Tandai halaman ini sebagai selesai
     completedPages[currentPage] = true;
 
+    // Simpan status selesai ke sessionStorage
+    if (currentPage === pasanganData.length - 1) {
+      sessionStorage.setItem('completed_pasangan', 'true');
+    }
+
     Swal.fire({icon: 'success', title: 'Sae Pisann! ✨', text: 'Tulisanmu apik lan rapi, mantepp!', confirmButtonColor: '#3E2723', customClass: { popup: "swal-paper", confirmButton: "swal-paper-confirm" }}).then(() => { 
       closeCanvas(); 
       if(currentPage < pasanganData.length - 1) {
         nextPage();
       } else {
-        Swal.fire({icon: 'success', title: 'Mantepp!', text: 'Sampeyan wis ngrampungake kabeh pasangan aksara!', confirmButtonColor: '#3E2723', customClass: { popup: "swal-paper", confirmButton: "swal-paper-confirm" }});
+        // Jika halaman terakhir, langsung ke beranda
+        Swal.fire({
+          icon: "success",
+          title: "Mantepp!",
+          html: "Sampeyan wis ngrampungake kabeh pasangan aksara!",
+          confirmButtonText: "Lanjut →",
+          confirmButtonColor: "#3E2723",
+          customClass: { popup: "swal-paper", confirmButton: "swal-paper-confirm" }
+        }).then(() => {
+          window.location.href = "beranda.html";
+        });
       }
     });
   }

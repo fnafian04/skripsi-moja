@@ -334,6 +334,11 @@ window.checkCanvas = () => {
     // Tandai halaman ini sebagai selesai
     completedPages[currentPage] = true;
 
+    // Simpan status selesai ke sessionStorage
+    if (currentPage === aksaraData.length - 1) {
+      sessionStorage.setItem('completed_legena', 'true');
+    }
+
     Swal.fire({
       icon: "success",
       title: "Sae Pisann! ✨",
@@ -346,13 +351,16 @@ window.checkCanvas = () => {
       if (currentPage < aksaraData.length - 1) {
         nextPage();
       } else {
-        // Jika halaman terakhir, tampilkan pesan selamat
+        // Jika halaman terakhir, langsung ke beranda
         Swal.fire({
           icon: "success",
           title: "Mantepp!",
-          text: "Sampeyan wis ngrampungake kabeh aksara!",
+          html: "Sampeyan wis ngrampungake kabeh aksara Legena!",
+          confirmButtonText: "Lanjut →",
           confirmButtonColor: "#3E2723",
           customClass: { popup: "swal-paper", confirmButton: "swal-paper-confirm" }
+        }).then(() => {
+          window.location.href = "beranda.html";
         });
       }
     });

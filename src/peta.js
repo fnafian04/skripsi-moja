@@ -114,17 +114,33 @@ if (overlay)
 let currentCandiId = null;
 
 // Menyimpan progres: jawaban, status tiap soal (none/empty/correct/wrong), jumlah salah, status candi
+const PROGRESS_KEY = 'pasinaon_progress';
 const userProgress = {};
-for (let key in candiData) {
-  userProgress[key] = {
-    ans1: "",
-    ans2: "",
-    q1State: "none",
-    q2State: "none",
-    attempts: 0,
-    status: "none",
-  };
+
+// Init: coba load dari sessionStorage dulu (reset otomatis saat browser ditutup)
+const savedProgress = sessionStorage.getItem(PROGRESS_KEY);
+if (savedProgress) {
+  const parsed = JSON.parse(savedProgress);
+  for (let key in candiData) {
+    userProgress[key] = parsed[key] ?? { ans1: "", ans2: "", q1State: "none", q2State: "none", attempts: 0, status: "none" };
+  }
+} else {
+  for (let key in candiData) {
+    userProgress[key] = { ans1: "", ans2: "", q1State: "none", q2State: "none", attempts: 0, status: "none" };
+  }
 }
+
+function saveProgress() {
+  sessionStorage.setItem(PROGRESS_KEY, JSON.stringify(userProgress));
+}
+
+// Restore glow visual candi setelah DOM siap
+document.addEventListener('DOMContentLoaded', () => {
+  for (let key in userProgress) {
+    if (userProgress[key].status === 'success') updateCandiGlow(key, 'success');
+    else if (userProgress[key].status === 'error') updateCandiGlow(key, 'error');
+  }
+});
 
 window.openQuiz = (id) => {
   currentCandiId = id;
@@ -155,6 +171,7 @@ window.closeQuiz = () => {
   if (currentCandiId) {
     userProgress[currentCandiId].ans1 = document.getElementById("ans1").value;
     userProgress[currentCandiId].ans2 = document.getElementById("ans2").value;
+    saveProgress();
   }
   document.getElementById("popup-book").classList.add("hidden");
 };
@@ -193,11 +210,13 @@ window.checkAllAnswers = () => {
   if (prog.q1State === "correct" && prog.q2State === "correct") {
     prog.status = "success";
     updateCandiGlow(id, "success");
+    saveProgress();
     checkFinishAll();
   } else if (prog.q1State === "wrong" || prog.q2State === "wrong") {
     prog.status = "error";
     prog.attempts += 1;
     updateCandiGlow(id, "error");
+    saveProgress();
 
     if (prog.attempts >= 3) {
       setTimeout(() => {
@@ -217,7 +236,8 @@ window.checkAllAnswers = () => {
           document.getElementById("ans2").value = "";
           applyFeedbackState("ans1", "feedback1", "none");
           applyFeedbackState("ans2", "feedback2", "none");
-          updateCandiGlow(id, "none"); // Matikan lampu merah
+          updateCandiGlow(id, "none");
+          saveProgress();
         });
       }, 500);
     }
@@ -269,21 +289,23 @@ function checkFinishAll() {
     let score = 100 - totalKesalahan * 5;
     if (score < 20) score = 20;
 
+    // Simpan status selesai ke sessionStorage agar sinkron dengan progress
+    sessionStorage.setItem('completed_pasinaon', 'true');
+
     setTimeout(() => {
       document.getElementById("popup-book").classList.add("hidden");
       Swal.fire({
         title: "Luar Biasa!",
         html: `Misi wis rampung! Kabeh teka-teki candhi wis ditanggulangi<br><br><b>Skor Final Panjenengan: <span style="font-size: 2.5em; color: #166534; display: block; margin-top: 10px;">${score}</span></b>`,
-        confirmButtonText: "Dolan Maneh?",
+        confirmButtonText: "Lanjut →",
         allowOutsideClick: false,
-        // Ini yang bikin modalnya jadi kertas abstrak kuno!
         customClass: {
           popup: "swal-paper",
           title: "swal-paper-title",
           confirmButton: "swal-paper-confirm",
         },
       }).then(() => {
-        location.reload();
+        window.location.href = "beranda.html";
       });
     }, 1000);
   }
