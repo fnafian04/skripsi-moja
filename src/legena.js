@@ -34,11 +34,11 @@ const aksaraData = [
 let currentPage = 0;
 const bookLayout = document.getElementById("book-layout");
 
-let checkedAksaraIds = new Set();
-let savedDrawings = {};
+let checkedAksaraIds = new Set(JSON.parse(localStorage.getItem("legena_checked_ids") || "[]"));
+let savedDrawings = JSON.parse(localStorage.getItem("legena_drawings") || "{}");
 
 // Array untuk menandai halaman yang sudah diselesaikan (berhasil menebali)
-let completedPages = new Array(aksaraData.length).fill(false);
+let completedPages = JSON.parse(localStorage.getItem("legena_completed_pages") || JSON.stringify(new Array(aksaraData.length).fill(false)));
 
 window.selectAksaraCard = (el) => {
   document.querySelectorAll(".aksara-card").forEach((card) => card.classList.remove("aksara-card-selected"));
@@ -156,6 +156,7 @@ window.handleCheck = (cb) => {
   } else {
     checkedAksaraIds.delete(cb.value);
   }
+  localStorage.setItem("legena_checked_ids", JSON.stringify(Array.from(checkedAksaraIds)));
 };
 
 // ================================================================
@@ -261,6 +262,9 @@ let currentlyTrackedStrokes = []; // strokes[] per panel
 let canvases     = [];            // fallback free-canvas
 let contexts     = [];
 
+let tracingAksaras = [];          // List aksara yang dipilih
+let currentTracingIndex = 0;      // Index aksara yang sedang ditebali
+
 // ================================================================
 // HELPER: SVG SMOOTH PATH dari array titik
 // ================================================================
@@ -339,16 +343,17 @@ function renderGuidedPanel(cb, pi, strokes) {
 
   // --- Area tracing ---
   const area = document.createElement('div');
-  area.style.cssText = 'position:relative;width:180px;height:180px;border:2px dashed rgba(93,64,55,.5);border-radius:.75rem;background:#fff;overflow:hidden;touch-action:none;user-select:none;-webkit-user-select:none;';
+  area.style.cssText = 'position:relative;width:250px;height:250px;border:2px dashed rgba(93,64,55,.5);border-radius:.75rem;background:#fff;overflow:hidden;touch-action:none;user-select:none;-webkit-user-select:none;';
 
   const wm = document.createElement('img');
   wm.src = img;
-  wm.style.cssText = 'position:absolute;left:30px;top:30px;width:120px;height:120px;object-fit:contain;opacity:.18;filter:grayscale(100%);pointer-events:none;z-index:1;';
+  wm.style.cssText = 'position:absolute;left:40px;top:40px;width:170px;height:170px;object-fit:contain;opacity:.18;filter:grayscale(100%);pointer-events:none;z-index:1;';
   area.appendChild(wm);
 
   // SVG layer untuk guide path + hotspot
   const svg = document.createElementNS(NS, 'svg');
-  svg.setAttribute('width', '180'); svg.setAttribute('height', '180');
+  svg.setAttribute('width', '250'); svg.setAttribute('height', '250');
+  svg.setAttribute('viewBox', '0 0 180 180'); // MAPPING KOORDINAT TETAP 180x180
   svg.style.cssText = 'position:absolute;top:0;left:0;pointer-events:none;z-index:2;overflow:visible;';
   svg.id = `tsvg-${pi}`;
 
@@ -413,14 +418,14 @@ function renderGuidedPanel(cb, pi, strokes) {
 
   // Canvas bawah: menyimpan bekas stroke SELESAI (tidak pernah dihapus kecuali reset)
   const doneCvs = document.createElement('canvas');
-  doneCvs.width = 180; doneCvs.height = 180;
-  doneCvs.style.cssText = 'position:absolute;top:0;left:0;z-index:8;pointer-events:none;touch-action:none;';
+  doneCvs.width = 250; doneCvs.height = 250;
+  doneCvs.style.cssText = 'position:absolute;top:0;left:0;z-index:8;pointer-events:none;touch-action:none;width:100%;height:100%;';
   doneCvs.id = `donecvs-${pi}`;
   area.appendChild(doneCvs);
 
   const cvs = document.createElement('canvas');
-  cvs.width = 180; cvs.height = 180;
-  cvs.style.cssText = 'position:absolute;top:0;left:0;z-index:10;cursor:crosshair;touch-action:none;';
+  cvs.width = 250; cvs.height = 250;
+  cvs.style.cssText = 'position:absolute;top:0;left:0;z-index:10;cursor:crosshair;touch-action:none;width:100%;height:100%;';
   cvs.id = `ucvs-${pi}`;
   area.appendChild(cvs);
 
@@ -434,13 +439,13 @@ function renderGuidedPanel(cb, pi, strokes) {
 // ================================================================
 function attachStrokeEvents(cvs, strokes, pi) {
   const ctx  = cvs.getContext('2d');
-  ctx.lineWidth = 3.5; ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+  ctx.lineWidth = 5; ctx.lineCap = 'round'; ctx.lineJoin = 'round'; // Line width dipertebal
   ctx.strokeStyle = 'rgba(62,39,35,0.85)';
 
-  const PROX       = 30;   // toleransi jarak dari jalur (px)
-  const MIN_PROG   = 0.65; // minimal 65% jalur harus ditempuh
-  const MAX_NGAWUR = 0.50; // maks 50% titik boleh di luar jalur
-  const END_R      = 38;   // radius harus sampai titik akhir stroke
+  const SCALE      = 250 / 180; // Faktor skala canvas
+  const PROX       = 30;        // toleransi jarak di ruang 180 (px)
+  const MIN_PROG   = 0.65;      // minimal 65% jalur harus ditempuh
+  const END_R_CHECK = 22;       // radius endpoint di ruang 180
 
   const getPt = (e) => {
     const r = cvs.getBoundingClientRect();
@@ -481,14 +486,19 @@ function attachStrokeEvents(cvs, strokes, pi) {
     e.preventDefault();
     const pt = getPt(e);
     const sp = strokes[st.currentStroke].points[0];
-    // Harus mulai dekat hotspot awal (radius 30px)
-    if (Math.hypot(pt.x - sp[0], pt.y - sp[1]) <= 30) {
+
+    // Map touch point back to 180 space for comparison with stroke data
+    const mappedX = pt.x / SCALE;
+    const mappedY = pt.y / SCALE;
+
+    // Harus mulai dekat hotspot awal (radius 30px di ruang 180)
+    if (Math.hypot(mappedX - sp[0], mappedY - sp[1]) <= 30) {
       st.isDrawing = true;
       st.drawn    = [];
       st.offCount = 0;
       lastPt      = pt;
       // Hanya clear ucvs (scratchpad) — donecvs tetap
-      ctx.clearRect(0, 0, 180, 180);
+      ctx.clearRect(0, 0, 250, 250);
       ctx.beginPath(); ctx.moveTo(pt.x, pt.y);
     }
   };
@@ -498,6 +508,8 @@ function attachStrokeEvents(cvs, strokes, pi) {
     if (!st || !st.isDrawing) return;
     e.preventDefault();
     const pt  = getPt(e);
+    // Kita harus mapping pt (0-250) balik ke (0-180) untuk komparasi dengan strokeData
+    const mappedPt = { x: pt.x / SCALE, y: pt.y / SCALE };
     const pts = strokes[st.currentStroke].points;
 
     lastPt = pt;
@@ -507,8 +519,8 @@ function attachStrokeEvents(cvs, strokes, pi) {
     ctx.beginPath(); ctx.moveTo(pt.x, pt.y);
 
     // Klasifikasikan: dekat jalur atau tidak
-    if (nearPath(pt, pts)) {
-      st.drawn.push(pt);
+    if (nearPath(mappedPt, pts)) {
+      st.drawn.push(mappedPt);
     } else {
       st.offCount = (st.offCount || 0) + 1;
     }
@@ -583,7 +595,7 @@ function doFinishStroke(pi, strokes) {
   if (ucvs && doneCvs) {
     const doneCtx = doneCvs.getContext('2d');
     doneCtx.drawImage(ucvs, 0, 0);
-    ucvs.getContext('2d').clearRect(0, 0, 180, 180);
+    ucvs.getContext('2d').clearRect(0, 0, 250, 250);
   }
   st.drawn = []; st.offCount = 0;
   st.currentStroke++;
@@ -634,6 +646,25 @@ function doFinishStroke(pi, strokes) {
   } else {
     // Semua stroke selesai!
     st.completed = true;
+    
+    // Simpan hasil menebali ke local storage
+    const ucvs = el(`ucvs-${pi}`);
+    const doneCvs = el(`donecvs-${pi}`);
+    if (ucvs && doneCvs) {
+      const finalCvs = document.createElement('canvas');
+      finalCvs.width = 250; finalCvs.height = 250;
+      const fctx = finalCvs.getContext('2d');
+      fctx.drawImage(doneCvs, 0, 0);
+      fctx.drawImage(ucvs, 0, 0); // Gabungkan scratchpad terakhir (walaupun harusnya kosong)
+      
+      const cb = tracingAksaras[currentTracingIndex];
+      if (cb) {
+        savedDrawings[cb.value] = finalCvs.toDataURL();
+        localStorage.setItem("legena_drawings", JSON.stringify(savedDrawings));
+        checkedAksaraIds.add(cb.value); // Pastikan ditandai
+      }
+    }
+
     const stepEl = el(`step-ind-${pi}`);
     if (stepEl) { stepEl.textContent = '✅ Selesai!'; stepEl.style.color = '#22c55e'; }
   }
@@ -650,8 +681,8 @@ function resetGuidedPanel(pi, strokes) {
   // Clear kedua canvas
   const ucvs   = document.getElementById(`ucvs-${pi}`);
   const doneCvs = document.getElementById(`donecvs-${pi}`);
-  if (ucvs)    ucvs.getContext('2d').clearRect(0, 0, 180, 180);
-  if (doneCvs) doneCvs.getContext('2d').clearRect(0, 0, 180, 180);
+  if (ucvs)    ucvs.getContext('2d').clearRect(0, 0, 250, 250);
+  if (doneCvs) doneCvs.getContext('2d').clearRect(0, 0, 250, 250);
 
   strokes.forEach((_, si) => {
     const active = si === 0;
@@ -701,60 +732,113 @@ function resetGuidedPanel(pi, strokes) {
 // ================================================================
 window.startTracing = () => {
   const checked = Array.from(document.querySelectorAll(".aksara-checkbox:checked"));
-  if (checked.length !== 2) {
-    return Swal.fire({ icon: "warning", title: "Pilih 2 Aksara!", text: "Sampeyan kudu milih pas 2 aksara kanggo latihan nebali", confirmButtonColor: "#3E2723", customClass: { popup: "swal-paper", confirmButton: "swal-paper-confirm" } });
+  if (checked.length === 0) {
+    return Swal.fire({ icon: "warning", title: "Pilih Aksara!", text: "Sampeyan kudu milih sakora-orane siji aksara kanggo latihan nebali", confirmButtonColor: "#3E2723", customClass: { popup: "swal-paper", confirmButton: "swal-paper-confirm" } });
   }
 
   const modal = document.getElementById("canvas-modal");
+  tracingAksaras = checked;
+  currentTracingIndex = 0;
+  
+  renderCurrentTracingAksara();
+  modal.classList.remove("hidden");
+};
+
+function renderCurrentTracingAksara() {
   const container = document.getElementById("canvas-container");
   container.innerHTML = "";
   tracingPanelStates = []; currentlyTrackedStrokes = [];
   canvases = []; contexts = [];
 
-  checked.forEach((cb, index) => {
-    const data = strokeData[cb.value];
-    if (data) {
-      // GUIDED TRACING (ada stroke data)
-      const panel = renderGuidedPanel(cb, index, data.strokes);
-      container.appendChild(panel);
-    } else {
-      // FALLBACK: canvas bebas (untuk aksara halaman 2–4)
-      tracingPanelStates[index] = { completed: false, isFree: true };
-      currentlyTrackedStrokes[index] = null;
-      container.innerHTML += `
-        <div class="bg-[#fdf5e6] flex-shrink-0" style="display:flex;flex-direction:column;align-items:center;padding:1.25rem;border-radius:1rem;box-shadow:0 5px 15px rgba(0,0,0,0.15);border:2px solid #5D4037;">
-          <h3 class="font-serif text-[#3E2723] bg-white" style="font-weight:bold;font-size:.875rem;margin-bottom:1.25rem;padding:.25rem 1.5rem;border-radius:999px;border:1px solid rgba(62,39,35,.3);box-shadow:0 2px 4px rgba(0,0,0,.05);">Aksara ${cb.getAttribute("data-name")}</h3>
-          <div class="bg-white touch-none overflow-hidden" style="position:relative;display:flex;align-items:center;justify-content:center;border:2px dashed rgba(93,64,55,.5);border-radius:.75rem;width:180px;height:180px;">
-            <img src="${cb.getAttribute("data-img")}" class="pointer-events-none" style="position:absolute;width:120px;height:120px;object-fit:contain;opacity:.25;filter:grayscale(100%);" alt="Watermark" />
-            <canvas id="board-${index}" width="180" height="180" class="cursor-crosshair" style="position:absolute;top:0;left:0;z-index:10;"></canvas>
-          </div>
-        </div>`;
+  const cb = tracingAksaras[currentTracingIndex];
+  const index = 0; // Karena cuma satu yang tampil
+
+  // Update Judul Modal
+  const modalTitle = document.querySelector("#canvas-modal-card h2");
+  if (modalTitle) {
+    modalTitle.textContent = `Latihan Nebali (${currentTracingIndex + 1}/${tracingAksaras.length})`;
+  }
+
+  const data = strokeData[cb.value];
+  if (data) {
+    // GUIDED TRACING
+    const panel = renderGuidedPanel(cb, index, data.strokes);
+    container.appendChild(panel);
+
+    // RESTORE SAVED DRAWING
+    if (savedDrawings[cb.value]) {
+      setTimeout(() => {
+        const doneCvs = document.getElementById(`donecvs-0`);
+        if (doneCvs) {
+          const img = new Image();
+          img.onload = () => {
+             doneCvs.getContext('2d').drawImage(img, 0, 0);
+             // Sembunyikan semua guide karena sudah selesai
+             tracingPanelStates[0].completed = true;
+             tracingPanelStates[0].currentStroke = data.strokes.length;
+             data.strokes.forEach((_, si) => {
+               const gp = document.getElementById(`gp-0-${si}`); if (gp) gp.style.opacity = '0';
+               const gh = document.getElementById(`gh-0-${si}`); if (gh) gh.style.opacity = '0';
+               const gl = document.getElementById(`gl-0-${si}`); if (gl) gl.style.opacity = '0';
+               const ge = document.getElementById(`ge-0-${si}`); if (ge) ge.style.opacity = '0';
+               const gr = document.getElementById(`gr-0-${si}`); if (gr) gr.setAttribute('fill', 'none');
+             });
+             const stepEl = document.getElementById(`step-ind-0`);
+             if (stepEl) { stepEl.textContent = '✅ Selesai!'; stepEl.style.color = '#22c55e'; }
+          };
+          img.src = savedDrawings[cb.value];
+        }
+      }, 150);
     }
-  });
+  } else {
+    // FALLBACK
+    tracingPanelStates[index] = { completed: false, isFree: true };
+    currentlyTrackedStrokes[index] = null;
+    container.innerHTML += `
+      <div class="bg-[#fdf5e6] flex-shrink-0" style="display:flex;flex-direction:column;align-items:center;padding:1.25rem;border-radius:1rem;box-shadow:0 5px 15px rgba(0,0,0,0.15);border:2px solid #5D4037;">
+        <h3 class="font-serif text-[#3E2723] bg-white" style="font-weight:bold;font-size:.875rem;margin-bottom:1.25rem;padding:.25rem 1.5rem;border-radius:999px;border:1px solid rgba(62,39,35,.3);box-shadow:0 2px 4px rgba(0,0,0,.05);">Aksara ${cb.getAttribute("data-name")}</h3>
+        <div class="bg-white touch-none overflow-hidden" style="position:relative;display:flex;align-items:center;justify-content:center;border:2px dashed rgba(93,64,55,.5);border-radius:.75rem;width:250px;height:250px;">
+          <img src="${cb.getAttribute("data-img")}" class="pointer-events-none" style="position:absolute;width:170px;height:170px;object-fit:contain;opacity:0.25;filter:grayscale(100%);" alt="Watermark" />
+          <canvas id="board-0" width="250" height="250" class="cursor-crosshair" style="position:absolute;top:0;left:0;z-index:10;"></canvas>
+        </div>
+      </div>`;
 
-  modal.classList.remove("hidden");
-
-  // Init fallback free-canvas
-  setTimeout(() => {
-    checked.forEach((cb, index) => {
-      if (strokeData[cb.value]) return; // skip guided panels
-      const cvs = document.getElementById(`board-${index}`);
+    setTimeout(() => {
+      const cvs = document.getElementById("board-0");
       if (!cvs) return;
       const ctx = cvs.getContext("2d", { willReadFrequently: true });
-      ctx.lineWidth = 3; ctx.lineCap = "round"; ctx.lineJoin = "round"; ctx.strokeStyle = "#3E2723";
+      ctx.lineWidth = 5; ctx.lineCap = "round"; ctx.lineJoin = "round"; ctx.strokeStyle = "#3E2723";
       canvases.push(cvs); contexts.push(ctx);
-      if (savedDrawings[cb.value]) { const i2 = new Image(); i2.onload = () => ctx.drawImage(i2, 0, 0); i2.src = savedDrawings[cb.value]; }
+
+      // RESTORE SAVED DRAWING (Fallback)
+      if (savedDrawings[cb.value]) {
+        const img = new Image();
+        img.onload = () => ctx.drawImage(img, 0, 0);
+        img.src = savedDrawings[cb.value];
+      }
+
       let isDrawing = false;
-      const drawFn = (e) => { if (!isDrawing) return; e.preventDefault(); const r = cvs.getBoundingClientRect(); const x = ((e.touches ? e.touches[0].clientX : e.clientX) - r.left) * cvs.width / r.width; const y = ((e.touches ? e.touches[0].clientY : e.clientY) - r.top) * cvs.height / r.height; ctx.lineTo(x, y); ctx.stroke(); ctx.beginPath(); ctx.moveTo(x, y); };
+      const drawFn = (e) => { 
+        if (!isDrawing) return; 
+        e.preventDefault(); 
+        const r = cvs.getBoundingClientRect(); 
+        const x = ((e.touches ? e.touches[0].clientX : e.clientX) - r.left) * cvs.width / r.width; 
+        const y = ((e.touches ? e.touches[0].clientY : e.clientY) - r.top) * cvs.height / r.height; 
+        ctx.lineTo(x, y); ctx.stroke(); ctx.beginPath(); ctx.moveTo(x, y); 
+        
+        // Simpan setiap coretan ke local storage (untuk free canvas)
+        savedDrawings[cb.value] = cvs.toDataURL();
+        localStorage.setItem("legena_drawings", JSON.stringify(savedDrawings));
+      };
       cvs.addEventListener("mousedown", (e) => { isDrawing = true; drawFn(e); });
       cvs.addEventListener("mouseup",   () => { isDrawing = false; ctx.beginPath(); });
       cvs.addEventListener("mousemove", drawFn);
       cvs.addEventListener("touchstart", (e) => { isDrawing = true; drawFn(e); }, { passive: false });
       cvs.addEventListener("touchend",   () => { isDrawing = false; ctx.beginPath(); });
       cvs.addEventListener("touchmove",  drawFn, { passive: false });
-    });
-  }, 100);
-};
+    }, 100);
+  }
+}
 
 window.closeCanvas = () => document.getElementById("canvas-modal").classList.add("hidden");
 
@@ -778,7 +862,26 @@ window.checkCanvas = () => {
     if (!allDone) {
       return Swal.fire({ icon: "warning", title: "Dereng Rampung!", text: "Ibutake kabeh garis! Tebali saka nomer 1 tekan rampung ya! 🖊️", confirmButtonColor: "#3E2723", customClass: { popup: "swal-paper", confirmButton: "swal-paper-confirm" } });
     }
+
+    // Jika masih ada aksara berikutnya
+    if (currentTracingIndex < tracingAksaras.length - 1) {
+      Swal.fire({ 
+        icon: "success", 
+        title: "Mantap! ✨", 
+        text: "Siji maneh yo, ayo diteruske!", 
+        confirmButtonColor: "#3E2723", 
+        timer: 1500,
+        showConfirmButton: false,
+        customClass: { popup: "swal-paper" } 
+      }).then(() => {
+        currentTracingIndex++;
+        renderCurrentTracingAksara();
+      });
+      return;
+    }
+
     completedPages[currentPage] = true;
+    localStorage.setItem("legena_completed_pages", JSON.stringify(completedPages));
     if (currentPage === aksaraData.length - 1) sessionStorage.setItem('completed_legena', 'true');
     Swal.fire({ icon: "success", title: "Sae Pisann! ✨", text: "Tulisanmu apik lan rapi, mantepp!", confirmButtonColor: "#3E2723", customClass: { popup: "swal-paper", confirmButton: "swal-paper-confirm" } }).then(() => {
       closeCanvas();
@@ -792,43 +895,48 @@ window.checkCanvas = () => {
   }
 
   // --- CEK FREE CANVAS (fallback halaman 2-4) ---
-  let empty = false, messy = false, incomplete = false;
-  canvases.forEach((cvs, i) => {
-    const ctx = contexts[i];
-    const imgElement = document.querySelectorAll("#canvas-container img")[i];
-    if (!imgElement) return;
-    const hitCvs = document.createElement("canvas"); hitCvs.width = cvs.width; hitCvs.height = cvs.height;
-    const hitCtx = hitCvs.getContext("2d", { willReadFrequently: true }); const offset = (cvs.width - 120) / 2;
-    hitCtx.shadowColor = "black"; hitCtx.shadowBlur = 15;
-    for (let k = 0; k < 3; k++) hitCtx.drawImage(imgElement, offset, offset, 120, 120);
-    const tempCvs = document.createElement("canvas"); tempCvs.width = cvs.width; tempCvs.height = cvs.height;
-    const tempCtx = tempCvs.getContext("2d", { willReadFrequently: true }); tempCtx.drawImage(imgElement, offset, offset, 120, 120);
-    const ud = ctx.getImageData(0,0,cvs.width,cvs.height).data, hd = hitCtx.getImageData(0,0,hitCvs.width,hitCvs.height).data, td = tempCtx.getImageData(0,0,tempCvs.width,tempCvs.height).data;
-    let up=0, sp=0, tp=0, cp=0;
-    for (let j=3; j<ud.length; j+=4) { const iu=ud[j]>10, ih=hd[j]>10, it=td[j]>10; if(iu){up++;if(!ih)sp++;} if(it){tp++;if(iu)cp++;} }
-    if(!tp){if(up<100)empty=true; if(up>4000)messy=true; return;}
-    if(up<100)empty=true; else if(sp/up>0.35)messy=true; else if(cp/tp<0.25)incomplete=true;
-  });
+  let empty = false;
+  const cvs = canvases[0];
+  if (!cvs) return;
+  const ctx = contexts[0];
+  
+  // Deteksi canvas kosong
+  const pix = ctx.getImageData(0, 0, cvs.width, cvs.height).data;
+  let hasInk = false;
+  for (let i = 0; i < pix.length; i += 4) { if (pix[i+3] > 20) { hasInk = true; break; } }
+  if (!hasInk) empty = true;
+
   if (empty) {
-    Swal.fire({ icon:"warning", title:"Dereng Rampung!", text:"Wonten aksara ingkang dereng sampeyan tebali.", confirmButtonColor:"#3E2723", customClass:{popup:"swal-paper",confirmButton:"swal-paper-confirm"} });
-  } else if (messy) {
-    Swal.fire({ icon:"error", title:"Coretan Ngawur!", text:"Waduh, sampeyan ojo nulis ngawur/metu garis. Sing rapi ya!", confirmButtonColor:"#3E2723", customClass:{popup:"swal-paper",confirmButton:"swal-paper-confirm"} });
-  } else if (incomplete) {
-    Swal.fire({ icon:"warning", title:"Kurang Pas!", text:"Coretane durung nutupi bentuk aksarane. Coba ditebali kabeh!", confirmButtonColor:"#3E2723", customClass:{popup:"swal-paper",confirmButton:"swal-paper-confirm"} });
-  } else {
-    const cbs2 = Array.from(document.querySelectorAll(".aksara-checkbox:checked"));
-    canvases.forEach((cvs, i) => { savedDrawings[cbs2[i]?.value] = cvs.toDataURL(); });
-    completedPages[currentPage] = true;
-    if (currentPage === aksaraData.length - 1) sessionStorage.setItem('completed_legena', 'true');
-    Swal.fire({ icon:"success", title:"Sae Pisann! ✨", text:"Tulisanmu apik lan rapi, mantepp!", confirmButtonColor:"#3E2723", customClass:{popup:"swal-paper",confirmButton:"swal-paper-confirm"} }).then(() => {
-      closeCanvas();
-      if (currentPage < aksaraData.length - 1) {
-        nextPage();
-      } else {
-        Swal.fire({ icon:"success", title:"Mantepp!", html:"Sampeyan wis ngrampungake kabeh aksara Legena!", confirmButtonText:"Lanjut →", confirmButtonColor:"#3E2723", customClass:{popup:"swal-paper",confirmButton:"swal-paper-confirm"} }).then(()=>{window.location.href="beranda.html";});
-      }
-    });
+    return Swal.fire({ icon: "warning", title: "Kosong!", text: "Aksarane digambar dhisik ya!", confirmButtonColor: "#3E2723", customClass: { popup: "swal-paper" } });
   }
+
+  // Jika masih ada aksara berikutnya
+  if (currentTracingIndex < tracingAksaras.length - 1) {
+    Swal.fire({ 
+      icon: "success", 
+      title: "Mantap! ✨", 
+      text: "Siji maneh yo!", 
+      confirmButtonColor: "#3E2723", 
+      timer: 1500,
+      showConfirmButton: false,
+      customClass: { popup: "swal-paper" } 
+    }).then(() => {
+      currentTracingIndex++;
+      renderCurrentTracingAksara();
+    });
+    return;
+  }
+
+  completedPages[currentPage] = true;
+  localStorage.setItem("legena_completed_pages", JSON.stringify(completedPages));
+
+  if (currentPage === aksaraData.length - 1) sessionStorage.setItem('completed_legena', 'true');
+  
+  Swal.fire({ icon: "success", title: "Mantepp! ✨", text: "Halaman iki wis rampung!", confirmButtonColor: "#3E2723", customClass: { popup: "swal-paper" } }).then(() => {
+    closeCanvas();
+    if (currentPage < aksaraData.length - 1) nextPage();
+    else window.location.href = "beranda.html";
+  });
 };
 
 renderBook();

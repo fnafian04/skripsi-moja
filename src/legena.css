@@ -317,11 +317,11 @@
    ============================================================ */
 @media screen and (max-height: 480px) and (orientation: landscape) {
 
-  #canvas-modal { overflow: hidden !important; }
+  #canvas-modal { overflow-y: auto !important; }
 
   #canvas-modal-inner {
-    padding: 0.25rem !important;
-    align-items: center !important;
+    padding: 1rem 0.5rem !important;
+    align-items: flex-start !important; /* Agar bisa di-scroll ke bawah jika kepotong */
     min-height: 100dvh !important;
   }
 
@@ -355,12 +355,12 @@
     font-size: 8px !important;
   }
 
-  /* Panel aksara: zoom 55% */
+  /* Panel aksara: lebih besar karena satu-satu */
   #canvas-container {
     gap: 0.5rem !important;
     margin-bottom: 0.15rem !important;
   }
-  #canvas-container > div { zoom: 0.55; }
+  #canvas-container > div { zoom: 0.8; } /* Zoom dikurangi karena cuma 1 aksara */
 
   /* Tombol aksi compact */
   #canvas-modal-card > div:last-child { gap: 0.35rem !important; }
