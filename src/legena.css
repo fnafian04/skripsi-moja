@@ -105,6 +105,13 @@
     box-shadow: 0 6px 0px #3E2723 !important;
   }
 
+/* Shadow banner di dalam modal dikurangi agar tidak mepet ke panel */
+#canvas-modal-card .book-banner {
+  box-shadow: 0 3px 0 #221310, 0 6px 10px rgba(0,0,0,0.3) !important;
+  transform: none !important;
+}
+
+
 /* =========================================================
    CUSTOM CHECKBOX GAYA KERATON (Diperkecil)
    ========================================================= */
@@ -274,3 +281,133 @@
   0% { transform: perspective(1000px) rotateY(-15deg) translateX(-20px) scale(0.98); opacity: 0; }
   100% { transform: perspective(1000px) rotateY(0deg) translateX(0) scale(1); opacity: 1; }
 }
+
+/* ============================================================
+   SISTEM NEBALI BERTAHAP — ANIMASI HOTSPOT & SHAKE
+   ============================================================ */
+
+/* Ring berdenyut di sekitar hotspot aktif */
+.hotspot-ring {
+  animation: hotspotPulse 1.4s ease-out infinite;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+@keyframes hotspotPulse {
+  0%   { r: 14; opacity: 0.7; }
+  60%  { r: 22; opacity: 0.15; }
+  100% { r: 14; opacity: 0.0; }
+}
+
+/* Efek getar canvas saat coretan menyimpang dari jalur */
+.shake-tracing {
+  animation: shakeTracing 0.55s cubic-bezier(.36,.07,.19,.97) both;
+}
+
+@keyframes shakeTracing {
+  10%, 90%  { transform: translateX(-2px); }
+  20%, 80%  { transform: translateX(4px); }
+  30%, 70%  { transform: translateX(-5px) rotate(-0.5deg); }
+  40%, 60%  { transform: translateX(5px) rotate(0.5deg); }
+  50%       { transform: translateX(-3px); }
+}
+
+/* ============================================================
+   MOBILE LANDSCAPE — Layar Pendek (HP landscape, ~225–480px tinggi)
+   ============================================================ */
+@media screen and (max-height: 480px) and (orientation: landscape) {
+
+  #canvas-modal { overflow: hidden !important; }
+
+  #canvas-modal-inner {
+    padding: 0.25rem !important;
+    align-items: center !important;
+    min-height: 100dvh !important;
+  }
+
+  #canvas-modal-card {
+    padding: 0.35rem 1rem 0.3rem !important;
+    border-radius: 0.5rem !important;
+    border-width: 2px !important;
+  }
+
+  /* Banner jauh lebih kecil, tidak overlap */
+  #canvas-modal-card .book-banner {
+    margin-bottom: 0.15rem !important;
+    padding: 0.1rem 0.6rem !important;
+    transform: none !important;
+    box-shadow: 0 2px 0 #221310 !important;
+  }
+  #canvas-modal-card .book-banner h2 {
+    font-size: 0.6rem !important;
+  }
+
+  /* Kompres header row (banner + X button) */
+  #canvas-modal-card > div:first-child {
+    margin-bottom: 0.25rem !important;
+    gap: 0.4rem !important;
+  }
+
+  /* Tombol X lebih kecil di mobile */
+  #canvas-modal-card .btn-close-3d {
+    width: 20px !important;
+    height: 14px !important;
+    font-size: 8px !important;
+  }
+
+  /* Panel aksara: zoom 55% */
+  #canvas-container {
+    gap: 0.5rem !important;
+    margin-bottom: 0.15rem !important;
+  }
+  #canvas-container > div { zoom: 0.55; }
+
+  /* Tombol aksi compact */
+  #canvas-modal-card > div:last-child { gap: 0.35rem !important; }
+  #canvas-modal-card .btn-modern-3d {
+    padding: 0.2rem 0.4rem !important;
+    font-size: 0.58rem !important;
+    border-bottom-width: 2px !important;
+    box-shadow: 0 2px 0 #3E2723 !important;
+  }
+
+  /* ── SweetAlert2: kompres semua modal peringatan ── */
+  .swal2-container {
+    padding: 0.25rem !important;
+  }
+  .swal2-popup {
+    width: 80vw !important;
+    max-width: 360px !important;
+    max-height: 88dvh !important;
+    padding: 0.75rem 1rem !important;
+    border-radius: 0.75rem !important;
+    overflow: hidden !important;
+  }
+  .swal2-icon {
+    zoom: 0.6 !important;
+    margin: 0 auto 0.35rem !important;
+  }
+  .swal2-title {
+    font-size: 1rem !important;
+    padding: 0 !important;
+    margin-bottom: 0.25rem !important;
+  }
+  .swal2-html-container {
+    font-size: 0.75rem !important;
+    margin: 0.2rem 0 !important;
+    padding: 0 !important;
+  }
+  .swal2-actions {
+    margin: 0.4rem auto 0 !important;
+    gap: 0.5rem !important;
+  }
+  .swal2-confirm, .swal2-cancel, .swal2-deny {
+    padding: 0.3rem 1rem !important;
+    font-size: 0.75rem !important;
+  }
+  /* Animasi entrance tidak butuh ruang ekstra */
+  .swal2-show { animation: none !important; }
+}
+
+
+

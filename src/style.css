@@ -111,6 +111,27 @@
   .hamburger-abstrak {
     border-radius: 12px 5px 15px 4px / 5px 15px 4px 12px !important;
   }
+
+  /* Style untuk Navbar Hide-on-Scroll */
+  header.lg\:hidden {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    z-index: 100;
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), 
+                margin-bottom 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+                opacity 0.3s ease;
+    will-change: transform, margin-bottom;
+  }
+
+  /* Class yang dipasang lewat JS saat scroll ke bawah */
+  /* margin-bottom negatif menarik konten di bawahnya naik, menghilangkan 'jejak' */
+  .navbar-hidden {
+    transform: translateY(-100%);
+    margin-bottom: -60px; /* Sesuaikan dengan tinggi rata-rata header mobile */
+    opacity: 0;
+    pointer-events: none;
+  }
   
   details>summary {
     list-style: none;

@@ -5,59 +5,50 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>pasinaon autocorrect</title>
   </head>
-  <body class="bg-[#FFF3E0] font-sans overflow-x-hidden">
-    <header class="lg:hidden bg-[#3E2723] text-white p-3 flex-none relative z-[70] shadow-md flex justify-between items-center">
-      <button id="hamburger" class="hamburger-abstrak px-3 py-1 bg-[#FFB300] text-[#3E2723] shadow-sm text-xl font-bold leading-none hover:bg-yellow-400 transition transform hover:scale-105">☰</button>
-      <a href="/index.html" class="font-serif text-lg font-bold hover:scale-105 hover:text-[#FFB300] transition-transform duration-300">Pasinaon Aksara Jawa 📜</a>
-    </header>
+  <body class="bg-[#FFF3E0] font-sans overflow-hidden flex h-[100dvh]">
+    <div id="sidebar-overlay" class="fixed inset-0 bg-black/50 z-[80] hidden"></div>
 
-    <div id="sidebar-overlay" class="fixed inset-0 bg-black/50 z-[55] hidden"></div>
+    <aside id="sidebar" class="sidebar-abstrak fixed lg:static inset-y-0 left-0 w-64 bg-[#F5E6CA] border-r-4 border-[#3E2723] z-[90] transform -translate-x-full lg:translate-x-0 transition-transform duration-300 flex flex-col overflow-hidden">
+      <a href="/index.html" class="hidden lg:block p-5 bg-[#3E2723] text-[#FFB300] text-center font-serif transition-all duration-300 border-b-4 border-[#3E2723]">
+        <span class="text-2xl font-bold block leading-tight">Pasinaon</span>
+        <span class="text-sm font-medium tracking-widest opacity-90">ꦄꦏ꧀ꦱꦫ ꦗꦮ</span>
+      </a>
+      <nav class="flex-1 p-3 pt-20 lg:pt-3 space-y-2 overflow-y-auto text-[#5D4037] font-bold text-sm">
+        <a href="pengenalan.html" class="block p-3 hover:bg-[#D7CCC8] rounded-xl transition">Pengenalan Aksara Jawa</a>
+        <a href="legena.html" class="block p-3 hover:bg-[#D7CCC8] rounded-xl transition">Aksara Legena</a>
+        <a href="pasangan.html" class="block p-3 hover:bg-[#D7CCC8] rounded-xl transition">Pasangan Aksara Legena</a>
+        <details class="group">
+          <summary class="p-3 hover:bg-[#D7CCC8] rounded-xl cursor-pointer flex justify-between items-center transition">
+            Sandhangan
+            <span class="transition-transform duration-300 group-open:rotate-180 text-xs">▼</span>
+          </summary>
+          <div class="pl-6 pb-2 space-y-1 mt-1 text-xs font-semibold">
+            <a href="#" class="block p-2 hover:text-[#3E2723] hover:bg-[#D7CCC8]/70 rounded-lg transition">Sandhangan Swara</a>
+            <a href="#" class="block p-2 hover:text-[#3E2723] hover:bg-[#D7CCC8]/70 rounded-lg transition">Sandhangan Wyanjana</a>
+            <a href="#" class="block p-2 hover:text-[#3E2723] hover:bg-[#D7CCC8]/70 rounded-lg transition">Sandhangan Panyigeg Wanda</a>
+          </div>
+        </details>
+        <a href="beranda-pasinaon.html" class="block p-3 bg-[#FFB300] text-[#3E2723] shadow-md rounded-xl transition">Latihan Pasinaon</a>
+      </nav>
+    </aside>
 
-    <div class="flex flex-1 overflow-hidden relative">
-      
-      <aside id="sidebar" class="sidebar-abstrak fixed lg:static inset-y-0 left-0 w-64 bg-[#F5E6CA] border-r-4 border-[#3E2723] z-[60] transform -translate-x-full lg:translate-x-0 transition-transform duration-300 flex flex-col overflow-hidden">
-        
-        <a href="/index.html" class="hidden lg:block p-5 bg-[#3E2723] text-[#FFB300] text-center font-serif transition-all duration-300 border-b-4 border-[#3E2723]">
-          <span class="text-2xl font-bold block leading-tight">Pasinaon</span>
-          <span class="text-sm font-medium tracking-widest opacity-90">ꦄꦏ꧀ꦱꦫ ꦗꦮ</span>
-        </a>
-        
-        <nav class="flex-1 p-3 pt-20 lg:pt-3 space-y-2 overflow-y-auto text-[#5D4037] font-bold text-sm">
-          
-          <a href="#" class="block p-3 hover:bg-[#D7CCC8] rounded-xl transition">Pengenalan Aksara Jawa</a>
-          <a href="legena.html" class="block p-3 hover:bg-[#D7CCC8] rounded-xl transition">Aksara Legena</a>
-          <a href="pasangan.html" class="block p-3 hover:bg-[#D7CCC8] rounded-xl transition">Pasangan Aksara Legena</a>
-          
-          <details class="group">
-            <summary class="p-3 hover:bg-[#D7CCC8] rounded-xl cursor-pointer flex justify-between items-center transition">
-              Sandhangan
-              <span class="transition-transform duration-300 group-open:rotate-180 text-xs">▼</span>
-            </summary>
-            <div class="pl-6 pb-2 space-y-1 mt-1 text-xs font-semibold">
-              <a href="#" class="block p-2 hover:text-[#3E2723] hover:bg-[#D7CCC8]/70 rounded-lg transition">Sandhangan Swara</a>
-              <a href="#" class="block p-2 hover:text-[#3E2723] hover:bg-[#D7CCC8]/70 rounded-lg transition">Sandhangan Wyanjana</a>
-              <a href="#" class="block p-2 hover:text-[#3E2723] hover:bg-[#D7CCC8]/70 rounded-lg transition">Sandhangan Panyigeg Wanda</a>
-            </div>
-          </details>
-          
-          <a href="beranda-pasinaon.html" class="block p-3 bg-[#FFB300] text-[#3E2723] shadow-md rounded-xl transition">Latihan Pasinaon</a>
-          
-        </nav>
-      </aside>
+    <div class="flex-1 flex flex-col h-full overflow-y-auto overflow-x-hidden relative w-full">
+      <header class="lg:hidden bg-[#3E2723] text-white p-3 flex-none w-full shadow-md flex justify-between items-center z-[100]">
+        <button id="hamburger" class="hamburger-abstrak px-3 py-1 bg-[#FFB300] text-[#3E2723] shadow-sm text-xl font-bold leading-none hover:bg-yellow-400 transition transform hover:scale-105">☰</button>
+        <a href="/index.html" class="font-serif text-lg font-bold hover:scale-105 hover:text-[#FFB300] transition-transform duration-300">Pasinaon Aksara Jawa 📜</a>
+      </header>
 
       <main class="flex-1 p-4 md:p-10 bg-batik flex items-center justify-center">
         <div class="max-w-4xl w-full text-center">
-          
           <a href="peta.html" class="block relative group rounded-3xl overflow-hidden shadow-2xl border-4 border-white aspect-video md:h-[450px] mx-auto hover:scale-[1.02] transition-transform duration-300">
             <img src="/assets/peta-candi-full.png" class="w-full h-full object-cover" />
             <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300"></div>
           </a>
-          
           <p class="mt-6 text-[#5D4037] italic font-medium">"klik pasinaon ing nduwur"</p>
-          
         </div>
       </main>
     </div>
     <script type="module" src="/src/main.js"></script>
+
   </body>
 </html>

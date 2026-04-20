@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>✏️ Stroke Path Editor v3 — Freehand</title>
+  <style>
+    :root {
+      --bg: #1a0f0a; --bg2: #110a06; --panel: #211510;
+      --brown: #5D4037; --amber: #FFB300; --cream: #FFF3E0;
+      --green: #22c55e; --red: #ef4444; --blue: #60a5fa;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: var(--bg); color: var(--cream);
+      height: 100dvh; display: flex; flex-direction: column; overflow: hidden;
+    }
+
+    header {
+      background: var(--bg2); padding: 9px 16px;
+      border-bottom: 2px solid var(--brown);
+      display: flex; align-items: center; gap: 12px; flex-shrink: 0;
+    }
+    header h1 { font-size: .95rem; color: var(--amber); }
+    header p  { font-size: .7rem; opacity: .55; margin-top: 2px; }
+
+    /* MODE BAR */
+    .modebar {
+      background: #140c07; border-bottom: 1px solid var(--brown);
+      padding: 6px 16px; display: flex; gap: 6px; align-items: center; flex-shrink: 0;
+    }
+    .modeBtn {
+      padding: 5px 13px; border-radius: 7px; border: 1.5px solid transparent;
+      font-size: 11px; font-weight: 700; cursor: pointer; letter-spacing: .3px;
+      transition: all .15s; background: rgba(255,255,255,.05); color: var(--cream);
+    }
+    .modeBtn.active { background: var(--amber); color: #3E2723; border-color: #c88a00; }
+    .modeBtn:hover:not(.active) { background: rgba(255,255,255,.1); }
+    .mode-hint { font-size: 10px; opacity: .5; margin-left: 6px; flex: 1; }
+
+    /* epsilon slider */
+    .eps-wrap {
+      display: flex; align-items: center; gap: 6px; font-size: 10px; opacity: .7;
+      margin-left: auto;
+    }
+    input[type=range] {
+      -webkit-appearance: none; width: 90px; height: 4px;
+      background: var(--brown); border-radius: 2px; cursor: pointer;
+    }
+    input[type=range]::-webkit-slider-thumb {
+      -webkit-appearance: none; width: 14px; height: 14px;
+      background: var(--amber); border-radius: 50%;
+    }
+
+    .layout { display: flex; flex: 1; overflow: hidden; }
+
+    /* CANVAS */
+    .canvas-area {
+      flex: 1; display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding: 14px; gap: 7px; background: #0e0805; overflow: auto;
+    }
+    .canvas-wrap {
+      position: relative; border: 2px solid var(--brown); border-radius: 12px;
+      overflow: hidden; box-shadow: 0 8px 40px rgba(0,0,0,.7); flex-shrink: 0;
+    }
+    canvas { display: block; }
+    .coord-bar { font-family: monospace; font-size: 11px; opacity: .45; }
+
+    /* STATUS BADGE */
+    .status-badge {
+      position: absolute; top: 6px; left: 6px;
+      font-size: 10px; font-weight: 700; padding: 2px 8px;
+      border-radius: 5px; pointer-events: none; z-index: 10;
+    }
+
+    /* PANEL */
+    .panel {
+      width: 270px; flex-shrink: 0; background: var(--panel);
+      border-left: 2px solid var(--brown); display: flex; flex-direction: column;
+      overflow-y: auto;
+    }
+    .sec { padding: 11px 13px; border-bottom: 1px solid rgba(255,255,255,.07); }
+    .sec h3 {
+      font-size: 9px; font-weight: 700; letter-spacing: 1px;
+      text-transform: uppercase; color: var(--amber); margin-bottom: 8px;
+    }
+
+    select {
+      width: 100%; padding: 6px 24px 6px 9px; background: #2c1a10;
+      color: var(--cream); border: 1.5px solid var(--brown); border-radius: 7px;
+      font-size: 12px; font-weight: 600; cursor: pointer; appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23FFB300' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right 7px center; background-size: 9px;
+    }
+    select:focus { outline: none; border-color: var(--amber); }
+
+    .stroke-list { display: flex; flex-direction: column; gap: 4px; margin-bottom: 7px; }
+    .stroke-item {
+      display: flex; align-items: center; gap: 6px; padding: 6px 8px;
+      border-radius: 7px; background: rgba(255,255,255,.04);
+      border: 1.5px solid transparent; cursor: pointer; transition: all .13s;
+    }
+    .stroke-item:hover { background: rgba(255,255,255,.08); }
+    .stroke-item.active { border-color: var(--amber); background: rgba(255,179,0,.09); }
+    .stroke-item.has-pts { border-color: rgba(34,197,94,.3); }
+    .s-dot {
+      width: 18px; height: 18px; border-radius: 50%; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 9px; font-weight: 900; border: 2px solid currentColor;
+    }
+    .s-meta { flex: 1; }
+    .s-name { font-size: 11px; font-weight: 600; }
+    .s-pts  { font-size: 9px; opacity: .5; }
+    .s-del  {
+      background: none; border: none; cursor: pointer; color: var(--red);
+      font-size: 12px; padding: 2px; border-radius: 4px; transition: background .1s;
+    }
+    .s-del:hover { background: rgba(239,68,68,.18); }
+
+    .btn {
+      display: block; width: 100%; padding: 7px 10px; border: none;
+      border-radius: 7px; cursor: pointer; font-weight: 700; font-size: 11px;
+      letter-spacing: .4px; text-transform: uppercase; transition: all .15s; margin-bottom: 5px;
+    }
+    .btn:last-child { margin-bottom: 0; }
+    .btn-amber { background: var(--amber); color: #3E2723; }
+    .btn-amber:hover { background: #ffc107; }
+    .btn-green { background: var(--green); color: white; }
+    .btn-green:hover { background: #16a34a; }
+    .btn-red   { background: var(--red);   color: white; }
+    .btn-red:hover   { background: #dc2626; }
+    .btn-ghost { background: rgba(255,255,255,.07); color: var(--cream); }
+    .btn-ghost:hover { background: rgba(255,255,255,.13); }
+
+    .instr {
+      font-size: 10px; line-height: 1.75; opacity: .65;
+      background: rgba(255,255,255,.04);
+      border-left: 3px solid var(--amber);
+      padding: 7px 9px; border-radius: 0 7px 7px 0;
+    }
+    .instr b { color: var(--amber); }
+
+    .chips { display: flex; flex-wrap: wrap; gap: 4px; }
+    .chip {
+      padding: 2px 6px; border-radius: 5px; font-size: 9px; font-weight: 700;
+      cursor: pointer; border: 1.5px solid transparent; transition: all .12s;
+    }
+
+    .json-box {
+      background: #080402; color: #86efac;
+      font-family: 'Cascadia Code', monospace; font-size: 9px; line-height: 1.5;
+      padding: 8px; border-radius: 7px; max-height: 140px; overflow-y: auto;
+      white-space: pre; border: 1px solid rgba(255,255,255,.07); margin-top: 7px;
+    }
+
+    .hkbar {
+      background: var(--bg2); border-top: 1px solid var(--brown);
+      padding: 5px 16px; display: flex; gap: 12px; align-items: center;
+      flex-shrink: 0; font-size: 9px; opacity: .5;
+    }
+    .hkbar kbd {
+      background: rgba(255,255,255,.1); border-radius: 3px;
+      padding: 1px 4px; font-family: monospace;
+    }
+
+    /* Recording ring animation */
+    @keyframes recPulse { 0%,100%{opacity:1} 50%{opacity:.3} }
+    .rec-dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: #ef4444; animation: recPulse 1s infinite; }
+  </style>
+</head>
+<body>
+
+<header>
+  <div>
+    <h1>✏️ Stroke Path Editor v3 — Freehand</h1>
+    <p>Tahan mouse dan gesek untuk menggambar jalur langsung di atas aksara.</p>
+  </div>
+</header>
+
+<div class="modebar">
+  <button class="modeBtn active" id="btn-draw" onclick="setMode('draw')">🖊 Gambar Bebas</button>
+  <button class="modeBtn"       id="btn-add"  onclick="setMode('add')">+ Titik Manual</button>
+  <button class="modeBtn"       id="btn-edit" onclick="setMode('edit')">↖ Edit &amp; Handle</button>
+  <span class="mode-hint" id="mode-hint">Tahan mouse → gesek mengikuti bentuk aksara → lepas untuk mengambil jalur</span>
+  <div class="eps-wrap">
+    <span>Simplikasi:</span>
+    <input type="range" id="eps-slider" min="1" max="20" value="5"
+           oninput="document.getElementById('eps-val').textContent=this.value">
+    <span id="eps-val">5</span>
+  </div>
+</div>
+
+<div class="layout">
+  <div class="canvas-area">
+    <div class="canvas-wrap" id="cw">
+      <canvas id="ec" width="360" height="360"></canvas>
+    </div>
+    <div class="coord-bar" id="coord">Arahkan mouse ke kanvas…</div>
+  </div>
+
+  <div class="panel">
+
+    <div class="sec">
+      <h3>📜 Pilih Aksara</h3>
+      <select id="aksara-sel" onchange="selectAksara(this.value)">
+        <optgroup label="Ha Na Ca Ra Ka (Halaman 1)">
+          <option value="ha">Ha (ꦲ)</option><option value="na">Na (ꦤ)</option>
+          <option value="ca">Ca (ꦕ)</option><option value="ra">Ra (ꦫ)</option>
+          <option value="ka">Ka (ꦏ)</option>
+        </optgroup>
+        <optgroup label="Da Ta Sa Wa La (Halaman 2)">
+          <option value="da">Da (ꦢ)</option><option value="ta">Ta (ꦠ)</option>
+          <option value="sa">Sa (ꦱ)</option><option value="wa">Wa (ꦮ)</option>
+          <option value="la">La (ꦭ)</option>
+        </optgroup>
+        <optgroup label="Pa Dha Ja Ya Nya (Halaman 3)">
+          <option value="pa">Pa (ꦥ)</option><option value="dha">Dha (ꦝ)</option>
+          <option value="ja">Ja (ꦗ)</option><option value="ya">Ya (ꦪ)</option>
+          <option value="nya">Nya (ꦚ)</option>
+        </optgroup>
+        <optgroup label="Ma Ga Ba Tha Nga (Halaman 4)">
+          <option value="ma">Ma (ꦩ)</option><option value="ga">Ga (ꦒ)</option>
+          <option value="ba">Ba (ꦧ)</option><option value="tha">Tha (ꦛ)</option>
+          <option value="nga">Nga (ꦔ)</option>
+        </optgroup>
+      </select>
+    </div>
+
+    <div class="sec">
+      <h3>🖊️ Garis (Strokes)</h3>
+      <div id="stroke-list" class="stroke-list"></div>
+      <button class="btn btn-amber" onclick="addStroke()">+ Tambah Garis Baru</button>
+      <button class="btn btn-ghost" onclick="undoSegment()">↩ Undo Goresan Terakhir</button>
+      <button class="btn btn-ghost" onclick="clearStroke()" style="border:1px solid rgba(239,68,68,.4);">✕ Hapus Garis Ini</button>
+      <button class="btn btn-red"   onclick="resetAksara()">🗑 Reset Aksara Ini</button>
+    </div>
+
+    <div class="sec">
+      <h3>📋 Cara Pakai</h3>
+      <div class="instr">
+        <b>Mode Gambar Bebas</b> (utama):<br>
+        &nbsp;Tahan + gesek &rarr; lepas &rarr; gesek lagi<br>
+        &nbsp;&rarr; tiap sesi <b>ditambahkan</b> ke garis sama<br>
+        &nbsp;&nbsp;&nbsp;(tidak mulai dari nol!)<br><br>
+        <b>&larr; Undo Goresan</b> = hapus sesi gesek terakhir<br>
+        <b>&times; Hapus Garis Ini</b> = kosongkan garis aktif<br><br>
+        <b>Slider Simplikasi</b>: kiri = detail, kanan = smooth.<br><br>
+        <b>Mode Edit</b>: seret titik/handle untuk atur<br>
+        &nbsp;posisi dan lengkung bezier.
+    </div>
+
+
+    <div class="sec">
+      <h3>📊 Status Aksara</h3>
+      <div id="chips" class="chips"></div>
+    </div>
+
+    <div class="sec">
+      <h3>📤 Ekspor JSON</h3>
+      <button class="btn btn-green" id="exp-btn" onclick="exportJSON()">📋 Salin JSON ke Clipboard</button>
+      <div id="json-box" class="json-box">{}</div>
+    </div>
+  </div>
+</div>
+
+<div class="hkbar">
+  <span><kbd>Tab</kbd> ganti mode</span>
+  <span><kbd>Z</kbd> undo titik</span>
+  <span><kbd>N</kbd> garis baru</span>
+  <span><kbd>←→</kbd> ganti aksara</span>
+  <span><kbd>R</kbd> resize simplikasi</span>
+</div>
+
+<script>
+// ================================================================
+// CONSTANTS
+// ================================================================
+const CANVAS_SIZE = 360;
+const AK_OFF      = 60;
+const AK_SIZE     = 240;
+const EXPORT_DIV  = 2;
+const TENSION     = 0.32;
+const MIN_SAMPLE_DIST = 4; // minimum px distance between raw freehand samples
+
+const ALL_IDS = ['ha','na','ca','ra','ka','da','ta','sa','wa','la','pa','dha','ja','ya','nya','ma','ga','ba','tha','nga'];
+const COLORS  = ['#FFB300','#4FC3F7','#F48FB1','#A5D6A7','#CE93D8','#FFCC80','#80DEEA','#EF9A9A'];
+
+// ================================================================
+// STATE
+// ================================================================
+// Point: { x, y, smooth:true, hOut:{dx,dy}|null, hIn:{dx,dy}|null }
+// strokeDB[id] = [ [point, ...], ... ]
+const strokeDB = {};
+ALL_IDS.forEach(id => strokeDB[id] = [[]]);
+
+let currentId  = 'ha';
+let activeSI   = 0;
+let mode       = 'draw';
+let akImage    = null;
+
+// Freehand state
+let isRecording  = false;
+let rawFreehand  = [];   // [{x,y}] captured during current drag session
+
+// Segment history per stroke for undo
+// segHistory[aksaraId][strokeIndex] = stack of point-array snapshots
+const segHistory = {};
+ALL_IDS.forEach(id => segHistory[id] = {});
+
+// Drag state (edit mode)
+let drag  = null;
+let hover = null;
+
+const canvas = document.getElementById('ec');
+const ctx    = canvas.getContext('2d');
+
+// ================================================================
+// RDP PATH SIMPLIFICATION
+// ================================================================
+function ptLineDist(p, a, b) {
+  const dx = b.x - a.x, dy = b.y - a.y;
+  if (!dx && !dy) return Math.hypot(p.x - a.x, p.y - a.y);
+  const t = ((p.x - a.x)*dx + (p.y - a.y)*dy) / (dx*dx + dy*dy);
+  const tc = Math.max(0, Math.min(1, t));
+  return Math.hypot(p.x - (a.x + tc*dx), p.y - (a.y + tc*dy));
+}
+
+function rdp(pts, eps) {
+  if (pts.length <= 2) return pts;
+  let maxD = 0, maxI = 0;
+  const a = pts[0], b = pts[pts.length-1];
+  for (let i = 1; i < pts.length-1; i++) {
+    const d = ptLineDist(pts[i], a, b);
+    if (d > maxD) { maxD = d; maxI = i; }
+  }
+  if (maxD > eps) {
+    return [...rdp(pts.slice(0, maxI+1), eps).slice(0,-1), ...rdp(pts.slice(maxI), eps)];
+  }
+  return [a, b];
+}
+
+// ================================================================
+// BEZIER HELPERS
+// ================================================================
+function autoOutHandle(pts, i) {
+  if (i >= pts.length-1) return {dx:0,dy:0};
+  const pp = i>0 ? pts[i-1] : pts[i];
+  const pn = pts[i+1];
+  return {dx:(pn.x-pp.x)*TENSION, dy:(pn.y-pp.y)*TENSION};
+}
+function autoInHandle(pts, i) {
+  if (i<=0) return {dx:0,dy:0};
+  const pp = pts[i-1];
+  const pn = i<pts.length-1 ? pts[i+1] : pts[i];
+  return {dx:-(pn.x-pp.x)*TENSION, dy:-(pn.y-pp.y)*TENSION};
+}
+const getHOut = (pts,i) => pts[i].hOut || autoOutHandle(pts,i);
+const getHIn  = (pts,i) => pts[i].hIn  || autoInHandle(pts,i);
+
+function buildPath(pts) {
+  if (pts.length < 2) return null;
+  const p = new Path2D();
+  p.moveTo(pts[0].x, pts[0].y);
+  for (let i=0; i<pts.length-1; i++) {
+    const h0=getHOut(pts,i), h1=getHIn(pts,i+1);
+    p.bezierCurveTo(pts[i].x+h0.dx, pts[i].y+h0.dy, pts[i+1].x+h1.dx, pts[i+1].y+h1.dy, pts[i+1].x, pts[i+1].y);
+  }
+  return p;
+}
+
+// ================================================================
+// DRAWING
+// ================================================================
+function redraw(rawPts) {
+  ctx.clearRect(0,0,CANVAS_SIZE,CANVAS_SIZE);
+  ctx.fillStyle='#fff'; ctx.fillRect(0,0,CANVAS_SIZE,CANVAS_SIZE);
+
+  // Grid
+  ctx.strokeStyle='rgba(0,0,0,.04)'; ctx.lineWidth=1;
+  for(let i=0;i<=CANVAS_SIZE;i+=20){
+    ctx.beginPath();ctx.moveTo(i,0);ctx.lineTo(i,CANVAS_SIZE);ctx.stroke();
+    ctx.beginPath();ctx.moveTo(0,i);ctx.lineTo(CANVAS_SIZE,i);ctx.stroke();
+  }
+
+  // Bounding box
+  ctx.strokeStyle='rgba(200,149,107,.2)'; ctx.lineWidth=1; ctx.setLineDash([4,4]);
+  ctx.strokeRect(AK_OFF,AK_OFF,AK_SIZE,AK_SIZE); ctx.setLineDash([]);
+
+  // Watermark
+  if(akImage){ ctx.globalAlpha=0.22; ctx.drawImage(akImage,AK_OFF,AK_OFF,AK_SIZE,AK_SIZE); ctx.globalAlpha=1; }
+
+  // ── Draw freehand raw preview (existing stroke + current session) ──
+  if(rawPts && rawPts.length>1){
+    // First draw existing committed points as a dimmed tail
+    const existPts = strokeDB[currentId][activeSI]||[];
+    if(existPts.length >= 2){
+      const epath = buildPath(existPts);
+      ctx.strokeStyle = COLORS[activeSI%COLORS.length];
+      ctx.lineWidth = 2.5; ctx.globalAlpha = 0.3;
+      ctx.setLineDash([6,4]); ctx.stroke(epath); ctx.setLineDash([]);
+      ctx.globalAlpha = 1;
+    }
+    // Draw current raw recording session in green
+    ctx.beginPath(); ctx.moveTo(rawPts[0].x,rawPts[0].y);
+    rawPts.forEach(p=>ctx.lineTo(p.x,p.y));
+    ctx.strokeStyle='rgba(34,197,94,.75)'; ctx.lineWidth=2.5;
+    ctx.lineCap='round'; ctx.lineJoin='round'; ctx.stroke();
+    // Pulsing dot at pen tip
+    const lp=rawPts[rawPts.length-1];
+    ctx.beginPath(); ctx.arc(lp.x,lp.y,5,0,Math.PI*2);
+    ctx.fillStyle='rgba(34,197,94,.85)'; ctx.fill();
+  }
+
+  // ── Draw stored strokes ──
+  const strokes=strokeDB[currentId];
+  strokes.forEach((pts,si)=>{
+    if(!pts.length) return;
+    const color=COLORS[si%COLORS.length];
+    const isAct=si===activeSI;
+    const alpha=isAct?1:0.45;
+    ctx.globalAlpha=alpha;
+
+    // Bezier path
+    if(pts.length>=2){
+      const path=buildPath(pts);
+      ctx.strokeStyle=color; ctx.lineWidth=isAct?3:2;
+      ctx.setLineDash([9,5]); ctx.lineCap='round';
+      ctx.stroke(path); ctx.setLineDash([]);
+    }
+
+    // Edit handles
+    if(mode==='edit' && isAct){
+      pts.forEach((pt,pi)=>{
+        if(pi<pts.length-1){
+          const h=getHOut(pts,pi), hx=pt.x+h.dx, hy=pt.y+h.dy;
+          const isHov=hover&&hover.type==='hOut'&&hover.si===si&&hover.pi===pi;
+          ctx.strokeStyle=pt.smooth?'#ffffff55':'#ffffff30';
+          ctx.lineWidth=1; ctx.setLineDash([3,3]);
+          ctx.beginPath();ctx.moveTo(pt.x,pt.y);ctx.lineTo(hx,hy);ctx.stroke();ctx.setLineDash([]);
+          ctx.beginPath();ctx.arc(hx,hy,isHov?7:5,0,Math.PI*2);
+          ctx.fillStyle=pt.hOut?'#fff':'#ffffff88';
+          ctx.strokeStyle=color; ctx.lineWidth=1.5; ctx.fill();ctx.stroke();
+        }
+        if(pi>0){
+          const h=getHIn(pts,pi), hx=pt.x+h.dx, hy=pt.y+h.dy;
+          const isHov=hover&&hover.type==='hIn'&&hover.si===si&&hover.pi===pi;
+          ctx.strokeStyle=pt.smooth?'#ffffff55':'#ffffff30';
+          ctx.lineWidth=1; ctx.setLineDash([3,3]);
+          ctx.beginPath();ctx.moveTo(pt.x,pt.y);ctx.lineTo(hx,hy);ctx.stroke();ctx.setLineDash([]);
+          ctx.beginPath();ctx.arc(hx,hy,isHov?7:5,0,Math.PI*2);
+          ctx.fillStyle=pt.hIn?'#ffffffcc':'#ffffff55';
+          ctx.strokeStyle=color; ctx.lineWidth=1.5; ctx.fill();ctx.stroke();
+        }
+      });
+    }
+
+    // Anchors
+    pts.forEach((pt,pi)=>{
+      const isHovA=hover&&hover.type==='anchor'&&hover.si===si&&hover.pi===pi;
+      if(pi===0){
+        // Hotspot
+        ctx.beginPath();ctx.arc(pt.x,pt.y,isAct?11:9,0,Math.PI*2);
+        ctx.fillStyle=isHovA?'#ffe066':color; ctx.fill();
+        ctx.strokeStyle='#3E2723';ctx.lineWidth=1.5;ctx.stroke();
+        ctx.fillStyle='#3E2723'; ctx.font=`bold ${isAct?11:9}px sans-serif`;
+        ctx.textAlign='center';ctx.textBaseline='middle'; ctx.fillText(si+1,pt.x,pt.y);
+      } else if(pi===pts.length-1){
+        ctx.beginPath();ctx.arc(pt.x,pt.y,isHovA?7:5,0,Math.PI*2);
+        ctx.fillStyle=isHovA?'#ffe066':color; ctx.fill();
+        ctx.strokeStyle='#3E2723';ctx.lineWidth=1.5;ctx.stroke();
+      } else {
+        if(mode==='edit'&&isAct){
+          const s=isHovA?8:6;
+          ctx.fillStyle=isHovA?'#ffe066':color;
+          ctx.fillRect(pt.x-s/2,pt.y-s/2,s,s);
+          ctx.strokeStyle='#3E2723';ctx.lineWidth=1;
+          ctx.strokeRect(pt.x-s/2,pt.y-s/2,s,s);
+        } else {
+          ctx.beginPath();ctx.arc(pt.x,pt.y,3,0,Math.PI*2);
+          ctx.fillStyle=color;ctx.globalAlpha=isAct?.7:.3;ctx.fill();
+          ctx.globalAlpha=alpha;
+        }
+      }
+    });
+    ctx.globalAlpha=1;
+  });
+
+  // Active label
+  const col=COLORS[activeSI%COLORS.length];
+  const pts0=strokes[activeSI]||[];
+  ctx.fillStyle=col; ctx.font='bold 10px sans-serif';
+  ctx.textAlign='left';ctx.textBaseline='top';
+  const recLabel = isRecording ? ' 🔴 Recording…' : '';
+  ctx.fillText(`Garis ${activeSI+1} aktif  (${pts0.length} titik)${recLabel}`, 5, 5);
+}
+
+// ================================================================
+// AKSARA LOADER
+// ================================================================
+async function loadImage(id){
+  return new Promise(r=>{
+    const img=new Image();
+    img.onload=()=>{akImage=img;r()};
+    img.onerror=()=>{akImage=null;r()};
+    img.src=`/assets/aksara-${id}.png`;
+  });
+}
+async function selectAksara(id){
+  currentId=id;
+  if(!strokeDB[id]||!strokeDB[id].length) strokeDB[id]=[[]];;
+  activeSI=strokeDB[id].length-1;
+  await loadImage(id);
+  redraw();updateStrokeList();updateChips();updateJSON();
+}
+
+// ================================================================
+// GET CANVAS POINT
+// ================================================================
+function getXY(e){
+  const r=canvas.getBoundingClientRect();
+  const sx=canvas.width/r.width, sy=canvas.height/r.height;
+  const src=e.touches?e.touches[0]:e;
+  return {x:Math.round((src.clientX-r.left)*sx), y:Math.round((src.clientY-r.top)*sy)};
+}
+function getEpsilon(){ return parseInt(document.getElementById('eps-slider').value)||5; }
+
+// ================================================================
+// HIT TEST (edit mode)
+// ================================================================
+const AR=13, HR=9;
+function hitTest(mx,my){
+  const strokes=strokeDB[currentId], si=activeSI, pts=strokes[si]||[];
+  if(mode==='edit'){
+    for(let pi=0;pi<pts.length;pi++){
+      const pt=pts[pi];
+      if(pi<pts.length-1){const h=getHOut(pts,pi);if(Math.hypot(mx-(pt.x+h.dx),my-(pt.y+h.dy))<HR)return{type:'hOut',si,pi};}
+      if(pi>0){const h=getHIn(pts,pi);if(Math.hypot(mx-(pt.x+h.dx),my-(pt.y+h.dy))<HR)return{type:'hIn',si,pi};}
+    }
+  }
+  for(let pi=pts.length-1;pi>=0;pi--)
+    if(Math.hypot(mx-pts[pi].x,my-pts[pi].y)<AR)return{type:'anchor',si,pi};
+  for(let s=0;s<strokes.length;s++){
+    if(s===si)continue;
+    const ps=strokes[s];
+    for(let pi=ps.length-1;pi>=0;pi--)
+      if(Math.hypot(mx-ps[pi].x,my-ps[pi].y)<AR)return{type:'anchor',si:s,pi};
+  }
+  return null;
+}
+
+// ================================================================
+// MOUSE EVENTS
+// ================================================================
+function onDown(e){
+  e.preventDefault();
+  const {x,y}=getXY(e);
+
+  if(mode==='draw'){
+    isRecording=true;
+    rawFreehand=[{x,y}];
+    canvas.style.cursor='crosshair';
+    return;
+  }
+  if(mode==='add'){
+    const pts=strokeDB[currentId][activeSI]||(strokeDB[currentId][activeSI]=[]);
+    pts.push({x,y,smooth:true,hOut:null,hIn:null});
+    redraw();updateStrokeList();updateJSON();autoSave();
+    return;
+  }
+  if(mode==='edit'){
+    const hit=hitTest(x,y);
+    if(hit){
+      drag={...hit,startX:x,startY:y};
+      const pts=strokeDB[currentId][hit.si];
+      const pt=pts[hit.pi];
+      if(hit.type==='anchor') drag.orig={x:pt.x,y:pt.y};
+      else if(hit.type==='hOut'){const h=getHOut(pts,hit.pi);drag.orig={...h};if(!pt.hOut)pt.hOut={...h};}
+      else{const h=getHIn(pts,hit.pi);drag.orig={...h};if(!pt.hIn)pt.hIn={...h};}
+    }
+  }
+}
+
+function onMove(e){
+  const {x,y}=getXY(e);
+  document.getElementById('coord').textContent=
+    `Canvas: (${x}, ${y})  →  Export: (${Math.round(x/EXPORT_DIV)}, ${Math.round(y/EXPORT_DIV)})`;
+
+  // ── Freehand recording ──
+  if(mode==='draw' && isRecording){
+    e.preventDefault();
+    const last=rawFreehand[rawFreehand.length-1];
+    if(Math.hypot(x-last.x,y-last.y)>MIN_SAMPLE_DIST){
+      rawFreehand.push({x,y});
+    }
+    redraw(rawFreehand); // live preview
+    return;
+  }
+
+  // ── Drag in edit mode ──
+  if(drag){
+    e.preventDefault();
+    const dx=x-drag.startX, dy=y-drag.startY;
+    const pts=strokeDB[currentId][drag.si];
+    const pt=pts[drag.pi];
+    if(drag.type==='anchor'){ pt.x=drag.orig.x+dx; pt.y=drag.orig.y+dy; }
+    else if(drag.type==='hOut'){
+      pt.hOut={dx:drag.orig.dx+dx,dy:drag.orig.dy+dy};
+      if(pt.smooth){const l=Math.hypot(pt.hOut.dx,pt.hOut.dy)||1;const il=Math.hypot(getHIn(pts,drag.pi).dx,getHIn(pts,drag.pi).dy)||l;pt.hIn={dx:-pt.hOut.dx/l*il,dy:-pt.hOut.dy/l*il};}
+    } else {
+      pt.hIn={dx:drag.orig.dx+dx,dy:drag.orig.dy+dy};
+      if(pt.smooth){const l=Math.hypot(pt.hIn.dx,pt.hIn.dy)||1;const ol=Math.hypot(getHOut(pts,drag.pi).dx,getHOut(pts,drag.pi).dy)||l;pt.hOut={dx:-pt.hIn.dx/l*ol,dy:-pt.hIn.dy/l*ol};}
+    }
+    redraw();updateJSON();
+    return;
+  }
+
+  // ── Hover feedback ──
+  if(mode==='edit'){
+    const hit=hitTest(x,y);
+    if(JSON.stringify(hit)!==JSON.stringify(hover)){
+      hover=hit; canvas.style.cursor=hit?'grab':'default'; redraw();
+    }
+  } else if(mode==='add'){
+    // Preview next click
+    redraw();
+    const pts=strokeDB[currentId][activeSI]||[];
+    if(pts.length>0){
+      const lp=pts[pts.length-1];
+      ctx.beginPath();ctx.moveTo(lp.x,lp.y);ctx.lineTo(x,y);
+      ctx.strokeStyle=COLORS[activeSI%COLORS.length];
+      ctx.lineWidth=1.5;ctx.globalAlpha=.3;ctx.setLineDash([4,4]);ctx.stroke();
+      ctx.setLineDash([]);ctx.globalAlpha=1;
+    }
+    ctx.beginPath();ctx.arc(x,y,4,0,Math.PI*2);
+    ctx.fillStyle=COLORS[activeSI%COLORS.length];ctx.globalAlpha=.45;ctx.fill();ctx.globalAlpha=1;
+  }
+}
+
+function onUp(e){
+  // ── Commit freehand segment ──
+  if(mode==='draw' && isRecording){
+    isRecording=false;
+    if(rawFreehand.length >= 2){
+      const eps = getEpsilon();
+      const simplified = rdp(rawFreehand, eps);
+      const existing = strokeDB[currentId][activeSI] || [];
+
+      // Save snapshot to history before appending
+      if(!segHistory[currentId][activeSI]) segHistory[currentId][activeSI] = [];
+      segHistory[currentId][activeSI].push(existing.map(p=>({...p})));
+
+      // Decide connection: if new start is close to last existing end, skip duplicate
+      let toAdd = simplified;
+      if(existing.length > 0){
+        const last = existing[existing.length-1];
+        const first = simplified[0];
+        if(Math.hypot(first.x - last.x, first.y - last.y) < 18) toAdd = simplified.slice(1);
+      }
+
+      // Append new segment's points
+      strokeDB[currentId][activeSI] = [
+        ...existing,
+        ...toAdd.map(p=>({x:Math.round(p.x), y:Math.round(p.y), smooth:true, hOut:null, hIn:null}))
+      ];
+    }
+    rawFreehand = [];
+    canvas.style.cursor = 'crosshair';
+    redraw(); updateStrokeList(); updateJSON(); autoSave();
+    return;
+  }
+
+  if(drag){ drag=null; autoSave(); updateStrokeList(); }
+}
+
+function onLeave(){
+  // DON'T auto-commit freehand on leave — user may re-enter to continue
+  // Just pause the preview (keep isRecording=true so they can continue on re-enter)
+  if(mode==='draw' && isRecording){
+    // Commit if they left with actual data
+    if(rawFreehand.length >= 2) onUp({clientX:rawFreehand[rawFreehand.length-1].x, clientY:rawFreehand[rawFreehand.length-1].y});
+    else { isRecording=false; rawFreehand=[]; }
+  }
+  if(drag){ drag=null; autoSave(); }
+  hover=null;
+  document.getElementById('coord').textContent='Arahkan mouse ke kanvas…';
+  redraw();
+}
+
+canvas.addEventListener('mousedown',  onDown, {passive:false});
+canvas.addEventListener('mousemove',  onMove, {passive:false});
+canvas.addEventListener('mouseup',    onUp);
+canvas.addEventListener('mouseleave', onLeave);
+canvas.addEventListener('touchstart', onDown, {passive:false});
+canvas.addEventListener('touchmove',  onMove, {passive:false});
+canvas.addEventListener('touchend',   onUp,   {passive:false});
+
+// Right-click = delete anchor (edit mode)
+canvas.addEventListener('contextmenu',e=>{
+  e.preventDefault();
+  if(mode!=='edit')return;
+  const {x,y}=getXY(e);
+  const hit=hitTest(x,y);
+  if(hit&&hit.type==='anchor'){
+    strokeDB[currentId][hit.si].splice(hit.pi,1);
+    hover=null; redraw();updateStrokeList();updateJSON();autoSave();
+  }
+});
+
+// Double-click = toggle smooth/corner (edit mode)
+canvas.addEventListener('dblclick',e=>{
+  if(mode!=='edit')return;
+  const {x,y}=getXY(e);
+  const hit=hitTest(x,y);
+  if(hit&&hit.type==='anchor'){
+    const pt=strokeDB[currentId][hit.si][hit.pi];
+    pt.smooth=!pt.smooth;
+    if(pt.smooth){pt.hIn=null;pt.hOut=null;}
+    redraw();autoSave();
+  }
+});
+
+// ================================================================
+// CONTROLS
+// ================================================================
+function setMode(m){
+  mode=m; drag=null; hover=null; isRecording=false; rawFreehand=[];
+  ['draw','add','edit'].forEach(id=>document.getElementById(`btn-${id}`).classList.toggle('active',id===m));
+  const hints={
+    draw: 'Tahan mouse → gesek mengikuti bentuk aksara → lepas untuk mengambil jalur',
+    add:  'Klik kanvas untuk menaruh titik satu per satu',
+    edit: 'Seret kotak biru = geser titik. Seret bulat putih = atur lengkung bezier. Klik kanan = hapus. Dobel klik = toggle smooth.'
+  };
+  document.getElementById('mode-hint').textContent=hints[m];
+  canvas.style.cursor=m==='edit'?'default':'crosshair';
+  redraw();
+}
+
+function addStroke(){
+  const strokes=strokeDB[currentId];
+  if(strokes[activeSI].length===0){alert(`Gambar garis ${activeSI+1} dulu!`);return;}
+  strokes.push([]);
+  activeSI=strokes.length-1;
+  if(!segHistory[currentId][activeSI]) segHistory[currentId][activeSI]=[];
+  redraw();updateStrokeList();
+}
+
+// Undo the last committed freehand segment (restores prior snapshot)
+function undoSegment(){
+  const hist = segHistory[currentId]?.[activeSI];
+  if(hist && hist.length > 0){
+    strokeDB[currentId][activeSI] = hist.pop();
+    redraw();updateStrokeList();updateJSON();autoSave();
+  } else {
+    // No segment history — just remove the last point
+    const pts=strokeDB[currentId][activeSI];
+    if(pts&&pts.length>0){pts.pop();redraw();updateStrokeList();updateJSON();autoSave();}
+  }
+}
+
+// Clear current stroke (keep other strokes intact)
+function clearStroke(){
+  if(!confirm(`Hapus semua titik Garis ${activeSI+1}?`))return;
+  segHistory[currentId][activeSI]=[];
+  strokeDB[currentId][activeSI]=[];
+  redraw();updateStrokeList();updateJSON();autoSave();
+}
+
+function resetAksara(){
+  if(!confirm(`Reset semua garis aksara "${currentId}"?`))return;
+  strokeDB[currentId]=[[]]; activeSI=0; drag=null; hover=null;
+  redraw();updateStrokeList();updateChips();updateJSON();autoSave();
+}
+
+function setActiveStroke(si){
+  activeSI=si; drag=null; hover=null; redraw();updateStrokeList();
+}
+
+function deleteStroke(si){
+  const strokes=strokeDB[currentId];
+  if(strokes.length<=1)strokes[0]=[];
+  else strokes.splice(si,1);
+  activeSI=Math.min(activeSI,strokeDB[currentId].length-1);
+  drag=null;hover=null;redraw();updateStrokeList();updateJSON();autoSave();
+}
+
+// Re-apply RDP to current stroke with new epsilon
+document.getElementById('eps-slider').addEventListener('input',()=>{
+  // Just update the label — rdp is applied on mouseup
+});
+
+// ================================================================
+// UI UPDATES
+// ================================================================
+function updateStrokeList(){
+  const strokes=strokeDB[currentId];
+  document.getElementById('stroke-list').innerHTML=strokes.map((pts,si)=>{
+    const c=COLORS[si%COLORS.length], act=si===activeSI;
+    return `<div class="stroke-item ${act?'active':pts.length?'has-pts':''}" onclick="setActiveStroke(${si})">
+      <div class="s-dot" style="color:${c};background:${c}22;">${si+1}</div>
+      <div class="s-meta">
+        <div class="s-name">Garis ${si+1}${act?' — aktif':''}</div>
+        <div class="s-pts">${pts.length} titik${!pts.length?' (kosong)':''}</div>
+      </div>
+      ${strokes.length>1?`<button class="s-del" onclick="event.stopPropagation();deleteStroke(${si})">✕</button>`:''}
+    </div>`;
+  }).join('');
+}
+
+function updateChips(){
+  document.getElementById('chips').innerHTML=ALL_IDS.map(id=>{
+    const has=strokeDB[id]&&strokeDB[id].some(s=>s.length>=2);
+    const cur=id===currentId;
+    return `<span class="chip"
+      onclick="document.getElementById('aksara-sel').value='${id}';selectAksara('${id}')"
+      style="background:${cur?'#5D4037':has?'#14532d':'#1a0f0a'};
+             color:${has?'#86efac':'#777'};
+             border-color:${cur?'#FFB300':has?'#22c55e':'#333'};">
+      ${id}</span>`;
+  }).join('');
+}
+
+function updateJSON(){
+  const out={};
+  ALL_IDS.forEach(id=>{
+    const valid=(strokeDB[id]||[])
+      .filter(pts=>pts.length>=2)
+      .map(pts=>{
+        const points=pts.map(p=>[Math.round(p.x/EXPORT_DIV),Math.round(p.y/EXPORT_DIV)]);
+        const hasManual=pts.some(p=>p.hOut||p.hIn);
+        if(!hasManual)return{points};
+        const segments=[];
+        for(let i=0;i<pts.length-1;i++){
+          const h0=getHOut(pts,i),h1=getHIn(pts,i+1);
+          segments.push([
+            Math.round((pts[i].x+h0.dx)/EXPORT_DIV),
+            Math.round((pts[i].y+h0.dy)/EXPORT_DIV),
+            Math.round((pts[i+1].x+h1.dx)/EXPORT_DIV),
+            Math.round((pts[i+1].y+h1.dy)/EXPORT_DIV)
+          ]);
+        }
+        return{points,segments};
+      });
+    if(valid.length>0)out[id]={strokes:valid};
+  });
+  document.getElementById('json-box').textContent=JSON.stringify(out,null,2);
+}
+
+async function exportJSON(){
+  updateJSON();
+  const text=document.getElementById('json-box').textContent;
+  try{
+    await navigator.clipboard.writeText(text);
+    const btn=document.getElementById('exp-btn');
+    btn.textContent='✅ Tersalin!';btn.style.background='#166534';
+    setTimeout(()=>{btn.textContent='📋 Salin JSON ke Clipboard';btn.style.background='';},2500);
+  }catch{prompt('Salin manual:',text);}
+}
+
+// ================================================================
+// PERSISTENCE
+// ================================================================
+function autoSave(){
+  try{localStorage.setItem('strokeEditorData_v3',JSON.stringify(strokeDB));}catch{}
+}
+function loadSaved(){
+  try{
+    const raw=localStorage.getItem('strokeEditorData_v3');
+    if(raw){
+      const p=JSON.parse(raw);
+      ALL_IDS.forEach(id=>{if(p[id])strokeDB[id]=p[id];});
+    }
+  }catch{}
+}
+setInterval(autoSave,3000);
+
+// ================================================================
+// KEYBOARD
+// ================================================================
+document.addEventListener('keydown',e=>{
+  if(e.target.tagName==='INPUT'||e.target.tagName==='SELECT')return;
+  if(e.key==='z'||e.key==='Z')undoPoint();
+  if(e.key==='n'||e.key==='N')addStroke();
+  if(e.key==='Tab'){e.preventDefault();const modes=['draw','add','edit'];const i=(modes.indexOf(mode)+1)%3;setMode(modes[i]);}
+  if(e.key==='Escape'){if(!confirm(`Reset "${currentId}"?`))return;resetAksara();}
+  if(e.key==='ArrowRight'){const next=ALL_IDS[(ALL_IDS.indexOf(currentId)+1)%ALL_IDS.length];document.getElementById('aksara-sel').value=next;selectAksara(next);}
+  if(e.key==='ArrowLeft'){const prev=ALL_IDS[(ALL_IDS.indexOf(currentId)-1+ALL_IDS.length)%ALL_IDS.length];document.getElementById('aksara-sel').value=prev;selectAksara(prev);}
+});
+
+// ================================================================
+// INIT
+// ================================================================
+loadSaved();
+selectAksara('ha');
+setMode('draw');
+</script>
+</body>
+</html>

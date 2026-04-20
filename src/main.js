@@ -18,6 +18,66 @@ if (overlay) {
   };
 }
 
+// =========================================================
+// HIDE-ON-SCROLL NAVBAR (mobile only, lg: tidak terpengaruh)
+// Mendukung dua pola layout:
+// - Layout A: scroll di body/window (beranda, beranda-pasinaon)
+// - Layout B: scroll di div flex-inner (legena, peta, pasangan)
+// =========================================================
+function setupHideOnScroll() {
+  const header = document.querySelector('header.lg\\:hidden');
+  if (!header) return;
+
+  let lastScrollY = 0;
+  let ticking = false;
+  const THRESHOLD = 8; // px minimal sebelum hide/show
+
+  function onScroll(currentY) {
+    if (!ticking) {
+      requestAnimationFrame(() => {
+        const isSidebarOpen = sidebar && !sidebar.classList.contains('-translate-x-full');
+        // Jangan hide kalau sidebar sedang terbuka
+        if (!isSidebarOpen) {
+          if (currentY > lastScrollY + THRESHOLD && currentY > 50) {
+            // Scroll ke bawah → sembunyikan navbar
+            header.classList.add('navbar-hidden');
+          } else if (currentY < lastScrollY - THRESHOLD || currentY <= 0) {
+            // Scroll ke atas → tampilkan navbar
+            header.classList.remove('navbar-hidden');
+          }
+        }
+        lastScrollY = currentY;
+        ticking = false;
+      });
+      ticking = true;
+    }
+  }
+
+  // Deteksi container scroll
+  const mainScrollArea = document.getElementById('main-scroll-area');
+  const scrollContainer = header.parentElement;
+
+  // 1. Prioritas ID spesifik (Legena, Peta, Pasangan)
+  if (mainScrollArea) {
+    mainScrollArea.addEventListener('scroll', () => onScroll(mainScrollArea.scrollTop), { passive: true });
+  } 
+  
+  // 2. Fallback ke Parent (Layout B)
+  if (scrollContainer) {
+    scrollContainer.addEventListener('scroll', () => onScroll(scrollContainer.scrollTop), { passive: true });
+  }
+
+  // 3. Fallback ke Window (Layout A: Beranda)
+  window.addEventListener('scroll', () => onScroll(window.scrollY), { passive: true });
+
+  // Munculkan kembali navbar saat sidebar dibuka
+  if (hamburger) {
+    hamburger.addEventListener('click', () => {
+      header.classList.remove('navbar-hidden');
+    });
+  }
+}
+
 // Fungsi untuk menambahkan centang pada menu yang sudah diselesaikan
 function addCompletionBadges() {
   // Cari link menu berdasarkan href
@@ -56,4 +116,7 @@ function addCompletionBadges() {
 }
 
 // Jalankan saat DOM siap
-document.addEventListener('DOMContentLoaded', addCompletionBadges);
+document.addEventListener('DOMContentLoaded', () => {
+  addCompletionBadges();
+  setupHideOnScroll();
+});
