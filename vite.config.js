@@ -12,6 +12,7 @@ export default defineConfig({
         peta: "peta.html",
         legena: "legena.html",
         pasangan: "pasangan.html",
+        pengenalan: "pengenalan.html",
       },
     },
   },
