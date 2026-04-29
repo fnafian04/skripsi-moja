@@ -115,8 +115,70 @@ function addCompletionBadges() {
   }
 }
 
+// =========================================================
+// LANDSCAPE ENFORCER (Mencegah Mode Portrait Pakai SweetAlert)
+// =========================================================
+let landscapeAlertShown = false;
+
+function enforceLandscape() {
+  if (window.innerWidth < 1024) {
+    if (window.innerHeight > window.innerWidth) {
+      if (!landscapeAlertShown) {
+        landscapeAlertShown = true;
+        
+        // Fungsi untuk memanggil Swal
+        const showWarning = () => {
+          Swal.fire({
+            icon: 'warning',
+            title: 'Puter HP Panjenengan!',
+            text: 'Aplikasi Pasinaon iki dirancang mirunggan kanggo tampilan layar mujur (Landscape).',
+            confirmButtonText: 'OK',
+            confirmButtonColor: '#3E2723',
+            allowOutsideClick: false,
+            allowEscapeKey: false,
+            customClass: {
+              popup: 'swal-paper',
+              title: 'swal-paper-title',
+              confirmButton: 'swal-paper-confirm'
+            }
+          }).then(() => {
+            landscapeAlertShown = false;
+            setTimeout(enforceLandscape, 500); // Cek ulang kalau user ngeyel klik OK
+          });
+        };
+
+        // Jika Swal belum diload (misal di halaman index), muat dulu via script
+        if (typeof Swal === 'undefined') {
+          const script = document.createElement('script');
+          script.src = "https://cdn.jsdelivr.net/npm/sweetalert2@11";
+          script.onload = showWarning;
+          document.head.appendChild(script);
+        } else {
+          showWarning();
+        }
+      }
+    } else {
+      // Jika diputar ke landscape, tutup alert-nya
+      if (landscapeAlertShown && typeof Swal !== 'undefined') {
+        Swal.close();
+        landscapeAlertShown = false;
+      }
+    }
+  } else {
+    // Layar besar (Laptop) aman
+    if (landscapeAlertShown && typeof Swal !== 'undefined') {
+      Swal.close();
+      landscapeAlertShown = false;
+    }
+  }
+}
+
+window.addEventListener('resize', enforceLandscape);
+window.addEventListener('orientationchange', enforceLandscape);
+
 // Jalankan saat DOM siap
 document.addEventListener('DOMContentLoaded', () => {
   addCompletionBadges();
   setupHideOnScroll();
+  enforceLandscape();
 });

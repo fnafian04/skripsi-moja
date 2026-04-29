@@ -140,6 +140,18 @@ document.addEventListener('DOMContentLoaded', () => {
     if (userProgress[key].status === 'success') updateCandiGlow(key, 'success');
     else if (userProgress[key].status === 'error') updateCandiGlow(key, 'error');
   }
+
+  // Tambahkan efek toel saat gambar candi di dalam buku diklik
+  const bookImg = document.getElementById("book-img");
+  if (bookImg) {
+    bookImg.style.cursor = "pointer";
+    bookImg.addEventListener("click", () => {
+      const wrapper = bookImg.parentElement;
+      wrapper.classList.remove("animate-duarr-1", "play-toel-wrapper");
+      void wrapper.offsetWidth; // Trigger reflow agar animasi bisa diulang
+      wrapper.classList.add("play-toel-wrapper");
+    });
+  }
 });
 
 window.openQuiz = (id) => {
@@ -147,23 +159,32 @@ window.openQuiz = (id) => {
   const data = candiData[id];
   const prog = userProgress[id];
 
-  document.getElementById("book-title").innerText = data.title;
-  // Logika Pintar: Jika imgSoal ada isinya, pakai itu. Jika kosong, pinjam gambar ikon peta.
-  document.getElementById("book-img").src = data.imgSoal ? data.imgSoal : data.img;
-  document.getElementById("book-desc").innerText = data.desc;
-  document.getElementById("book-lokasi").innerText = data.lokasi;
-  document.getElementById("q1-text").innerText = "1. " + data.q1;
-  document.getElementById("q2-text").innerText = "2. " + data.q2;
+  const hotspot = document.querySelector(`.hotspot[data-id="${id}"]`);
+  if (hotspot) {
+    hotspot.classList.add("animate-toel");
+    setTimeout(() => hotspot.classList.remove("animate-toel"), 400);
+  }
 
-  // Kembalikan teks jawaban
-  document.getElementById("ans1").value = prog.ans1;
-  document.getElementById("ans2").value = prog.ans2;
+  setTimeout(() => {
+    const titleEl = document.getElementById("book-title");
+    if (titleEl) titleEl.innerText = data.title;
+    // Logika Pintar: Jika imgSoal ada isinya, pakai itu. Jika kosong, pinjam gambar ikon peta.
+    document.getElementById("book-img").src = data.imgSoal ? data.imgSoal : data.img;
+    document.getElementById("book-desc").innerText = data.desc;
+    document.getElementById("book-lokasi").innerText = data.lokasi;
+    document.getElementById("q1-text").innerText = "1. " + data.q1;
+    document.getElementById("q2-text").innerText = "2. " + data.q2;
 
-  // Kembalikan status tooltips (Benar/Salah/Kosong)
-  applyFeedbackState("ans1", "feedback1", prog.q1State);
-  applyFeedbackState("ans2", "feedback2", prog.q2State);
+    // Kembalikan teks jawaban
+    document.getElementById("ans1").value = prog.ans1;
+    document.getElementById("ans2").value = prog.ans2;
 
-  document.getElementById("popup-book").classList.remove("hidden");
+    // Kembalikan status tooltips (Benar/Salah/Kosong)
+    applyFeedbackState("ans1", "feedback1", prog.q1State);
+    applyFeedbackState("ans2", "feedback2", prog.q2State);
+
+    document.getElementById("popup-book").classList.remove("hidden");
+  }, 250);
 };
 
 window.closeQuiz = () => {

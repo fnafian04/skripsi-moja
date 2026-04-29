@@ -141,15 +141,13 @@
     display: none;
   }
   
-  @media (max-height: 500px) and (orientation: landscape) {
-    #popup-book {
-      padding: 2px !important;
-      align-items: flex-start !important;
-    }
-  
-    .book-container {
-      margin-top: 5px;
-      transform: scale(0.85);
-      transform-origin: top center;
-    }
+
+
+  /* Hilangkan Scrollbar tapi tetap bisa di-scroll */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
   }
