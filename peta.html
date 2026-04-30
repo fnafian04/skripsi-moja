@@ -120,13 +120,11 @@
       </main>
     </div>
 
-    <div id="popup-book" class="fixed inset-0 z-[100] hidden overflow-auto bg-black/70 backdrop-blur-sm">
+    <div id="popup-book" class="fixed inset-0 z-[100] hidden flex items-center justify-center p-2 md:p-6 bg-black/70 backdrop-blur-sm">
       
-      <!-- Scrollable Centered Container -->
-      <div class="w-fit h-fit min-w-full min-h-full flex items-center justify-center p-4 md:p-8">
-        
-        <!-- WRAPPER UTAMA (Di-set ukuran minimal 750x450 agar buku tetap utuh dan bisa discroll di HP) -->
-        <div class="relative w-[750px] md:w-[90vw] max-w-5xl h-[450px] md:h-[85vh] lg:h-[550px] flex-shrink-0 flex items-center justify-center" style="perspective: 1500px;">
+      <!-- WRAPPER UTAMA (Fixed Aspect Ratio) -->
+      <!-- Menggunakan aspect-ratio agar bentuk buku selalu konsisten proporsinya (tidak penyok) di HP maupun Web -->
+      <div class="relative flex items-center justify-center mx-auto" style="aspect-ratio: 8/5; height: 85vh; max-height: 550px; max-width: 95vw; perspective: 1500px;">
         
         <!-- LAPISAN 1: BUKU 3D (Lebih tidur: 65deg) -->
         <div class="book-container absolute inset-0 w-full h-full bg-wood-css p-2 md:p-4 rounded-sm book-3d-shadow flex flex-col pointer-events-none z-0">
@@ -183,7 +181,8 @@
         </div>
 
         <!-- LAPISAN 2: KONTEN 2D OVERLAY (Tegak Lurus, Rapi, Terpisah dari Buku) -->
-        <div class="popup-overlay absolute w-full h-[65%] flex flex-row z-10 pointer-events-none">
+        <!-- Menambahkan top-[10%] md:top-[12%] agar konten tidak tumpah melewati garis bawah buku -->
+        <div class="popup-overlay absolute top-[10%] md:top-[12%] w-full h-[65%] flex flex-row z-10 pointer-events-none">
           <button onclick="closeQuiz()" class="btn-close-3d absolute -top-3 -right-3 md:-top-5 md:-right-5 bg-red-800 text-[#FFB300] px-3 py-1 md:px-4 md:py-2 rounded-full font-bold border-2 border-[#FFB300] cursor-pointer z-[200] pointer-events-auto">
             ✖
           </button>
@@ -232,8 +231,6 @@
             <button onclick="checkAllAnswers()" class="animate-duarr-3 btn-modern-3d w-[80%] md:w-[70%] mx-auto py-1.5 md:py-2.5 text-[9px] md:text-sm font-serif z-10 flex-shrink-0 pointer-events-auto mt-3 md:mt-6 mb-1 md:mb-2 uppercase font-bold tracking-wider">PRIKSA WANGSULAN</button>
           </div>
         </div>
-      </div>
-      
       </div>
     </div>
 
