@@ -142,24 +142,8 @@ function enforceLandscape() {
               confirmButton: 'swal-paper-confirm'
             }
           }).then(() => {
-            // Coba paksa fullscreen dan lock orientasi landscape
-            try {
-              let docEl = document.documentElement;
-              let requestFS = docEl.requestFullscreen || docEl.webkitRequestFullscreen || docEl.msRequestFullscreen;
-              
-              if (requestFS) {
-                requestFS.call(docEl).then(() => {
-                  if (screen.orientation && screen.orientation.lock) {
-                    screen.orientation.lock("landscape").catch(e => console.log("Gagal lock orientasi:", e));
-                  }
-                }).catch(e => console.log("Gagal request fullscreen:", e));
-              }
-            } catch (error) {
-              console.log("Browser tidak mendukung force landscape:", error);
-            }
-
             landscapeAlertShown = false;
-            setTimeout(enforceLandscape, 1500); // Beri waktu lebih lama sebelum cek ulang agar efek rotate terasa
+            setTimeout(enforceLandscape, 500); // Cek ulang kalau user ngeyel klik OK
           });
         };
 
