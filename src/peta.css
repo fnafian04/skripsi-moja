@@ -206,7 +206,7 @@
     }
 
     .page-right {
-      transform: translateY(-20px) !important; /* Angkat sisi kanan agar tidak lewat bawah buku */
+      transform: translateY(-5px) !important;
     }
 
     #book-img {
@@ -218,7 +218,7 @@
 
     .book-banner {
       padding: 2px !important;
-      margin-top: -10px !important;
+      margin-top: 0 !important;
     }
 
     .book-banner h2, .book-banner h3 {
