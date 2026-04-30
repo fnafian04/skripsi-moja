@@ -1,5 +1,30 @@
 import "./peta.css";
 
+window.openIntroCover = () => {
+  const wrapper = document.getElementById("intro-book-wrapper");
+  const frontCover = document.getElementById("intro-front-cover");
+  const introCover = document.getElementById("map-cover-intro");
+  
+  if(wrapper && frontCover && introCover) {
+    // 1. Hanya buka sampul depannya saja seperti membuka kotak/cover
+    // Biarkan wrapper (halaman tebalnya) tetap pada posisi tilt aslinya tanpa bergerak sedikitpun
+    frontCover.style.transform = "rotateY(-120deg) translateZ(2px)";
+    
+    // 2. Tunggu sebentar agar user melihat isinya, lalu zoom in ke peta
+    setTimeout(() => {
+      // Zoom in menembus ke dalam halaman sambil mempertahankan tilt 3D-nya
+      wrapper.style.transform = "rotateY(15deg) rotateX(10deg) scale(15)";
+      wrapper.style.opacity = "0";
+      introCover.style.opacity = "0";
+      introCover.style.pointerEvents = "none";
+      
+      setTimeout(() => {
+        introCover.classList.add("hidden");
+      }, 1500);
+    }, 1200);
+  }
+};
+
 export const candiData = {
   brahu: {
     title: "Candi Brahu",
