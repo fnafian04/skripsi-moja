@@ -162,7 +162,7 @@ window.openQuiz = (id) => {
   const hotspot = document.querySelector(`.hotspot[data-id="${id}"]`);
   if (hotspot) {
     hotspot.classList.add("animate-toel");
-    setTimeout(() => hotspot.classList.remove("animate-toel"), 400);
+    setTimeout(() => hotspot.classList.remove("animate-toel"), 300);
   }
 
   setTimeout(() => {
@@ -277,15 +277,15 @@ function applyFeedbackState(inputId, feedbackId, state) {
 
   feedback.classList.add("show");
   if (state === "correct") {
-    feedback.innerText = "Jawaban Benar! ✅";
+    feedback.innerText = "Wangsulan Bener! ✅";
     feedback.classList.add("feedback-correct");
     input.classList.add("border-green-500", "bg-green-50");
   } else if (state === "wrong") {
-    feedback.innerText = "Jawaban Salah! ❌";
+    feedback.innerText = "Wangsulan Salah! ❌";
     feedback.classList.add("feedback-wrong");
     input.classList.add("border-red-500", "bg-red-50");
   } else if (state === "empty") {
-    feedback.innerText = "Sek Kosong! ⚠️";
+    feedback.innerText = "Isih Kosong! ⚠️";
     feedback.classList.add("feedback-empty");
     input.classList.add("border-yellow-500", "bg-yellow-50");
   }

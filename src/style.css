@@ -99,6 +99,53 @@
     transform: translate(2px, 2px) !important;
     box-shadow: 0px 0px 0px #FFB300 !important;
   }
+
+  /* --- FIX HP LANDSCAPE & MOBILE SWEETALERT --- */
+  @media (max-width: 768px) {
+    .swal-paper {
+      padding: 1em 1.5em !important;
+      width: 90% !important;
+      max-width: 450px !important;
+    }
+    .swal-paper-title {
+      font-size: 1.2rem !important;
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+    .swal2-html-container {
+      font-size: 0.85rem !important;
+      margin: 0.5em 0 !important;
+    }
+    .swal-paper-confirm {
+      padding: 0.4em 1em !important;
+      font-size: 0.85rem !important;
+    }
+    .swal2-icon {
+      transform: scale(0.6) !important;
+      margin: -10px auto -15px !important;
+    }
+  }
+
+  @media (max-height: 500px) and (orientation: landscape) {
+    .swal-paper {
+      padding: 0.5em 2em !important;
+      width: 90% !important;
+      max-width: 550px !important; /* Lebar lebih besar biar teks gak numpuk ke bawah */
+    }
+    .swal-paper-title {
+      font-size: 1.1rem !important;
+    }
+    .swal2-html-container {
+      font-size: 0.8rem !important;
+      margin: 0.3em 0 !important;
+    }
+    .swal2-icon {
+      display: none !important; /* Sembunyikan icon agar ruang vertikal lebih lega */
+    }
+    .swal2-actions {
+      margin: 0.3em 0 0 !important;
+    }
+  }
   
   /* =========================================================
      3. SIDEBAR & NAVIGASI
