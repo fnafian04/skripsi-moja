@@ -20,8 +20,34 @@ window.openIntroCover = () => {
       
       setTimeout(() => {
         introCover.classList.add("hidden");
+        
+        // Tampilkan Peta Dora
+        const doraMap = document.getElementById("dora-map-overlay");
+        const doraContent = document.getElementById("dora-map-content");
+        if(doraMap && doraContent) {
+          doraMap.classList.remove("hidden");
+          // Trigger reflow
+          void doraMap.offsetWidth;
+          doraMap.classList.remove("opacity-0");
+          doraContent.classList.remove("scale-0", "translate-y-20");
+          doraContent.classList.add("scale-100", "translate-y-0");
+        }
       }, 1500);
     }, 1200);
+  }
+};
+
+window.closeDoraMap = () => {
+  const doraMap = document.getElementById("dora-map-overlay");
+  const doraContent = document.getElementById("dora-map-content");
+  if(doraMap && doraContent) {
+    doraContent.classList.remove("scale-100", "translate-y-0");
+    doraContent.classList.add("scale-150", "translate-y-20", "opacity-0"); // Zoom in effect
+    doraMap.classList.add("opacity-0");
+    
+    setTimeout(() => {
+      doraMap.classList.add("hidden");
+    }, 800);
   }
 };
 
