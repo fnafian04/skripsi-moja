@@ -1,5 +1,28 @@
 import "./legena.css";
 
+window.openLegenaCover = () => {
+  const wrapper = document.getElementById("legena-intro-book-wrapper");
+  const frontCover = document.getElementById("legena-intro-front-cover");
+  const introCover = document.getElementById("legena-cover-intro");
+  
+  if(wrapper && frontCover && introCover) {
+    // 1. Hanya buka sampul depannya saja seperti membuka kotak/cover
+    frontCover.style.transform = "rotateY(-120deg) translateZ(2px)";
+    
+    // 2. Tunggu sebentar agar user melihat isinya, lalu zoom in ke buku yang sudah terbuka
+    setTimeout(() => {
+      // Zoom in menembus ke dalam halaman
+      wrapper.style.transform = "rotateY(15deg) rotateX(10deg) scale(15)";
+      wrapper.style.opacity = "0";
+      introCover.style.opacity = "0";
+      introCover.style.pointerEvents = "none";
+      
+      setTimeout(() => {
+        introCover.classList.add("hidden");
+      }, 1500);
+    }, 1200);
+  }
+};
 const aksaraData = [
   [
     { id: "ha", name: "Ha", img: "/assets/aksara-ha.png" },
