@@ -69,15 +69,18 @@ function renderBook() {
 
   let leftHTML = `
     <div class="page-left flex-1 w-1/2 p-1 pl-2 pr-3 md:p-4 md:pl-8 md:pr-10 flex flex-col items-center pointer-events-auto justify-start" style="transform: scale(0.92); transform-origin: top center;">
-      <div class="book-banner w-[95%] md:w-[85%] py-0.5 md:py-1 text-center mb-1 md:mb-2 z-10 flex-shrink-0 mt-0">
+      <div class="book-banner w-[95%] md:w-[85%] py-0.5 md:py-1 text-center mb-0 z-10 flex-shrink-0 mt-0">
         <h2 class="text-[10px] md:text-base font-serif font-bold tracking-wide leading-none">Aksara Dasar</h2>
       </div>
-      <div class="flex flex-col w-full items-center mt-1 md:mt-2 gap-1.5 md:gap-4">
+      
+      <!-- Konten Utama (Cards) -->
+      <div class="flex flex-col w-full items-center my-auto gap-2 md:gap-4 flex-shrink-0 z-20">
         <div class="flex flex-row justify-center w-full gap-2 md:gap-4">${createCard(items[0])}${createCard(items[1])}</div>
         <div class="flex flex-row justify-center w-full gap-2 md:gap-4">${createCard(items[2])}${createCard(items[3])}${createCard(items[4])}</div>
       </div>
       
-      <div class="w-full flex justify-start items-center mt-auto flex-shrink-0">
+      <!-- Navigasi Bawah -->
+      <div class="w-full flex justify-start items-center flex-shrink-0">
         <button onclick="prevPage()" class="btn-modern-3d text-[7px] md:text-[11px] font-bold tracking-wider px-1.5 py-1 md:px-3" ${currentPage === 0 ? "disabled" : ""}>
           <span style="display: flex; gap: 2px; align-items: center;"><span>⬅</span><span>BALENI</span></span>
         </button>
@@ -87,21 +90,25 @@ function renderBook() {
 
   let rightHTML = `
     <div class="page-right flex-1 w-1/2 p-1 pr-2 pl-3 md:p-4 md:pr-8 md:pl-10 flex flex-col items-center pointer-events-auto relative justify-start" style="transform: scale(0.92); transform-origin: top center;">
-      <div class="book-banner w-[95%] md:w-[85%] mx-auto py-0 md:py-1 text-center mb-0.5 md:mb-1 z-10 flex-shrink-0 mt-0" style="background: linear-gradient(to bottom, #A1887F, #5D4037);">
+      <div class="book-banner w-[95%] md:w-[85%] mx-auto py-0.5 md:py-1 text-center mb-0 z-10 flex-shrink-0 mt-0" style="background: linear-gradient(to bottom, #A1887F, #5D4037);">
         <h3 class="font-serif text-[10px] md:text-base font-bold text-[#FFF3E0] leading-none">Latihan Nulis</h3>
       </div>
-      <p class="text-[6.5px] md:text-[11px] text-center italic text-[#5D4037] mb-0.5 md:mb-1 font-serif flex-shrink-0">"Pilih maks 2 aksara kanggo latihan"</p>
       
-      <div class="flex flex-col w-full items-center mt-0 gap-0.5 md:gap-2">
+      <!-- Konten Utama (Checkboxes) -->
+      <div class="flex flex-col w-full items-center my-auto gap-1 md:gap-3 flex-shrink-0 z-20 relative">
+        <div class="w-full flex justify-end pr-2 md:pr-4 mb-[-2px] md:mb-[-6px]">
+          <span class="text-[4.5px] md:text-[8px] italic text-[#5D4037] font-bold font-serif leading-none">"Pilih maks 2 aksara"</span>
+        </div>
         <div class="flex flex-row justify-center w-full gap-1 md:gap-3">${createCheckbox(items[0])}${createCheckbox(items[1])}</div>
         <div class="flex flex-row justify-center w-full gap-1 md:gap-3">${createCheckbox(items[2])}${createCheckbox(items[3])}${createCheckbox(items[4])}</div>
       </div>
       
-      <div class="w-[95%] md:w-[85%] mt-1 md:mt-2 mb-1 flex-shrink-0">
+      <div class="w-[95%] md:w-[85%] mb-1 flex-shrink-0">
         <button onclick="startTracing()" class="btn-modern-3d w-full py-1 md:py-1.5 text-[7px] md:text-[12px] font-bold tracking-widest shadow-lg hover:scale-[1.02] transition-transform">MULAI NEBALI ✍️</button>
       </div>
       
-      <div class="w-full flex justify-between items-center mt-auto flex-shrink-0">
+      <!-- Navigasi Bawah -->
+      <div class="w-full flex justify-between items-center flex-shrink-0">
         <span class="text-[#3E2723] font-bold text-[7px] md:text-[11px]">Hal ${currentPage + 1}/4</span>
         <button onclick="nextPage()" class="btn-modern-3d text-[7px] md:text-[11px] font-bold tracking-wider px-1.5 py-1 md:px-3" ${currentPage === aksaraData.length - 1 || !completedPages[currentPage] ? "disabled" : ""}>
           <span style="display: flex; gap: 2px; align-items: center;"><span>LANJUT</span><span>➡</span></span>
