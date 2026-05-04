@@ -77,7 +77,7 @@ function renderBook() {
         <div class="flex flex-row justify-center w-full gap-2 md:gap-4">${createCard(items[2])}${createCard(items[3])}${createCard(items[4])}</div>
       </div>
       
-      <div class="w-full flex justify-start items-center mt-auto pt-0.5 md:pt-1 border-t border-dashed border-[#5D4037]/30 flex-shrink-0">
+      <div class="w-full flex justify-start items-center mt-auto flex-shrink-0">
         <button onclick="prevPage()" class="btn-modern-3d text-[7px] md:text-[11px] font-bold tracking-wider px-1.5 py-1 md:px-3" ${currentPage === 0 ? "disabled" : ""}>
           <span style="display: flex; gap: 2px; align-items: center;"><span>⬅</span><span>BALENI</span></span>
         </button>
@@ -97,11 +97,11 @@ function renderBook() {
         <div class="flex flex-row justify-center w-full gap-1 md:gap-3">${createCheckbox(items[2])}${createCheckbox(items[3])}${createCheckbox(items[4])}</div>
       </div>
       
-      <div class="w-[95%] md:w-[85%] mt-1 md:mt-2 mb-0.5 md:mb-1 flex-shrink-0">
+      <div class="w-[95%] md:w-[85%] mt-1 md:mt-2 mb-1 flex-shrink-0">
         <button onclick="startTracing()" class="btn-modern-3d w-full py-1 md:py-1.5 text-[7px] md:text-[12px] font-bold tracking-widest shadow-lg hover:scale-[1.02] transition-transform">MULAI NEBALI ✍️</button>
       </div>
       
-      <div class="w-full flex justify-between items-center mt-auto pt-0.5 md:pt-1 border-t border-dashed border-[#5D4037]/30 flex-shrink-0">
+      <div class="w-full flex justify-between items-center mt-auto flex-shrink-0">
         <span class="text-[#3E2723] font-bold text-[7px] md:text-[11px]">Hal ${currentPage + 1}/4</span>
         <button onclick="nextPage()" class="btn-modern-3d text-[7px] md:text-[11px] font-bold tracking-wider px-1.5 py-1 md:px-3" ${currentPage === aksaraData.length - 1 || !completedPages[currentPage] ? "disabled" : ""}>
           <span style="display: flex; gap: 2px; align-items: center;"><span>LANJUT</span><span>➡</span></span>

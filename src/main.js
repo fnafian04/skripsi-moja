@@ -76,6 +76,28 @@ function setupHideOnScroll() {
       header.classList.remove('navbar-hidden');
     });
   }
+
+  // === Tambahan: Deteksi Swipe untuk layar yang tidak bisa di-scroll ===
+  let touchStartY = 0;
+  window.addEventListener('touchstart', (e) => {
+    touchStartY = e.touches[0].clientY;
+  }, { passive: true });
+
+  window.addEventListener('touchmove', (e) => {
+    const isSidebarOpen = sidebar && !sidebar.classList.contains('-translate-x-full');
+    if (!isSidebarOpen) {
+      const touchY = e.touches[0].clientY;
+      const diff = touchStartY - touchY;
+      
+      if (diff > 30) { 
+        // Swipe Up -> Sembunyikan navbar
+        header.classList.add('navbar-hidden');
+      } else if (diff < -30) { 
+        // Swipe Down -> Tampilkan navbar
+        header.classList.remove('navbar-hidden');
+      }
+    }
+  }, { passive: true });
 }
 
 // Fungsi untuk menambahkan centang pada menu yang sudah diselesaikan
