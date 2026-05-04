@@ -70,41 +70,41 @@ function renderBook() {
   const items = aksaraData[currentPage];
 
   let leftHTML = `
-    <div class="page-left flex-1 w-1/2 p-3 md:p-5 flex flex-col items-center bg-[#fdf5e6] overflow-y-auto">
-      <div class="book-banner w-[80%] py-1.5 md:py-2 text-center mb-5 z-10 flex-shrink-0">
-        <h2 class="text-[13px] md:text-lg font-serif font-bold tracking-wide">Aksara Dasar</h2>
+    <div class="page-left flex-1 w-1/2 p-2 pl-3 pr-4 md:p-4 md:pl-8 md:pr-10 flex flex-col items-center pointer-events-auto justify-start" style="transform: scale(0.88); transform-origin: top center;">
+      <div class="book-banner w-[85%] py-1 md:py-1.5 text-center mb-4 z-10 flex-shrink-0 mt-0">
+        <h2 class="text-[12px] md:text-base font-serif font-bold tracking-wide leading-none">Aksara Dasar</h2>
       </div>
-      <div class="flex flex-col w-full items-center flex-1 justify-center" style="gap: 12px;">
-        <div class="flex flex-row justify-center w-full" style="gap: 12px;">${createCard(items[0])}${createCard(items[1])}</div>
-        <div class="flex flex-row justify-center w-full" style="gap: 12px;">${createCard(items[2])}${createCard(items[3])}</div>
-        <div class="flex flex-row justify-center w-full" style="gap: 12px;">${createCard(items[4])}</div>
+      <div class="flex flex-col w-full items-center mt-1" style="gap: 12px;">
+        <div class="flex flex-row justify-center w-full" style="gap: 16px;">${createCard(items[0])}${createCard(items[1])}</div>
+        <div class="flex flex-row justify-center w-full" style="gap: 16px;">${createCard(items[2])}${createCard(items[3])}</div>
+        <div class="flex flex-row justify-center w-full" style="gap: 16px;">${createCard(items[4])}</div>
       </div>
     </div>
   `;
 
   let rightHTML = `
-    <div class="page-right flex-1 w-1/2 p-3 md:p-5 flex flex-col items-center bg-[#fdf5e6]/50 overflow-y-auto">
-      <div class="book-banner w-[80%] mx-auto py-1.5 md:py-2 text-center mb-5 z-10 flex-shrink-0" style="background: linear-gradient(to bottom, #A1887F, #5D4037);">
-        <h3 class="font-serif text-[11px] md:text-lg font-bold text-[#FFF3E0]">Latihan Nulis</h3>
+    <div class="page-right flex-1 w-1/2 p-2 pr-3 pl-4 md:p-4 md:pr-8 md:pl-10 flex flex-col items-center pointer-events-auto relative justify-start" style="transform: scale(0.88); transform-origin: top center;">
+      <div class="book-banner w-[85%] mx-auto py-1 md:py-1.5 text-center mb-1 z-10 flex-shrink-0 mt-0" style="background: linear-gradient(to bottom, #A1887F, #5D4037);">
+        <h3 class="font-serif text-[11px] md:text-base font-bold text-[#FFF3E0] leading-none">Latihan Nulis</h3>
       </div>
-      <p class="text-[9px] md:text-[13px] text-center italic text-[#5D4037] mb-5 font-serif flex-shrink-0">"Pilih maksimal 2 aksara kanggo latihan"</p>
+      <p class="text-[9px] md:text-[11px] text-center italic text-[#5D4037] mb-3 font-serif flex-shrink-0">"Pilih maksimal 2 aksara kanggo latihan"</p>
       
-      <div class="flex flex-col w-full items-center flex-1" style="gap: 10px;">
-        <div class="flex flex-row justify-center w-full" style="gap: 10px;">${createCheckbox(items[0])}${createCheckbox(items[1])}</div>
-        <div class="flex flex-row justify-center w-full" style="gap: 10px;">${createCheckbox(items[2])}${createCheckbox(items[3])}</div>
-        <div class="flex flex-row justify-center w-full" style="gap: 10px;">${createCheckbox(items[4])}</div>
-      </div>
-      
-      <div class="w-[80%] mt-5 mb-4 flex-shrink-0">
-        <button onclick="startTracing()" class="btn-modern-3d w-full py-2 md:py-2.5 text-[10px] md:text-[13px] font-bold tracking-widest shadow-lg hover:scale-[1.02] transition-transform">MULAI NEBALI ✍️</button>
+      <div class="flex flex-col w-full items-center mt-1" style="gap: 12px;">
+        <div class="flex flex-row justify-center w-full" style="gap: 12px;">${createCheckbox(items[0])}${createCheckbox(items[1])}</div>
+        <div class="flex flex-row justify-center w-full" style="gap: 12px;">${createCheckbox(items[2])}${createCheckbox(items[3])}</div>
+        <div class="flex flex-row justify-center w-full" style="gap: 12px;">${createCheckbox(items[4])}</div>
       </div>
       
-      <div class="w-full flex justify-between items-center mt-auto pt-3 border-t border-dashed border-[#5D4037]/30 flex-shrink-0">
-        <button onclick="prevPage()" class="btn-modern-3d text-[9px] md:text-[11px] font-bold tracking-wider" style="padding: 6px 16px;" ${currentPage === 0 ? "disabled" : ""}>
+      <div class="w-[85%] mt-5 mb-2 flex-shrink-0">
+        <button onclick="startTracing()" class="btn-modern-3d w-full py-1.5 md:py-2 text-[10px] md:text-[12px] font-bold tracking-widest shadow-lg hover:scale-[1.02] transition-transform">MULAI NEBALI ✍️</button>
+      </div>
+      
+      <div class="w-full flex justify-between items-center mt-auto pt-2 border-t border-dashed border-[#5D4037]/30 flex-shrink-0">
+        <button onclick="prevPage()" class="btn-modern-3d text-[9px] md:text-[11px] font-bold tracking-wider" style="padding: 4px 12px;" ${currentPage === 0 ? "disabled" : ""}>
           <span style="display: flex; gap: 4px; align-items: center;"><span>⬅</span><span>BALENI</span></span>
         </button>
         <span class="text-[#3E2723] font-bold text-[9px] md:text-[11px]">Hal ${currentPage + 1}/4</span>
-        <button onclick="nextPage()" class="btn-modern-3d text-[9px] md:text-[11px] font-bold tracking-wider" style="padding: 6px 16px;" ${currentPage === aksaraData.length - 1 || !completedPages[currentPage] ? "disabled" : ""}>
+        <button onclick="nextPage()" class="btn-modern-3d text-[9px] md:text-[11px] font-bold tracking-wider" style="padding: 4px 12px;" ${currentPage === aksaraData.length - 1 || !completedPages[currentPage] ? "disabled" : ""}>
           <span style="display: flex; gap: 4px; align-items: center;"><span>LANJUT</span><span>➡</span></span>
         </button>
       </div>

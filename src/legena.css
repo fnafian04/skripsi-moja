@@ -1,50 +1,90 @@
 /* =========================================================
    SISTEM BUKU 3D (DIKLONING 100% DARI PETA)
    ========================================================= */
-   .book-container {
-    transform: rotateX(20deg); 
-    transform-style: preserve-3d;
-    border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px !important;
-    min-width: 750px !important; 
-    margin: auto;
+.book-container {
+  transform: rotateX(65deg) rotateZ(-1deg);
+  transform-style: preserve-3d;
+  box-shadow: 0 40px 60px rgba(0, 0, 0, 0.8);
+  animation: bookOpen3DLegena 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+@keyframes bookOpen3DLegena {
+  0% {
+    transform: rotateX(75deg) rotateZ(-1deg) scale(0.8);
+    opacity: 0;
   }
-  
-  .book-content {
-    flex-direction: row !important;
-    border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px !important;
-    transform-style: preserve-3d !important;
+  100% {
+    transform: rotateX(65deg) rotateZ(-1deg) scale(1);
+    opacity: 1;
   }
-  
-  .page-left, .page-right {
-    width: 50% !important;
-    flex: 1 !important;
-    overflow-y: auto !important;
+}
+
+/* --- FIX HP LANDSCAPE (Layar Pendek / max-height 500px) --- */
+@media (max-height: 500px) and (orientation: landscape) {
+  .book-container {
+    animation: bookOpen3DMobileLegena 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards !important;
   }
-  
-  .page-left {
-    box-shadow: inset -25px 0 35px -15px rgba(0, 0, 0, 0.6) !important;
-    border-right: none !important;
+}
+
+@keyframes bookOpen3DMobileLegena {
+  0% {
+    transform: rotateX(70deg) rotateZ(-1deg) scale(0.8) translateY(5%);
+    opacity: 0;
   }
-  
-  .page-right {
-    box-shadow: inset 25px 0 35px -15px rgba(0, 0, 0, 0.5) !important;
-    border-left: none !important;
+  100% {
+    transform: rotateX(60deg) rotateZ(-1deg) scaleX(1.05) scaleY(1.2) translateY(5%);
+    opacity: 1;
   }
-  
-  /* JURUS PAMUNGKAS SCROLL HP */
-  @media (max-width: 800px) {
-    #main-scroll-area {
-      display: block !important;
-      overflow-x: auto !important;
-      padding: 1rem !important;
-    }
-    .book-container {
-      display: inline-block !important;
-      margin: 0 !important;
-      height: auto !important;
-      min-height: 80vh !important;
-    }
-  }
+}
+
+.book-container, .book-content {
+  border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px !important;
+}
+
+.book-content {
+  position: relative;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  transform-style: preserve-3d !important;
+}
+
+/* Ketebalan Buku (Hanya sisi kanan) */
+.book-content::after {
+  content: "";
+  position: absolute;
+  width: 50%;
+  right: 0;
+  height: 100%;
+  top: 0;
+  transform: translateZ(-2px);
+  background: #fdf5e6;
+  border-radius: 0 15px 15px 0;
+  box-shadow: 
+    1px 1px 0 #d7ccc8, 
+    2px 2px 0 #d7ccc8, 
+    3px 3px 0 #d7ccc8, 
+    4px 4px 0 #d7ccc8, 
+    5px 5px 0 #d7ccc8, 
+    6px 6px 0 #d7ccc8, 
+    7px 7px 0 #d7ccc8, 
+    8px 8px 0 #d7ccc8, 
+    9px 9px 0 #d7ccc8, 
+    10px 10px 0 #d7ccc8, 
+    11px 11px 0 #d7ccc8, 
+    12px 12px 0 #d7ccc8, 
+    13px 13px 0 #d7ccc8, 
+    14px 14px 0 #d7ccc8, 
+    15px 15px 15px rgba(0, 0, 0, 0.5);
+}
+
+.page-left {
+  border-right: none !important;
+}
+
+.page-right {
+  border-left: none !important;
+}
+
+
   
   /* =========================================================
      BANNER & TOMBOL MODERN
@@ -163,98 +203,19 @@
     background-color: #FFF8E1 !important; /* Warnanya agak menguning dikit biar makin spesial */
   }
 
-  /* =========================================================
-   EFEK BUKU MIRING 3D (PERSIS KAYAK DI PETA)
-   ========================================================= */
-.book-container {
-  transform: rotateX(30deg); /* Kemiringan buku */
-  transform-style: preserve-3d;
-  box-shadow: 0 40px 60px rgba(0, 0, 0, 0.8) !important;
-  border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px !important; /* Efek kertas melengkung */
-  background-color: #5D4037 !important; /* Warna cover kayu */
-}
-
-.book-content {
-  transform-style: preserve-3d !important;
-  border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px !important;
-}
-
-/* Bayangan lipatan tengah buku */
-.page-left {
-  box-shadow: inset -25px 0 35px -15px rgba(0, 0, 0, 0.6) !important;
-}
-
-.page-right {
-  box-shadow: inset 25px 0 35px -15px rgba(0, 0, 0, 0.5) !important;
-}
-
-/* Bikin Banner Judul ikutan melayang 3D dikit (opsional tapi keren) */
-.book-banner {
-  transform: translateZ(10px);
-  box-shadow: 0 8px 0px #221310, 0 15px 20px rgba(0, 0, 0, 0.4) !important;
-}
-
 /* =========================================================
    EFEK CHECKBOX TIMBUL SAAT DICENTANG
    ========================================================= */
-   .checkbox-label {
-    transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  }
-  
-  .checkbox-label:has(.aksara-checkbox:checked) {
-    transform: translateY(-4px) !important;
-    box-shadow: 0 4px 0px rgba(93, 64, 55, 0.3), 0 8px 10px rgba(0, 0, 0, 0.2) !important;
-    background-color: #FFF8E1 !important;
-    border-color: #5D4037 !important;
-  }
+.checkbox-label {
+  transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
 
-/* =========================================================
-   EFEK BUKU MIRING 3D (PERSIS KAYAK DI PETA)
-   ========================================================= */
-   .book-container {
-    transform: rotateX(30deg);
-    transform-style: preserve-3d;
-    /* Bayangan super tebal buat ngasih ilusi buku tebal */
-    box-shadow: 0 40px 60px rgba(0, 0, 0, 0.8), 0 15px 25px rgba(0, 0, 0, 0.6) !important;
-    /* Samain lengkungan cover sama kertasnya biar rapi! */
-    border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px !important;
-    /* Warna cover buku abu-abu kecoklatan yang nongol jadi pinggiran */
-    background-color: #4b433c !important; 
-  }
-  
-  .book-content {
-    transform-style: preserve-3d !important;
-    border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px !important;
-  }
-  
-  /* Bayangan lipatan tengah buku */
-  .page-left {
-    box-shadow: inset -25px 0 35px -15px rgba(0, 0, 0, 0.6) !important;
-  }
-  
-  .page-right {
-    box-shadow: inset 25px 0 35px -15px rgba(0, 0, 0, 0.5) !important;
-  }
-  
-  /* Bikin Banner Judul ikutan melayang 3D dikit */
-  .book-banner {
-    transform: translateZ(10px);
-    box-shadow: 0 8px 0px #221310, 0 15px 20px rgba(0, 0, 0, 0.4) !important;
-  }
-  
-  /* =========================================================
-     EFEK CHECKBOX TIMBUL SAAT DICENTANG
-     ========================================================= */
-  .checkbox-label {
-    transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  }
-  
-  .checkbox-label:has(.aksara-checkbox:checked) {
-    transform: translateY(-4px) !important;
-    box-shadow: 0 4px 0px rgba(93, 64, 55, 0.3), 0 8px 10px rgba(0, 0, 0, 0.2) !important;
-    background-color: #FFF8E1 !important;
-    border-color: #5D4037 !important;
-  }
+.checkbox-label:has(.aksara-checkbox:checked) {
+  transform: translateY(-4px) !important;
+  box-shadow: 0 4px 0px rgba(93, 64, 55, 0.3), 0 8px 10px rgba(0, 0, 0, 0.2) !important;
+  background-color: #FFF8E1 !important;
+  border-color: #5D4037 !important;
+}
 
  /* =========================================================
    EFEK ANIMASI BALIK HALAMAN (LEBIH SMOOTH & ELEGAN)
