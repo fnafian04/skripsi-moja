@@ -46,22 +46,20 @@ window.selectAksaraCard = (el) => {
 };
 
 function createCard(item) {
-  // UKURAN DIPERKECIL: width 75px, height 90px (sebelumnya 85x100)
   return `
-    <div onclick="selectAksaraCard(this)" class="aksara-card flex flex-col items-center justify-center bg-white rounded-xl cursor-pointer flex-shrink-0" style="width: 75px; height: 90px; padding: 8px;">
-      <img src="${item.img}" style="width: 38px; height: 38px; object-fit: contain; margin-bottom: 4px;" class="drop-shadow-sm pointer-events-none" alt="Aksara ${item.name}" />
-      <span style="font-size: 10px; font-weight: 900; color: #3E2723; text-transform: uppercase;">${item.name}</span>
+    <div onclick="selectAksaraCard(this)" class="aksara-card flex flex-col items-center justify-center bg-white rounded-xl cursor-pointer flex-shrink-0 w-[42px] h-[52px] sm:w-[50px] sm:h-[60px] md:w-[75px] md:h-[90px] p-0.5 md:p-2">
+      <img src="${item.img}" class="w-[20px] h-[20px] sm:w-[24px] sm:h-[24px] md:w-[38px] md:h-[38px] object-contain mb-0 md:mb-1 drop-shadow-sm pointer-events-none" alt="Aksara ${item.name}" />
+      <span class="text-[6px] sm:text-[7px] md:text-[10px] font-black text-[#3E2723] uppercase">${item.name}</span>
     </div>
   `;
 }
 
 function createCheckbox(item) {
   const isChecked = checkedAksaraIds.has(item.id) ? "checked" : "";
-  // UKURAN DIPERKECIL: width 125px, gap 8px (sebelumnya 140px, gap 12px)
   return `
-    <label class="checkbox-label flex items-center bg-white border-b-4 border-r-4 border-[#5d4037]/30 rounded-xl cursor-pointer hover:bg-[#FFF3E0] hover:-translate-y-1 shadow-sm transition flex-shrink-0" style="width: 125px; height: 40px; gap: 8px; padding-left: 12px;">
-      <input type="checkbox" class="aksara-checkbox" value="${item.id}" data-name="${item.name}" data-img="${item.img}" onchange="handleCheck(this)" ${isChecked}>
-      <span style="font-weight: 800; color: #3E2723; font-size: 11px;">Aksara ${item.name}</span>
+    <label class="checkbox-label flex items-center bg-white border-b-2 md:border-b-4 border-r-2 md:border-r-4 border-[#5d4037]/30 rounded-lg md:rounded-xl cursor-pointer hover:bg-[#FFF3E0] hover:-translate-y-1 shadow-sm transition flex-shrink-0 w-[70px] h-[24px] sm:w-[85px] sm:h-[28px] md:w-[125px] md:h-[40px] gap-1 md:gap-2 pl-1 md:pl-3">
+      <input type="checkbox" class="aksara-checkbox transform scale-[0.6] sm:scale-[0.7] md:scale-100" value="${item.id}" data-name="${item.name}" data-img="${item.img}" onchange="handleCheck(this)" ${isChecked}>
+      <span class="font-extrabold text-[#3E2723] text-[6px] sm:text-[7px] md:text-[11px] -ml-1 md:ml-0">Aksara ${item.name}</span>
     </label>
   `;
 }
@@ -70,42 +68,42 @@ function renderBook() {
   const items = aksaraData[currentPage];
 
   let leftHTML = `
-    <div class="page-left flex-1 w-1/2 p-2 pl-3 pr-4 md:p-4 md:pl-8 md:pr-10 flex flex-col items-center pointer-events-auto justify-start" style="transform: scale(0.88); transform-origin: top center;">
-      <div class="book-banner w-[85%] py-1 md:py-1.5 text-center mb-4 z-10 flex-shrink-0 mt-0">
-        <h2 class="text-[12px] md:text-base font-serif font-bold tracking-wide leading-none">Aksara Dasar</h2>
+    <div class="page-left flex-1 w-1/2 p-1 pl-2 pr-3 md:p-4 md:pl-8 md:pr-10 flex flex-col items-center pointer-events-auto justify-start" style="transform: scale(0.95); transform-origin: top center;">
+      <div class="book-banner w-[95%] md:w-[85%] py-0.5 md:py-1.5 text-center mb-1 md:mb-4 z-10 flex-shrink-0 mt-0">
+        <h2 class="text-[10px] md:text-base font-serif font-bold tracking-wide leading-none">Aksara Dasar</h2>
       </div>
-      <div class="flex flex-col w-full items-center mt-1" style="gap: 12px;">
-        <div class="flex flex-row justify-center w-full" style="gap: 16px;">${createCard(items[0])}${createCard(items[1])}</div>
-        <div class="flex flex-row justify-center w-full" style="gap: 16px;">${createCard(items[2])}${createCard(items[3])}</div>
-        <div class="flex flex-row justify-center w-full" style="gap: 16px;">${createCard(items[4])}</div>
+      <div class="flex flex-col w-full items-center mt-0 md:mt-1 gap-1.5 md:gap-3">
+        <div class="flex flex-row justify-center w-full gap-2 md:gap-4">${createCard(items[0])}${createCard(items[1])}</div>
+        <div class="flex flex-row justify-center w-full gap-2 md:gap-4">${createCard(items[2])}${createCard(items[3])}</div>
+        <div class="flex flex-row justify-center w-full gap-2 md:gap-4">${createCard(items[4])}</div>
       </div>
     </div>
   `;
 
   let rightHTML = `
-    <div class="page-right flex-1 w-1/2 p-2 pr-3 pl-4 md:p-4 md:pr-8 md:pl-10 flex flex-col items-center pointer-events-auto relative justify-start" style="transform: scale(0.88); transform-origin: top center;">
-      <div class="book-banner w-[85%] mx-auto py-1 md:py-1.5 text-center mb-1 z-10 flex-shrink-0 mt-0" style="background: linear-gradient(to bottom, #A1887F, #5D4037);">
-        <h3 class="font-serif text-[11px] md:text-base font-bold text-[#FFF3E0] leading-none">Latihan Nulis</h3>
+    <div class="page-right flex-1 w-1/2 p-1 pr-2 pl-3 md:p-4 md:pr-8 md:pl-10 flex flex-col items-center pointer-events-auto relative justify-start" style="transform: scale(0.95); transform-origin: top center;">
+      <div class="book-banner w-[95%] md:w-[85%] mx-auto py-0.5 md:py-1.5 text-center mb-0.5 md:mb-1 z-10 flex-shrink-0 mt-0" style="background: linear-gradient(to bottom, #A1887F, #5D4037);">
+        <h3 class="font-serif text-[10px] md:text-base font-bold text-[#FFF3E0] leading-none">Latihan Nulis</h3>
       </div>
-      <p class="text-[9px] md:text-[11px] text-center italic text-[#5D4037] mb-3 font-serif flex-shrink-0">"Pilih maksimal 2 aksara kanggo latihan"</p>
+      <p class="text-[7px] md:text-[11px] text-center italic text-[#5D4037] mb-1 md:mb-3 font-serif flex-shrink-0">"Pilih maks 2 aksara kanggo latihan"</p>
       
-      <div class="flex flex-col w-full items-center mt-1" style="gap: 12px;">
-        <div class="flex flex-row justify-center w-full" style="gap: 12px;">${createCheckbox(items[0])}${createCheckbox(items[1])}</div>
-        <div class="flex flex-row justify-center w-full" style="gap: 12px;">${createCheckbox(items[2])}${createCheckbox(items[3])}</div>
-        <div class="flex flex-row justify-center w-full" style="gap: 12px;">${createCheckbox(items[4])}</div>
-      </div>
-      
-      <div class="w-[85%] mt-5 mb-2 flex-shrink-0">
-        <button onclick="startTracing()" class="btn-modern-3d w-full py-1.5 md:py-2 text-[10px] md:text-[12px] font-bold tracking-widest shadow-lg hover:scale-[1.02] transition-transform">MULAI NEBALI ✍️</button>
+      <div class="flex flex-col w-full items-center mt-0 md:mt-1 gap-1.5 md:gap-3">
+        <div class="flex flex-row justify-center w-full gap-1.5 md:gap-3">${createCheckbox(items[0])}${createCheckbox(items[1])}</div>
+        <div class="flex flex-row justify-center w-full gap-1.5 md:gap-3">${createCheckbox(items[2])}${createCheckbox(items[3])}</div>
+        <div class="flex flex-row justify-center w-full gap-1.5 md:gap-3">${createCheckbox(items[4])}</div>
       </div>
       
-      <div class="w-full flex justify-between items-center mt-auto pt-2 border-t border-dashed border-[#5D4037]/30 flex-shrink-0">
-        <button onclick="prevPage()" class="btn-modern-3d text-[9px] md:text-[11px] font-bold tracking-wider" style="padding: 4px 12px;" ${currentPage === 0 ? "disabled" : ""}>
-          <span style="display: flex; gap: 4px; align-items: center;"><span>⬅</span><span>BALENI</span></span>
+      <div class="w-[95%] md:w-[85%] mt-2 md:mt-5 mb-1 md:mb-2 flex-shrink-0">
+        <button onclick="startTracing()" class="btn-modern-3d w-full py-1 md:py-2 text-[8px] md:text-[12px] font-bold tracking-widest shadow-lg hover:scale-[1.02] transition-transform">MULAI NEBALI ✍️</button>
+      </div>
+      
+      <div class="w-full flex justify-between items-center mt-auto pt-1 md:pt-2 border-t border-dashed border-[#5D4037]/30 flex-shrink-0">
+        <button onclick="prevPage()" class="btn-modern-3d text-[7px] md:text-[11px] font-bold tracking-wider px-1.5 py-1 md:px-3" ${currentPage === 0 ? "disabled" : ""}>
+          <span style="display: flex; gap: 2px; align-items: center;"><span>⬅</span><span>BALENI</span></span>
         </button>
-        <span class="text-[#3E2723] font-bold text-[9px] md:text-[11px]">Hal ${currentPage + 1}/4</span>
-        <button onclick="nextPage()" class="btn-modern-3d text-[9px] md:text-[11px] font-bold tracking-wider" style="padding: 4px 12px;" ${currentPage === aksaraData.length - 1 || !completedPages[currentPage] ? "disabled" : ""}>
-          <span style="display: flex; gap: 4px; align-items: center;"><span>LANJUT</span><span>➡</span></span>
+        <span class="text-[#3E2723] font-bold text-[7px] md:text-[11px]">Hal ${currentPage + 1}/4</span>
+        <button onclick="nextPage()" class="btn-modern-3d text-[7px] md:text-[11px] font-bold tracking-wider px-1.5 py-1 md:px-3" ${currentPage === aksaraData.length - 1 || !completedPages[currentPage] ? "disabled" : ""}>
+          <span style="display: flex; gap: 2px; align-items: center;"><span>LANJUT</span><span>➡</span></span>
         </button>
       </div>
     </div>

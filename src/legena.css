@@ -24,6 +24,66 @@
   .book-container {
     animation: bookOpen3DMobileLegena 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards !important;
   }
+  
+  .popup-overlay {
+    height: 75% !important; 
+  }
+
+  .page-right {
+    transform: translateY(-5px) scale(0.95) !important;
+  }
+  
+  .page-left {
+    transform: translateY(0px) scale(0.95) !important;
+  }
+
+  /* Force elements to fit within very short vertical space */
+  .aksara-card {
+    width: 50px !important;
+    height: 55px !important;
+    padding: 2px !important;
+  }
+  .aksara-card img {
+    width: 24px !important;
+    height: 24px !important;
+    margin-bottom: 2px !important;
+  }
+  .aksara-card span {
+    font-size: 8px !important;
+  }
+
+  .checkbox-label {
+    width: 90px !important;
+    height: 28px !important;
+    padding-left: 4px !important;
+  }
+  .checkbox-label span {
+    font-size: 8px !important;
+  }
+  .aksara-checkbox {
+    transform: scale(0.7) !important;
+  }
+
+  .book-banner {
+    padding: 2px !important;
+    margin-bottom: 2px !important;
+  }
+  .book-banner h2, .book-banner h3 {
+    font-size: 11px !important;
+  }
+  
+  .btn-modern-3d {
+    padding: 4px 8px !important;
+    font-size: 9px !important;
+  }
+
+  /* Override flex gaps injected by JS tailwind classes */
+  .page-left .flex-col, .page-right .flex-col {
+    gap: 4px !important;
+  }
+  .page-left .flex-row, .page-right .flex-row {
+    gap: 8px !important;
+  }
 }
 
 @keyframes bookOpen3DMobileLegena {
@@ -368,6 +428,32 @@
   }
   /* Animasi entrance tidak butuh ruang ekstra */
   .swal2-show { animation: none !important; }
+}
+
+/* --- FIX HP LANDSCAPE & MOBILE SWEETALERT --- */
+@media (max-width: 768px) {
+  .swal-paper {
+    padding: 1em 1.5em !important;
+    width: 90% !important;
+    max-width: 450px !important;
+  }
+  .swal-paper-title {
+    font-size: 1.2rem !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  .swal2-html-container {
+    font-size: 0.85rem !important;
+    margin: 0.5em 0 !important;
+  }
+  .swal-paper-confirm {
+    padding: 0.4em 1em !important;
+    font-size: 0.85rem !important;
+  }
+  .swal2-icon {
+    transform: scale(0.6) !important;
+    margin: -10px auto -15px !important;
+  }
 }
 
 
