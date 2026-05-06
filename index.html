@@ -7,53 +7,52 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Javanese&family=Playfair+Display:ital,wght@0,700;1,900&display=swap" rel="stylesheet" />
     <style>
       .bg-batik-dark {
-        background-color: #2c1e1a;
-        background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%23d4af37' stroke-width='1' stroke-opacity='0.2'%3E%3Cpath d='M0 0c10 0 15 5 15 15s-5 15-15 15M100 0c-10 0-15 5-15 15s5 15 15 15M0 100c10 0 15-5 15-15s-5-15-15-15M100 100c-10 0-15-5-15-15s5-15 15-15 50 50c-10 0-15-5-15-15s5-15 15-15 15 5 15 15-5 15-15 15zM50 50c0 10-5 15-15 15s-15-5-15-15M50 50c0-10 5-15 15-15s15 5 15 15M50 50c10 0 15 5 15 15s-5 15-15 15M50 50c-10 0-15 5-15 15s5 15 15 15'/%3E%3Cpath d='M25 25c5 5 10 0 10-5s-5-10-10-5-10 0-5 5 0 10 5 5zM75 75c5 5 10 0 10-5s-5-10-10-5-10 0-5 5 0 10 5 5zM25 75c-5 5-10 0-10-5s5-10 10-5 10 0 5 5 0 10-5 5zM75 25c-5 5-10 0-10-5s5-10 10-5 10 0 5 5 0 10-5 5z'/%3E%3C/g%3E%3C/svg%3E");
+        background-color: #E1F5FE;
+        background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%2303A9F4' stroke-width='1' stroke-opacity='0.1'%3E%3Cpath d='M0 0c10 0 15 5 15 15s-5 15-15 15M100 0c-10 0-15 5-15 15s5 15 15 15M0 100c10 0 15-5 15-15s-5-15-15-15M100 100c-10 0-15-5-15-15s5-15 15-15M50 50c-10 0-15-5-15-15s5-15 15-15 15 5 15 15-5 15-15 15zM50 50c0 10-5 15-15 15s-15-5-15-15M50 50c0-10 5-15 15-15s15 5 15 15M50 50c10 0 15 5 15 15s-5 15-15 15M50 50c-10 0-15 5-15 15s5 15 15 15'/%3E%3Cpath d='M25 25c5 5 10 0 10-5s-5-10-10-5-10 0-5 5 0 10 5 5zM75 75c5 5 10 0 10-5s-5-10-10-5-10 0-5 5 0 10 5 5zM25 75c-5 5-10 0-10-5s5-10 10-5 10 0 5 5 0 10-5 5zM75 25c-5 5-10 0-10-5s5-10 10-5 10 0 5 5 0 10-5 5z'/%3E%3C/g%3E%3C/svg%3E");
         background-repeat: repeat;
         background-size: 100px 100px;
       }
       
       .majestic-box {
-        background: linear-gradient(135deg, #fff3e0, #e6cca0);
-        /* Garis dan jarak dikecilin khusus buat layar HP biar ga sumpek */
-        border: 4px solid #3e2723;
+        background: #E1F5FE;
+        border: 4px solid #03A9F4; /* Blue lines */
         border-radius: 16px;
-        outline: 2px solid #d4af37;
+        outline: 3px solid #3E2723; /* Dark Brown outline */
         outline-offset: -8px; 
-        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.8), inset 0 0 20px rgba(62, 39, 35, 0.25);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2), inset 0 0 20px rgba(3, 169, 244, 0.1);
         transition: transform 0.4s ease;
       }
       
       /* Balikin ketebalan garisnya kalau dibuka di Laptop/Tablet */
       @media (min-width: 768px) {
         .majestic-box {
-          border: 6px solid #3e2723;
-          outline: 3px solid #d4af37;
+          border: 6px solid #03A9F4; /* Blue lines thicker */
+          outline: 4px solid #3E2723; /* Dark Brown outline */
           outline-offset: -14px;
         }
       }
       
       .majestic-box:hover { transform: scale(1.02); }
       .text-glow-gold {
-        color: #3e2723;
-        text-shadow: 1px 1px 0px #d4af37, 2px 2px 0px #8d6e63, 4px 4px 4px rgba(0, 0, 0, 0.6), 0 0 25px rgba(255, 179, 0, 0.8), 0 0 45px rgba(212, 175, 55, 0.6);
+        color: #3E2723; /* Dark Brown text */
+        text-shadow: 3px 3px 0px #03A9F4, 4px 4px 10px rgba(0, 0, 0, 0.1); /* Blue lines */
       }
       .text-jawa-embossed {
-        color: #5d4037;
-        text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.7), -1px -1px 1px rgba(0, 0, 0, 0.2);
+        color: #01579B;
+        text-shadow: 1px 1px 1px rgba(255, 201, 71, 0.5);
       }
     </style>
   </head>
   <body class="bg-batik-dark font-sans h-[100dvh] w-full flex items-center justify-center overflow-hidden cursor-pointer" onclick="location.href='beranda.html'">
     
-    <div class="majestic-box relative z-10 p-4 py-6 md:p-20 w-[80%] max-w-sm md:max-w-4xl mx-auto text-center border-y-4 md:border-4 border-[#3E2723] bg-[#F5E6CA]/90 shadow-2xl rounded-xl md:rounded-3xl">
+    <div class="majestic-box relative z-10 p-4 py-6 md:p-20 w-[80%] max-w-sm md:max-w-4xl mx-auto text-center shadow-2xl rounded-xl md:rounded-3xl">
       
       <h1 class="font-serif text-3xl md:text-6xl font-black text-glow-gold mb-2 md:mb-4 leading-tight tracking-wide">Pasinaon<br />Aksara Jawa</h1>
       
       <div class="font-jawa text-jawa-embossed text-xl md:text-4xl mb-6 md:mb-12 opacity-95">ꦥꦱꦶꦤꦲꦺꦴꦤ꧀ ꦄꦏ꧀ꦱꦫ ꦗꦮ</div>
       
       <div class="mt-2">
-        <span class="bg-[#3E2723] text-[#FFB300] inline-block px-5 md:px-10 py-2.5 md:py-4 rounded-full font-bold text-[10px] md:text-base tracking-[0.15em] md:tracking-[0.2em] shadow-[0_8px_20px_rgba(0,0,0,0.5)] border-2 md:border-4 border-[#D4AF37] transition-all duration-200 active:scale-95 active:shadow-[0_2px_10px_rgba(0,0,0,0.5)]">
+        <span class="bg-[#EF5350] text-[#FFFFFF] inline-block px-5 md:px-10 py-2.5 md:py-4 rounded-full font-bold text-[10px] md:text-base tracking-[0.15em] md:tracking-[0.2em] shadow-[0_8px_20px_rgba(0,0,0,0.2)] border-2 md:border-4 border-[#03A9F4] transition-all duration-200 active:scale-95 active:shadow-[0_2px_10px_rgba(0,0,0,0.1)]">
           KLIK KANGGO MIWITI PASINAON
         </span>
       </div>

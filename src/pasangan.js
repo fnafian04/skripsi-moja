@@ -26,7 +26,7 @@ function createCard(item) {
   return `
     <div onclick="selectAksaraCard(this)" class="aksara-card flex flex-col items-center justify-center bg-white rounded-xl cursor-pointer flex-shrink-0" style="width: 75px; height: 90px; padding: 8px;">
       <img src="${item.img}" style="width: 55px; height: 55px; object-fit: contain; margin-bottom: 2px;" class="drop-shadow-sm pointer-events-none" alt="Pasangan ${item.name}" />
-      <span style="font-size: 10px; font-weight: 900; color: #3E2723; text-transform: uppercase;">${item.name}</span>
+      <span style="font-size: 10px; font-weight: 900; color: #795548; text-transform: uppercase;">${item.name}</span>
     </div>
   `;
 }
@@ -36,7 +36,7 @@ function createCheckbox(item) {
   return `
     <label class="checkbox-label flex items-center bg-white border-b-4 border-r-4 border-[#5d4037]/30 rounded-xl cursor-pointer hover:bg-[#FFF3E0] hover:-translate-y-1 shadow-sm transition flex-shrink-0" style="width: 125px; height: 40px; gap: 8px; padding-left: 12px;">
       <input type="checkbox" class="aksara-checkbox" value="${item.id}" data-name="${item.name}" data-img="${item.img}" onchange="handleCheck(this)" ${isChecked}>
-      <span style="font-weight: 800; color: #3E2723; font-size: 11px;">Pasangan ${item.name}</span>
+      <span style="font-weight: 800; color: #795548; font-size: 11px;">Pasangan ${item.name}</span>
     </label>
   `;
 }
@@ -59,10 +59,10 @@ function renderBook() {
 
   let rightHTML = `
     <div class="page-right flex-1 w-1/2 p-3 md:p-5 flex flex-col items-center bg-[#fdf5e6]/50 overflow-y-auto">
-      <div class="book-banner w-[80%] mx-auto py-1.5 md:py-2 text-center mb-5 z-10 flex-shrink-0" style="background: linear-gradient(to bottom, #A1887F, #5D4037);">
-        <h3 class="font-serif text-[11px] md:text-lg font-bold text-[#FFF3E0]">Latihan Nulis</h3>
+      <div class="book-banner w-[80%] mx-auto py-1.5 md:py-2 text-center mb-5 z-10 flex-shrink-0" style="background: linear-gradient(to bottom, #795548, #A1887F); border: 2px solid #03A9F4; box-shadow: 0 4px 0 #03A9F4;">
+        <h3 class="font-serif text-[11px] md:text-lg font-bold text-[#FFFFFF]">Latihan Nulis</h3>
       </div>
-      <p class="text-[9px] md:text-[13px] text-center italic text-[#5D4037] mb-5 font-serif flex-shrink-0">"Pilih maksimal 2 pasangan kanggo latihan"</p>
+      <p class="text-[9px] md:text-[13px] text-center italic text-[#A1887F] mb-5 font-serif flex-shrink-0">"Pilih maksimal 2 pasangan kanggo latihan"</p>
       
       <div class="flex flex-col w-full items-center flex-1" style="gap: 10px;">
         <div class="flex flex-row justify-center w-full" style="gap: 10px;">${createCheckbox(items[0])}${createCheckbox(items[1])}</div>
@@ -74,11 +74,11 @@ function renderBook() {
         <button onclick="startTracing()" class="btn-modern-3d w-full py-2 md:py-2.5 text-[10px] md:text-[13px] font-bold tracking-widest shadow-lg hover:scale-[1.02] transition-transform">MULAI NEBALI ✍️</button>
       </div>
       
-      <div class="w-full flex justify-between items-center mt-auto pt-3 border-t border-dashed border-[#5D4037]/30 flex-shrink-0">
+      <div class="w-full flex justify-between items-center mt-auto pt-3 border-t border-dashed border-[#A1887F]/30 flex-shrink-0">
         <button onclick="prevPage()" class="btn-modern-3d text-[9px] md:text-[11px] font-bold tracking-wider" style="padding: 6px 16px;" ${currentPage === 0 ? 'disabled' : ''}>
           <span style="display: flex; gap: 4px; align-items: center;"><span>⬅</span><span>BALENI</span></span>
         </button>
-        <span class="text-[#3E2723] font-bold text-[9px] md:text-[11px]">Hal ${currentPage + 1}/4</span>
+        <span class="text-[#795548] font-bold text-[9px] md:text-[11px]">Hal ${currentPage + 1}/4</span>
         <button onclick="nextPage()" class="btn-modern-3d text-[9px] md:text-[11px] font-bold tracking-wider" style="padding: 6px 16px;" ${currentPage === pasanganData.length-1 || !completedPages[currentPage] ? 'disabled' : ''}>
           <span style="display: flex; gap: 4px; align-items: center;"><span>LANJUT</span><span>➡</span></span>
         </button>
@@ -119,7 +119,7 @@ window.handleCheck = (cb) => {
   const checked = document.querySelectorAll('.aksara-checkbox:checked');
   if(checked.length > 2) {
     cb.checked = false; 
-    Swal.fire({ icon: 'warning', title: 'Kebak!', text: 'Maksimal milih 2 pasangan ae yo!', confirmButtonColor: '#3E2723', customClass: { popup: "swal-paper", confirmButton: "swal-paper-confirm" }});
+    Swal.fire({ icon: 'warning', title: 'Kebak!', text: 'Maksimal milih 2 pasangan ae yo!', confirmButtonColor: '#795548', customClass: { popup: "swal-paper", confirmButton: "swal-paper-confirm" }});
     return;
   }
   if (cb.checked) {
@@ -140,7 +140,7 @@ window.startTracing = () => {
       icon: 'warning', 
       title: 'Pilih 2 Pasangan!', 
       text: 'Sampeyan kudu milih pas 2 pasangan kanggo latihan nebali', 
-      confirmButtonColor: '#3E2723', 
+      confirmButtonColor: '#795548', 
       customClass: { popup: "swal-paper", confirmButton: "swal-paper-confirm" } 
     });
   }
@@ -152,8 +152,8 @@ window.startTracing = () => {
   checked.forEach((cb, index) => {
     // PERBAIKAN: Gambar background di dalam kanvas di-ZOOM jadi 160px (sebelumnya 120px)
     container.innerHTML += `
-      <div class="bg-[#fdf5e6] flex-shrink-0" style="display: flex; flex-direction: column; align-items: center; padding: 1.25rem; border-radius: 1rem; box-shadow: 0 5px 15px rgba(0,0,0,0.15); border: 2px solid #5D4037;">
-        <h3 class="font-serif text-[#3E2723] bg-white" style="font-weight: bold; font-size: 0.875rem; margin-bottom: 1.25rem; padding: 0.25rem 1.5rem; border-radius: 999px; border: 1px solid rgba(62,39,35,0.3); box-shadow: 0 2px 4px rgba(0,0,0,0.05);">Pasangan ${cb.getAttribute('data-name')}</h3>
+      <div class="bg-[#fdf5e6] flex-shrink-0" style="display: flex; flex-direction: column; align-items: center; padding: 1.25rem; border-radius: 1rem; box-shadow: 0 5px 15px rgba(0,0,0,0.15); border: 2px solid #A1887F;">
+        <h3 class="font-serif text-[#795548] bg-white" style="font-weight: bold; font-size: 0.875rem; margin-bottom: 1.25rem; padding: 0.25rem 1.5rem; border-radius: 999px; border: 1px solid rgba(62,39,35,0.3); box-shadow: 0 2px 4px rgba(0,0,0,0.05);">Pasangan ${cb.getAttribute('data-name')}</h3>
         <div class="bg-white touch-none overflow-hidden" style="position: relative; display: flex; align-items: center; justify-content: center; border: 2px dashed rgba(93,64,55,0.5); border-radius: 0.75rem; width: 180px; height: 180px;">
           <img src="${cb.getAttribute('data-img')}" class="pointer-events-none" style="position: absolute; width: 160px; height: 160px; object-fit: contain; opacity: 0.25; filter: grayscale(100%);" alt="Watermark" />
           <canvas id="board-${index}" width="180" height="180" class="cursor-crosshair" style="position: absolute; top: 0; left: 0; z-index: 10;"></canvas>
@@ -171,7 +171,7 @@ window.startTracing = () => {
       ctx.lineWidth = 2; 
       ctx.lineCap = "round"; 
       ctx.lineJoin = "round"; 
-      ctx.strokeStyle = "#3E2723";
+      ctx.strokeStyle = "#795548";
       canvases.push(cvs); contexts.push(ctx);
 
       const aksaraId = cb.value;
@@ -263,11 +263,11 @@ window.checkCanvas = () => {
   });
 
   if (empty) {
-    Swal.fire({icon: 'warning', title: 'Dereng Rampung!', text: 'Wonten pasangan ingkang dereng sampeyan tebali. Ayoo diselesaino!', confirmButtonColor: '#3E2723', customClass: { popup: "swal-paper", confirmButton: "swal-paper-confirm" }});
+    Swal.fire({icon: 'warning', title: 'Dereng Rampung!', text: 'Wonten pasangan ingkang dereng sampeyan tebali. Ayoo diselesaino!', confirmButtonColor: '#795548', customClass: { popup: "swal-paper", confirmButton: "swal-paper-confirm" }});
   } else if (messy) {
-    Swal.fire({icon: 'error', title: 'Coretan Ngawur!', text: 'Waduh, sampeyan ojo nulis ngawur/metu garis. Sing rapi ya!', confirmButtonColor: '#3E2723', customClass: { popup: "swal-paper", confirmButton: "swal-paper-confirm" }});
+    Swal.fire({icon: 'error', title: 'Coretan Ngawur!', text: 'Waduh, sampeyan ojo nulis ngawur/metu garis. Sing rapi ya!', confirmButtonColor: '#795548', customClass: { popup: "swal-paper", confirmButton: "swal-paper-confirm" }});
   } else if (incomplete) {
-    Swal.fire({icon: 'warning', title: 'Kurang Pas!', text: 'Coretane durung nutupi bentuk pasangan. Coba ditebali kabeh ojo sepotong!', confirmButtonColor: '#3E2723', customClass: { popup: "swal-paper", confirmButton: "swal-paper-confirm" }});
+    Swal.fire({icon: 'warning', title: 'Kurang Pas!', text: 'Coretane durung nutupi bentuk pasangan. Coba ditebali kabeh ojo sepotong!', confirmButtonColor: '#795548', customClass: { popup: "swal-paper", confirmButton: "swal-paper-confirm" }});
   } else {
     const checkedBoxes = Array.from(document.querySelectorAll('.aksara-checkbox:checked'));
     canvases.forEach((cvs, i) => {
@@ -282,7 +282,7 @@ window.checkCanvas = () => {
       sessionStorage.setItem('completed_pasangan', 'true');
     }
 
-    Swal.fire({icon: 'success', title: 'Sae Pisann! ✨', text: 'Tulisanmu apik lan rapi, mantepp!', confirmButtonColor: '#3E2723', customClass: { popup: "swal-paper", confirmButton: "swal-paper-confirm" }}).then(() => { 
+    Swal.fire({icon: 'success', title: 'Sae Pisann! ✨', text: 'Tulisanmu apik lan rapi, mantepp!', confirmButtonColor: '#795548', customClass: { popup: "swal-paper", confirmButton: "swal-paper-confirm" }}).then(() => { 
       closeCanvas(); 
       if(currentPage < pasanganData.length - 1) {
         nextPage();
@@ -293,7 +293,7 @@ window.checkCanvas = () => {
           title: "Mantepp!",
           html: "Sampeyan wis ngrampungake kabeh pasangan aksara!",
           confirmButtonText: "Lanjut →",
-          confirmButtonColor: "#3E2723",
+          confirmButtonColor: "#03A9F4",
           customClass: { popup: "swal-paper", confirmButton: "swal-paper-confirm" }
         }).then(() => {
           window.location.href = "beranda.html";

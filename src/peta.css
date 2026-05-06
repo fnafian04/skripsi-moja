@@ -17,7 +17,7 @@
     align-items: flex-start;
     padding: 1.5rem;
     scrollbar-width: thin;
-    scrollbar-color: #3E2723 transparent;
+    scrollbar-color: #03A9F4 transparent;
   }
   
   @media (min-width: 1024px) {
@@ -38,9 +38,9 @@
     min-width: 800px;
     width: 100%;
     height: auto;
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6), 0 0 0 8px rgba(93, 64, 55, 0.2);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4), 0 0 0 8px rgba(3, 169, 244, 0.2);
     border-radius: 0.5rem;
-    border: 4px solid #fff3e0;
+    border: 4px solid #03A9F4; /* Blue Border */
   }
   
   @media (min-width: 1024px) {
@@ -117,17 +117,17 @@
   /* --- FIX LABEL NAMA (Papan Kayu Mewah Anti Tabrakan) --- */
   .hotspot-name {
     margin-top: 0.5rem;
-    background: linear-gradient(to bottom, #4E342E, #3E2723) !important;
-    color: #FFCA28 !important;
+    background: #B3E5FC !important;
+    color: #3E2723 !important;
     font-size: 11px !important;
     line-height: 1.2 !important;
     font-weight: 800 !important;
-    padding: 4px 8px !important;
-    border-radius: 6px !important;
-    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.6), inset 0 1px 1px rgba(255, 255, 255, 0.2) !important;
+    padding: 4px 10px !important;
+    border-radius: 8px !important;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.2) !important;
     text-align: center !important;
-    border: 1px solid #FFCA28 !important;
-    min-width: 80px !important;
+    border: 2px solid #03A9F4 !important;
+    min-width: 85px !important;
     z-index: 20;
     pointer-events: none;
     display: flex;
@@ -295,24 +295,24 @@
     height: 100%;
     top: 0;
     transform: translateZ(-2px);
-    background: #fdf5e6;
+    background: #FEFBF3; /* Cream Parchment */
     border-radius: 0 15px 15px 0;
     box-shadow: 
-      1px 1px 0 #d7ccc8, 
-      2px 2px 0 #d7ccc8, 
-      3px 3px 0 #d7ccc8, 
-      4px 4px 0 #d7ccc8, 
-      5px 5px 0 #d7ccc8, 
-      6px 6px 0 #d7ccc8, 
-      7px 7px 0 #d7ccc8, 
-      8px 8px 0 #d7ccc8, 
-      9px 9px 0 #d7ccc8, 
-      10px 10px 0 #d7ccc8, 
-      11px 11px 0 #d7ccc8, 
-      12px 12px 0 #d7ccc8, 
-      13px 13px 0 #d7ccc8, 
-      14px 14px 0 #d7ccc8, 
-      15px 15px 15px rgba(0, 0, 0, 0.5);
+      1px 1px 0 #BDBDBD, 
+      2px 2px 0 #BDBDBD, 
+      3px 3px 0 #BDBDBD, 
+      4px 4px 0 #BDBDBD, 
+      5px 5px 0 #BDBDBD, 
+      6px 6px 0 #BDBDBD, 
+      7px 7px 0 #BDBDBD, 
+      8px 8px 0 #BDBDBD, 
+      9px 9px 0 #BDBDBD, 
+      10px 10px 0 #BDBDBD, 
+      11px 11px 0 #BDBDBD, 
+      12px 12px 0 #BDBDBD, 
+      13px 13px 0 #BDBDBD, 
+      14px 14px 0 #BDBDBD, 
+      15px 15px 15px rgba(0, 0, 0, 0.4);
   }
   
   .page-left {
@@ -343,46 +343,44 @@
   
   /* --- JUDUL (2D OVERLAY) --- */
   .book-banner {
-    background: linear-gradient(135deg, #5c7a52, #3a5332);
-    border: 2px solid #3E2723;
+    background: linear-gradient(135deg, #B3E5FC, #81D4FA); /* Light Blue like the bottle */
+    border: 2px solid #03A9F4;
     border-radius: 8px 2px 8px 2px !important;
-    color: #FFD54F;
-    box-shadow: 0px 4px 0px rgba(62, 39, 35, 0.8), 0px 10px 10px rgba(0, 0, 0, 0.3) !important;
-    text-shadow: 0 0 8px rgba(255, 213, 79, 0.8), 1px 1px 2px rgba(0, 0, 0, 0.9);
+    color: #3E2723; /* Dark Brown Text */
+    box-shadow: 0px 4px 0px #03A9F4, 0px 10px 10px rgba(0, 0, 0, 0.2) !important;
   }
   
   .stone-plaque {
-    background: linear-gradient(to bottom, #A1887F, #5D4037);
-    border: 2px solid #3E2723;
+    background: linear-gradient(to bottom, #FEFBF3, #F5F5F5);
+    border: 2px solid #03A9F4;
     border-radius: 30px 10px 20px 15px / 15px 20px 10px 25px;
-    color: #FFF3E0;
-    box-shadow: 0px 4px 0px rgba(62, 39, 35, 0.8), 0px 10px 10px rgba(0, 0, 0, 0.3) !important;
-    text-shadow: -1px -1px 0px rgba(0, 0, 0, 0.6), 1px 1px 0px rgba(255, 255, 255, 0.2);
-    letter-spacing: 1px;
+    color: #01579B;
+    box-shadow: 0px 4px 0px rgba(3, 169, 244, 0.3), 0px 10px 10px rgba(0, 0, 0, 0.1) !important;
+    text-shadow: none;
+    letter-spacing: 0.5px;
   }
   
   .btn-modern-3d {
-    background: linear-gradient(135deg, #FFCA28, #F57F17);
-    color: #3E2723;
-    border: 2px solid #3E2723;
+    background: linear-gradient(135deg, #EF5350, #D32F2F); /* Red like the ribbon */
+    color: #FFFFFF;
+    border: 2px solid #03A9F4;
     border-radius: 8px 3px 8px 3px !important;
     font-weight: 900;
     text-transform: uppercase;
     letter-spacing: 1.5px;
-    text-shadow: 1px 1px 0px rgba(255, 255, 255, 0.5);
     transition: all 0.2s ease-in-out;
-    box-shadow: 0px 5px 0px rgba(62, 39, 35, 0.9), 0px 15px 15px rgba(0, 0, 0, 0.4) !important;
+    box-shadow: 0px 5px 0px #3E2723, 0px 15px 15px rgba(0, 0, 0, 0.2) !important;
   }
   
   .btn-modern-3d:hover {
     transform: scale(1.05) !important;
-    box-shadow: 0px 8px 0px rgba(62, 39, 35, 0.9), 0px 20px 20px rgba(0, 0, 0, 0.5) !important;
+    box-shadow: 0px 8px 0px rgba(1, 87, 155, 0.9), 0px 20px 20px rgba(0, 0, 0, 0.5) !important;
     filter: brightness(1.1) !important;
   }
   
   .btn-modern-3d:active {
     transform: translateY(3px) !important;
-    box-shadow: 0px 2px 0px rgba(62, 39, 35, 0.9), 0px 5px 5px rgba(0, 0, 0, 0.4) !important;
+    box-shadow: 0px 2px 0px rgba(1, 87, 155, 0.9), 0px 5px 5px rgba(0, 0, 0, 0.4) !important;
   }
   
   .landscape-bg {
@@ -433,7 +431,7 @@
   
   /* --- TOMBOL X (2D OVERLAY) --- */
   .btn-close-3d {
-    box-shadow: 0px 4px 0px rgba(62, 39, 35, 0.9), 0px 10px 10px rgba(0, 0, 0, 0.4) !important;
+    box-shadow: 0px 4px 0px rgba(183, 28, 28, 0.9), 0px 10px 10px rgba(0, 0, 0, 0.3) !important;
     transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     z-index: 200;
   }
@@ -502,27 +500,29 @@
   }
   
   .swal-paper {
-    background-color: #fdf5e6 !important;
-    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%235d4037' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") !important;
-    border: 3px solid #5d4037 !important;
+    background-color: #FEFBF3 !important;
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23185ADB' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") !important;
+    border: 3px solid #03A9F4 !important;
     border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px !important;
-    box-shadow: 12px 12px 0px rgba(62, 39, 35, 0.15) !important;
-    color: #3E2723 !important;
+    box-shadow: 12px 12px 0px rgba(24, 90, 219, 0.2) !important;
+    color: #0A1931 !important;
   }
   
   .swal-paper-title {
     font-family: 'Playfair Display', serif !important;
-    color: #3E2723 !important;
+    color: #03A9F4 !important;
     font-size: 2.2rem !important;
+    font-weight: 900 !important;
+    text-shadow: 1px 1px 0px #FFC947;
   }
   
   .swal-paper-confirm {
-    background-color: #3E2723 !important;
-    color: #FFB300 !important;
-    border: 2px solid #FFB300 !important;
+    background-color: #03A9F4 !important;
+    color: #FFC947 !important;
+    border: 2px solid #FFC947 !important;
     border-radius: 10px !important;
     font-weight: bold !important;
-    box-shadow: 3px 3px 0px #FFB300 !important;
+    box-shadow: 3px 3px 0px #FFC947 !important;
     transition: all 0.2s !important;
   }
   

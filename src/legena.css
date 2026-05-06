@@ -116,24 +116,24 @@
   height: 100%;
   top: 0;
   transform: translateZ(-2px);
-  background: #fdf5e6;
+  background: #E1F5FE;
   border-radius: 0 15px 15px 0;
   box-shadow: 
-    1px 1px 0 #d7ccc8, 
-    2px 2px 0 #d7ccc8, 
-    3px 3px 0 #d7ccc8, 
-    4px 4px 0 #d7ccc8, 
-    5px 5px 0 #d7ccc8, 
-    6px 6px 0 #d7ccc8, 
-    7px 7px 0 #d7ccc8, 
-    8px 8px 0 #d7ccc8, 
-    9px 9px 0 #d7ccc8, 
-    10px 10px 0 #d7ccc8, 
-    11px 11px 0 #d7ccc8, 
-    12px 12px 0 #d7ccc8, 
-    13px 13px 0 #d7ccc8, 
-    14px 14px 0 #d7ccc8, 
-    15px 15px 15px rgba(0, 0, 0, 0.5);
+    1px 1px 0 #B3E5FC, 
+    2px 2px 0 #B3E5FC, 
+    3px 3px 0 #B3E5FC, 
+    4px 4px 0 #B3E5FC, 
+    5px 5px 0 #B3E5FC, 
+    6px 6px 0 #B3E5FC, 
+    7px 7px 0 #B3E5FC, 
+    8px 8px 0 #B3E5FC, 
+    9px 9px 0 #B3E5FC, 
+    10px 10px 0 #B3E5FC, 
+    11px 11px 0 #B3E5FC, 
+    12px 12px 0 #B3E5FC, 
+    13px 13px 0 #B3E5FC, 
+    14px 14px 0 #B3E5FC, 
+    15px 15px 15px rgba(0, 0, 0, 0.3);
 }
 
 .page-left {
@@ -150,32 +150,30 @@
      BANNER & TOMBOL MODERN
      ========================================================= */
   .book-banner {
-    background: linear-gradient(135deg, #5c7a52, #3a5332);
-    border: 2px solid #3E2723;
+    background: linear-gradient(135deg, #B3E5FC, #81D4FA); /* Light Blue like the bottle */
+    border: 2px solid #03A9F4;
     border-radius: 8px 2px 8px 2px !important;
-    color: #FFD54F;
+    color: #3E2723; /* Dark Brown Text */
     transform: translateZ(10px);
-    box-shadow: 0 8px 0px #221310, 0 15px 20px rgba(0, 0, 0, 0.5) !important;
-    text-shadow: 0 0 8px rgba(255, 213, 79, 0.8), 1px 1px 2px rgba(0, 0, 0, 0.9);
+    box-shadow: 0 4px 0 #03A9F4, 0 10px 15px rgba(0, 0, 0, 0.2) !important;
   }
   
   .btn-modern-3d {
-    background: linear-gradient(135deg, #FFCA28, #F57F17);
-    color: #3E2723;
-    border: 2px solid #3E2723;
+    background: linear-gradient(135deg, #EF5350, #D32F2F); /* Red like the ribbon */
+    color: #FFFFFF;
+    border: 2px solid #03A9F4;
     border-radius: 8px 3px 8px 3px !important;
     font-weight: 900;
     text-transform: uppercase;
     letter-spacing: 1.5px;
-    text-shadow: 1px 1px 0px rgba(255, 255, 255, 0.5);
     transition: all 0.2s ease-in-out;
-    box-shadow: 0 6px 0px #3E2723, 0 12px 15px rgba(0, 0, 0, 0.4) !important;
+    box-shadow: 0 6px 0px #3E2723, 0 12px 15px rgba(0, 0, 0, 0.2) !important;
   }
   
   .btn-modern-3d:hover { filter: brightness(1.1); }
   .btn-modern-3d:active {
     transform: translateY(4px);
-    box-shadow: 0 0px 0px #3E2723, -2px 2px 5px rgba(0, 0, 0, 0.5) !important;
+    box-shadow: 0 0px 0px #795548, -2px 2px 5px rgba(0, 0, 0, 0.5) !important;
   }
   
   /* TOMBOL X MERAH */
@@ -202,7 +200,7 @@
     opacity: 0.5;
     cursor: not-allowed;
     transform: none !important;
-    box-shadow: 0 6px 0px #3E2723 !important;
+    box-shadow: 0 6px 0px #795548 !important;
   }
 
 /* Shadow banner di dalam modal dikurangi agar tidak mepet ke panel */
@@ -220,7 +218,7 @@
     -webkit-appearance: none;
     width: 18px; /* Tadinya 22px */
     height: 18px; /* Tadinya 22px */
-    border: 2px solid #5D4037;
+    border: 2px solid #03A9F4;
     border-radius: 5px;
     background-color: #fdf5e6;
     cursor: pointer;
@@ -230,8 +228,8 @@
   }
   
   .aksara-checkbox:checked {
-    background-color: #3a5332; 
-    border-color: #221310;
+    background-color: #03A9F4; 
+    border-color: #03A9F4;
   }
   
   .aksara-checkbox:checked::after {
@@ -257,10 +255,10 @@
   
   /* Tampilan pas diteken/dipilih (Timbul ke atas persis kayak Banner) */
   .aksara-card-selected {
-    border: 2px solid #3E2723 !important;
-    box-shadow: 0 6px 0px #3E2723, 0 12px 15px rgba(0, 0, 0, 0.3) !important;
+    border: 2px solid #03A9F4 !important;
+    box-shadow: 0 6px 0px #03A9F4, 0 12px 15px rgba(0, 0, 0, 0.3) !important;
     transform: translateY(-6px) !important;
-    background-color: #FFF8E1 !important; /* Warnanya agak menguning dikit biar makin spesial */
+    background-color: #FEFBF3 !important; /* Parchment white */
   }
 
 /* =========================================================
@@ -272,9 +270,9 @@
 
 .checkbox-label:has(.aksara-checkbox:checked) {
   transform: translateY(-4px) !important;
-  box-shadow: 0 4px 0px rgba(93, 64, 55, 0.3), 0 8px 10px rgba(0, 0, 0, 0.2) !important;
-  background-color: #FFF8E1 !important;
-  border-color: #5D4037 !important;
+  box-shadow: 0 4px 0px #03A9F4, 0 8px 10px rgba(0, 0, 0, 0.2) !important;
+  background-color: #FEFBF3 !important;
+  border-color: #03A9F4 !important;
 }
 
  /* =========================================================
@@ -389,7 +387,7 @@
     padding: 0.2rem 0.4rem !important;
     font-size: 0.58rem !important;
     border-bottom-width: 2px !important;
-    box-shadow: 0 2px 0 #3E2723 !important;
+    box-shadow: 0 2px 0 #795548 !important;
   }
 
   /* ── SweetAlert2: kompres semua modal peringatan ── */
@@ -433,22 +431,29 @@
 /* --- FIX HP LANDSCAPE & MOBILE SWEETALERT --- */
 @media (max-width: 768px) {
   .swal-paper {
-    padding: 1em 1.5em !important;
-    width: 90% !important;
-    max-width: 450px !important;
+    background-color: #E1F5FE !important;
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%230288D1' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") !important;
+    border: 3px solid #0288D1 !important;
+    border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px !important;
+    box-shadow: 12px 12px 0px rgba(2, 136, 209, 0.15) !important;
+    color: #03A9F4 !important;
   }
   .swal-paper-title {
+    font-family: 'Quicksand', sans-serif !important;
+    color: #03A9F4 !important;
     font-size: 1.2rem !important;
+    font-weight: 800 !important;
     margin: 0 !important;
     padding: 0 !important;
   }
-  .swal2-html-container {
-    font-size: 0.85rem !important;
-    margin: 0.5em 0 !important;
-  }
   .swal-paper-confirm {
-    padding: 0.4em 1em !important;
-    font-size: 0.85rem !important;
+    background-color: #03A9F4 !important;
+    color: #FFFFFF !important;
+    border: 2px solid #03A9F4 !important;
+    border-radius: 10px !important;
+    font-weight: bold !important;
+    box-shadow: 3px 3px 0px #03A9F4 !important;
+    transition: all 0.2s !important;
   }
   .swal2-icon {
     transform: scale(0.6) !important;

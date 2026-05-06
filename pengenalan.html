@@ -7,44 +7,44 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Quicksand:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/src/style.css">
 </head>
-<body class="bg-[#FFF3E0] font-sans overflow-hidden flex h-[100dvh]">
+<body class="bg-[#E1F5FE] font-sans overflow-hidden flex h-[100dvh]">
     <div id="sidebar-overlay" class="fixed inset-0 bg-black/50 z-[80] hidden"></div>
 
-    <aside id="sidebar" class="sidebar-abstrak fixed lg:static inset-y-0 left-0 w-64 bg-[#F5E6CA] border-r-4 border-[#3E2723] z-[90] transform -translate-x-full lg:translate-x-0 transition-transform duration-300 flex flex-col overflow-hidden">
-        <a href="/index.html" class="hidden lg:block p-5 bg-[#3E2723] text-[#FFB300] text-center font-serif transition-all duration-300 border-b-4 border-[#3E2723]">
+    <aside id="sidebar" class="sidebar-abstrak fixed lg:static inset-y-0 left-0 w-64 bg-[#B3E5FC] border-r-4 border-[#03A9F4] z-[90] transform -translate-x-full lg:translate-x-0 transition-transform duration-300 flex flex-col overflow-hidden">
+        <a href="/index.html" class="hidden lg:block p-5 bg-[#03A9F4] text-[#FFFFFF] text-center font-serif transition-all duration-300 border-b-4 border-[#3E2723]">
             <span class="text-2xl font-bold block leading-tight">Pasinaon</span>
             <span class="text-sm font-medium tracking-widest opacity-90">ꦄꦏ꧀ꦱꦫ ꦗꦮ</span>
         </a>
-        <nav class="flex-1 p-3 pt-20 lg:pt-3 space-y-2 overflow-y-auto text-[#5D4037] font-bold text-sm">
-            <a href="pengenalan.html" class="block p-3 bg-[#FFB300] text-[#3E2723] shadow-md rounded-xl transition">Pengenalan Aksara Jawa</a>
-            <a href="legena.html" class="block p-3 hover:bg-[#D7CCC8] rounded-xl transition">Aksara Legena</a>
-            <a href="pasangan.html" class="block p-3 hover:bg-[#D7CCC8] rounded-xl transition">Pasangan Aksara Legena</a>
+        <nav class="flex-1 p-3 pt-20 lg:pt-4 space-y-2 overflow-y-auto text-[#3E2723] font-bold text-sm">
+            <a href="pengenalan.html" class="block p-3 bg-[#81D4FA] text-[#01579B] shadow-md border-l-4 border-[#03A9F4] rounded-xl transition">Pengenalan Aksara Jawa</a>
+            <a href="legena.html" class="block p-3 hover:bg-[#81D4FA] hover:text-[#01579B] rounded-xl transition border-b-2 border-transparent hover:border-[#03A9F4]">Aksara Legena</a>
+            <a href="pasangan.html" class="block p-3 hover:bg-[#81D4FA] hover:text-[#01579B] rounded-xl transition border-b-2 border-transparent hover:border-[#03A9F4]">Pasangan Aksara Legena</a>
             <details class="group">
-                <summary class="p-3 hover:bg-[#D7CCC8] rounded-xl cursor-pointer flex justify-between items-center transition">
+                <summary class="p-3 hover:bg-[#81D4FA] hover:text-[#01579B] rounded-xl cursor-pointer flex justify-between items-center transition">
                     Sandhangan
                     <span class="transition-transform duration-300 group-open:rotate-180 text-xs">▼</span>
                 </summary>
                 <div class="pl-6 pb-2 space-y-1 mt-1 text-xs font-semibold">
-                    <a href="#" class="block p-2 hover:text-[#3E2723] hover:bg-[#D7CCC8]/70 rounded-lg transition">Sandhangan Swara</a>
-                    <a href="#" class="block p-2 hover:text-[#3E2723] hover:bg-[#D7CCC8]/70 rounded-lg transition">Sandhangan Wyanjana</a>
-                    <a href="#" class="block p-2 hover:text-[#3E2723] hover:bg-[#D7CCC8]/70 rounded-lg transition">Sandhangan Panyigeg Wanda</a>
+                    <a href="#" class="block p-2 hover:text-[#01579B] hover:bg-[#81D4FA]/70 rounded-lg transition">Sandhangan Swara</a>
+                    <a href="#" class="block p-2 hover:text-[#01579B] hover:bg-[#81D4FA]/70 rounded-lg transition">Sandhangan Wyanjana</a>
+                    <a href="#" class="block p-2 hover:text-[#01579B] hover:bg-[#81D4FA]/70 rounded-lg transition">Sandhangan Panyigeg Wanda</a>
                 </div>
             </details>
-            <a href="beranda-pasinaon.html" class="block p-3 hover:bg-[#D7CCC8] rounded-xl transition">Latihan Pasinaon</a>
+            <a href="beranda-pasinaon.html" class="block p-3 hover:bg-[#81D4FA] hover:text-[#01579B] rounded-xl transition border-b-2 border-transparent hover:border-[#03A9F4]">Latihan Pasinaon</a>
         </nav>
     </aside>
 
     <div class="flex-1 flex flex-col h-full overflow-y-auto overflow-x-hidden relative w-full">
-        <header class="lg:hidden bg-[#3E2723] text-white p-3 flex-none w-full shadow-md flex justify-between items-center z-[100]">
-            <button id="hamburger" class="hamburger-abstrak px-3 py-1 bg-[#FFB300] text-[#3E2723] shadow-sm text-xl font-bold leading-none hover:bg-yellow-400 transition transform hover:scale-105">☰</button>
-            <a href="/index.html" class="font-serif text-lg font-bold hover:scale-105 hover:text-[#FFB300] transition-transform duration-300">Pengenalan 📜</a>
+        <header class="lg:hidden bg-[#B3E5FC] text-[#3E2723] p-3 flex-none w-full shadow-md flex justify-between items-center z-[100] border-b-2 border-[#03A9F4]">
+            <button id="hamburger" class="hamburger-abstrak px-3 py-1 bg-[#03A9F4] text-[#FFFFFF] shadow-sm text-xl font-bold leading-none border border-[#3E2723] hover:bg-sky-600 transition transform hover:scale-105">☰</button>
+            <a href="/index.html" class="font-serif text-lg font-bold hover:scale-105 hover:text-[#03A9F4] transition-transform duration-300">Pengenalan 📜</a>
         </header>
 
         <main id="main-scroll-area" class="flex-1 p-4 md:p-10 bg-batik flex flex-col items-center">
             <div class="swal-paper mt-6 md:mt-0 max-w-2xl w-full p-5 md:p-10 mb-10">
                 <h1 class="swal-paper-title text-center text-2xl md:text-5xl mb-4">Aksara Jawa</h1>
                 
-                <div class="space-y-4 text-[#3E2723] leading-relaxed text-justify text-sm md:text-base">
+                <div class="space-y-4 text-[#795548] leading-relaxed text-justify text-sm md:text-base">
                     <p class="font-medium">
                         Aksara Jawa adalah huruf tradisional yang digunakan untuk menulis bahasa Jawa. Huruf ini berbeda dengan huruf alfabet (A, B, C), karena memiliki bentuk dan cara penulisan sendiri. Aksara Jawa biasanya digunakan untuk menulis kata, kalimat, atau cerita dalam bahasa Jawa.
                     </p>
@@ -53,9 +53,9 @@
                         Sandhangan swara adalah tanda tambahan dalam Aksara Jawa yang berfungsi untuk mengubah bunyi huruf. Sandhangan swara membantu agar bacaan menjadi jelas, misalnya untuk memberi bunyi vokal seperti i, u, e, atau o.
                     </p>
                     
-                    <div class="pt-4 border-t-2 border-[#5D4037]/20 mt-6">
+                    <div class="pt-4 border-t-2 border-[#A1887F]/20 mt-6">
                         <h3 class="font-serif font-bold text-lg mb-2">Kesimpulan singkat:</h3>
-                        <p class="bg-[#3E2723]/5 p-3 rounded-xl italic text-sm md:text-base">
+                        <p class="bg-[#03A9F4]/5 p-3 rounded-xl italic text-sm md:text-base">
                             "Aksara Jawa adalah hurufnya, sedangkan sandhangan adalah tanda bantu untuk mengubah bunyi huruf tersebut."
                         </p>
                     </div>

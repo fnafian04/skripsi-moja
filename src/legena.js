@@ -72,7 +72,7 @@ function createCard(item) {
   return `
     <div onclick="selectAksaraCard(this)" class="aksara-card flex flex-col items-center justify-center bg-white rounded-xl cursor-pointer flex-shrink-0 w-[42px] h-[52px] sm:w-[50px] sm:h-[60px] md:w-[75px] md:h-[90px] p-0.5 md:p-2">
       <img src="${item.img}" class="w-[20px] h-[20px] sm:w-[24px] sm:h-[24px] md:w-[38px] md:h-[38px] object-contain mb-0 md:mb-1 drop-shadow-sm pointer-events-none" alt="Aksara ${item.name}" />
-      <span class="text-[6px] sm:text-[7px] md:text-[10px] font-black text-[#3E2723] uppercase">${item.name}</span>
+      <span class="text-[6px] sm:text-[7px] md:text-[10px] font-black text-[#795548] uppercase">${item.name}</span>
     </div>
   `;
 }
@@ -82,7 +82,7 @@ function createCheckbox(item) {
   return `
     <label class="checkbox-label flex items-center bg-white border-b-2 md:border-b-4 border-r-2 md:border-r-4 border-[#5d4037]/30 rounded-lg md:rounded-xl cursor-pointer hover:bg-[#FFF3E0] hover:-translate-y-1 shadow-sm transition flex-shrink-0 w-[58px] h-[22px] sm:w-[85px] sm:h-[28px] md:w-[125px] md:h-[40px] gap-0.5 md:gap-2 pl-0.5 md:pl-3">
       <input type="checkbox" class="aksara-checkbox transform scale-[0.5] sm:scale-[0.7] md:scale-100" value="${item.id}" data-name="${item.name}" data-img="${item.img}" onchange="handleCheck(this)" ${isChecked}>
-      <span class="font-extrabold text-[#3E2723] text-[5px] sm:text-[7px] md:text-[11px] -ml-1 md:ml-0">Aksara ${item.name}</span>
+      <span class="font-extrabold text-[#795548] text-[5px] sm:text-[7px] md:text-[11px] -ml-1 md:ml-0">Aksara ${item.name}</span>
     </label>
   `;
 }
@@ -113,14 +113,14 @@ function renderBook() {
 
   let rightHTML = `
     <div class="page-right flex-1 w-1/2 p-1 pr-2 pl-3 md:p-4 md:pr-8 md:pl-10 flex flex-col items-center pointer-events-auto relative justify-start" style="transform: scale(0.92); transform-origin: top center;">
-      <div class="book-banner w-[95%] md:w-[85%] mx-auto py-0.5 md:py-1 text-center mb-0 z-10 flex-shrink-0 mt-0" style="background: linear-gradient(to bottom, #A1887F, #5D4037);">
+      <div class="book-banner w-[95%] md:w-[85%] mx-auto py-0.5 md:py-1 text-center mb-0 z-10 flex-shrink-0 mt-0" style="background: linear-gradient(to bottom, #A1887F, #A1887F);">
         <h3 class="font-serif text-[10px] md:text-base font-bold text-[#FFF3E0] leading-none">Latihan Nulis</h3>
       </div>
       
       <!-- Konten Utama (Checkboxes) -->
       <div class="flex flex-col w-full items-center my-auto gap-1 md:gap-3 flex-shrink-0 z-20 relative">
         <div class="w-full flex justify-end pr-2 md:pr-4 mb-[-2px] md:mb-[-6px]">
-          <span class="text-[4.5px] md:text-[8px] italic text-[#5D4037] font-bold font-serif leading-none">"Pilih maks 2 aksara"</span>
+          <span class="text-[4.5px] md:text-[8px] italic text-[#A1887F] font-bold font-serif leading-none">"Pilih maks 2 aksara"</span>
         </div>
         <div class="flex flex-row justify-center w-full gap-1 md:gap-3">${createCheckbox(items[0])}${createCheckbox(items[1])}</div>
         <div class="flex flex-row justify-center w-full gap-1 md:gap-3">${createCheckbox(items[2])}${createCheckbox(items[3])}${createCheckbox(items[4])}</div>
@@ -132,7 +132,7 @@ function renderBook() {
       
       <!-- Navigasi Bawah -->
       <div class="w-full flex justify-between items-center flex-shrink-0">
-        <span class="text-[#3E2723] font-bold text-[7px] md:text-[11px]">Hal ${currentPage + 1}/4</span>
+        <span class="text-[#795548] font-bold text-[7px] md:text-[11px]">Hal ${currentPage + 1}/4</span>
         <button onclick="nextPage()" class="btn-modern-3d text-[7px] md:text-[11px] font-bold tracking-wider px-1.5 py-1 md:px-3" ${currentPage === aksaraData.length - 1 || !completedPages[currentPage] ? "disabled" : ""}>
           <span style="display: flex; gap: 2px; align-items: center;"><span>LANJUT</span><span>➡</span></span>
         </button>
@@ -176,7 +176,7 @@ window.handleCheck = (cb) => {
   const checked = document.querySelectorAll(".aksara-checkbox:checked");
   if (checked.length > 2) {
     cb.checked = false;
-    Swal.fire({ icon: "warning", title: "Kebak!", text: "Maksimal milih 2 aksara ae yo!", confirmButtonColor: "#3E2723", customClass: { popup: "swal-paper", confirmButton: "swal-paper-confirm" } });
+    Swal.fire({ icon: "warning", title: "Kebak!", text: "Maksimal milih 2 aksara ae yo!", confirmButtonColor: "#03A9F4", customClass: { popup: "swal-paper", confirmButton: "swal-paper-confirm" } });
     return;
   }
 
@@ -363,9 +363,9 @@ function renderGuidedPanel(cb, pi, strokes) {
   // --- Wrapper ---
   const wrap = document.createElement('div');
   wrap.className = 'bg-[#fdf5e6] flex-shrink-0';
-  wrap.style.cssText = 'display:flex;flex-direction:column;align-items:center;padding:1.25rem;border-radius:1rem;box-shadow:0 5px 15px rgba(0,0,0,0.15);border:2px solid #5D4037;';
+  wrap.style.cssText = 'display:flex;flex-direction:column;align-items:center;padding:1.25rem;border-radius:1rem;box-shadow:0 5px 15px rgba(0,0,0,0.15);border:2px solid #A1887F;';
   wrap.innerHTML = `
-    <h3 class="font-serif text-[#3E2723] bg-white"
+    <h3 class="font-serif text-[#795548] bg-white"
         style="font-weight:bold;font-size:.875rem;margin-bottom:.6rem;padding:.25rem 1.5rem;border-radius:999px;border:1px solid rgba(62,39,35,.3);box-shadow:0 2px 4px rgba(0,0,0,.05);">
       Aksara ${name}
     </h3>`;
@@ -388,8 +388,8 @@ function renderGuidedPanel(cb, pi, strokes) {
 
   strokes.forEach((stroke, si) => {
     const active = si === 0;
-    const pathClr = active ? '#D4956B' : '#C0B49A';
-    const hotClr  = active ? '#FFB300' : '#D4C5A9';
+    const pathClr = active ? '#03A9F4' : '#B3E5FC';
+    const hotClr  = active ? '#01579B' : '#D4EBF8';
     const d  = pointsToSmoothPath(stroke.points, stroke.segments);
     const sp = stroke.points[0];
     const ep = stroke.points[stroke.points.length - 1];
@@ -406,8 +406,8 @@ function renderGuidedPanel(cb, pi, strokes) {
     // Titik akhir — hanya dot kecil, tanpa angka
     const endDot = document.createElementNS(NS, 'circle');
     endDot.setAttribute('cx', ep[0]); endDot.setAttribute('cy', ep[1]); endDot.setAttribute('r', '3.5');
-    endDot.setAttribute('fill', active ? '#D4956B' : '#C0B49A');
-    endDot.setAttribute('stroke', '#3E2723'); endDot.setAttribute('stroke-width', '1');
+    endDot.setAttribute('fill', active ? '#03A9F4' : '#B3E5FC');
+    endDot.setAttribute('stroke', '#795548'); endDot.setAttribute('stroke-width', '1');
     endDot.style.opacity = active ? '0.9' : '0.28';
     endDot.id = `ge-${pi}-${si}`;
     svg.appendChild(endDot);
@@ -425,7 +425,7 @@ function renderGuidedPanel(cb, pi, strokes) {
     // Lingkaran hotspot — lebih kecil
     const hs = document.createElementNS(NS, 'circle');
     hs.setAttribute('cx', sp[0]); hs.setAttribute('cy', sp[1]); hs.setAttribute('r', '8');
-    hs.setAttribute('fill', hotClr); hs.setAttribute('stroke', '#3E2723'); hs.setAttribute('stroke-width', '1.5');
+    hs.setAttribute('fill', hotClr); hs.setAttribute('stroke', '#795548'); hs.setAttribute('stroke-width', '1.5');
     hs.style.opacity = active ? '1' : '0.32';
     hs.id = `gh-${pi}-${si}`;
     svg.appendChild(hs);
@@ -435,7 +435,7 @@ function renderGuidedPanel(cb, pi, strokes) {
       const lbl = document.createElementNS(NS, 'text');
       lbl.setAttribute('x', sp[0]); lbl.setAttribute('y', sp[1] + 4);
       lbl.setAttribute('text-anchor', 'middle'); lbl.setAttribute('font-size', '9');
-      lbl.setAttribute('font-weight', 'bold'); lbl.setAttribute('fill', '#3E2723');
+      lbl.setAttribute('font-weight', 'bold'); lbl.setAttribute('fill', '#795548');
       lbl.setAttribute('font-family', 'sans-serif'); lbl.setAttribute('pointer-events', 'none');
       lbl.textContent = si + 1;
       lbl.id = `gl-${pi}-${si}`;
@@ -504,7 +504,7 @@ function attachStrokeEvents(cvs, strokes, pi) {
     Swal.fire({
       icon: 'error', title: 'Ojo Ngawur!',
       text: 'Waduh, coretane metu saka jalure! Tebali sesuai garis putus-putus ya! 🖊️',
-      confirmButtonColor: '#3E2723',
+      confirmButtonColor: '#795548',
       customClass: { popup: 'swal-paper', confirmButton: 'swal-paper-confirm' }
     });
   };
@@ -762,7 +762,7 @@ function resetGuidedPanel(pi, strokes) {
 window.startTracing = () => {
   const checked = Array.from(document.querySelectorAll(".aksara-checkbox:checked"));
   if (checked.length === 0) {
-    return Swal.fire({ icon: "warning", title: "Pilih Aksara!", text: "Sampeyan kudu milih sakora-orane siji aksara kanggo latihan nebali", confirmButtonColor: "#3E2723", customClass: { popup: "swal-paper", confirmButton: "swal-paper-confirm" } });
+    return Swal.fire({ icon: "warning", title: "Pilih Aksara!", text: "Sampeyan kudu milih sakora-orane siji aksara kanggo latihan nebali", confirmButtonColor: "#03A9F4", customClass: { popup: "swal-paper", confirmButton: "swal-paper-confirm" } });
   }
 
   const modal = document.getElementById("canvas-modal");
@@ -889,7 +889,7 @@ window.checkCanvas = () => {
     // --- CEK GUIDED TRACING ---
     const allDone = tracingPanelStates.every(st => st && st.completed);
     if (!allDone) {
-      return Swal.fire({ icon: "warning", title: "Dereng Rampung!", text: "Ibutake kabeh garis! Tebali saka nomer 1 tekan rampung ya! 🖊️", confirmButtonColor: "#3E2723", customClass: { popup: "swal-paper", confirmButton: "swal-paper-confirm" } });
+      return Swal.fire({ icon: "warning", title: "Dereng Rampung!", text: "Ibutake kabeh garis! Tebali saka nomer 1 tekan rampung ya! 🖊️", confirmButtonColor: "#03A9F4", customClass: { popup: "swal-paper", confirmButton: "swal-paper-confirm" } });
     }
 
     // Jika masih ada aksara berikutnya
@@ -898,7 +898,7 @@ window.checkCanvas = () => {
         icon: "success", 
         title: "Mantap! ✨", 
         text: "Siji maneh yo, ayo diteruske!", 
-        confirmButtonColor: "#3E2723", 
+        confirmButtonColor: "#03A9F4", 
         timer: 1500,
         showConfirmButton: false,
         customClass: { popup: "swal-paper" } 
@@ -912,12 +912,12 @@ window.checkCanvas = () => {
     completedPages[currentPage] = true;
     localStorage.setItem("legena_completed_pages", JSON.stringify(completedPages));
     if (currentPage === aksaraData.length - 1) sessionStorage.setItem('completed_legena', 'true');
-    Swal.fire({ icon: "success", title: "Sae Pisann! ✨", text: "Tulisanmu apik lan rapi, mantepp!", confirmButtonColor: "#3E2723", customClass: { popup: "swal-paper", confirmButton: "swal-paper-confirm" } }).then(() => {
+    Swal.fire({ icon: "success", title: "Sae Pisann! ✨", text: "Tulisanmu apik lan rapi, mantepp!", confirmButtonColor: "#03A9F4", customClass: { popup: "swal-paper", confirmButton: "swal-paper-confirm" } }).then(() => {
       closeCanvas();
       if (currentPage < aksaraData.length - 1) {
         nextPage();
       } else {
-        Swal.fire({ icon: "success", title: "Mantepp!", html: "Sampeyan wis ngrampungake kabeh aksara Legena!", confirmButtonText: "Lanjut →", confirmButtonColor: "#3E2723", customClass: { popup: "swal-paper", confirmButton: "swal-paper-confirm" } }).then(() => { window.location.href = "beranda.html"; });
+        Swal.fire({ icon: "success", title: "Mantepp!", html: "Sampeyan wis ngrampungake kabeh aksara Legena!", confirmButtonText: "Lanjut →", confirmButtonColor: "#03A9F4", customClass: { popup: "swal-paper", confirmButton: "swal-paper-confirm" } }).then(() => { window.location.href = "beranda.html"; });
       }
     });
     return;
@@ -936,7 +936,7 @@ window.checkCanvas = () => {
   if (!hasInk) empty = true;
 
   if (empty) {
-    return Swal.fire({ icon: "warning", title: "Kosong!", text: "Aksarane digambar dhisik ya!", confirmButtonColor: "#3E2723", customClass: { popup: "swal-paper" } });
+    return Swal.fire({ icon: "warning", title: "Kosong!", text: "Aksarane digambar dhisik ya!", confirmButtonColor: "#03A9F4", customClass: { popup: "swal-paper" } });
   }
 
   // Jika masih ada aksara berikutnya
@@ -945,7 +945,7 @@ window.checkCanvas = () => {
       icon: "success", 
       title: "Mantap! ✨", 
       text: "Siji maneh yo!", 
-      confirmButtonColor: "#3E2723", 
+      confirmButtonColor: "#03A9F4", 
       timer: 1500,
       showConfirmButton: false,
       customClass: { popup: "swal-paper" } 
@@ -961,7 +961,7 @@ window.checkCanvas = () => {
 
   if (currentPage === aksaraData.length - 1) sessionStorage.setItem('completed_legena', 'true');
   
-  Swal.fire({ icon: "success", title: "Mantepp! ✨", text: "Halaman iki wis rampung!", confirmButtonColor: "#3E2723", customClass: { popup: "swal-paper" } }).then(() => {
+  Swal.fire({ icon: "success", title: "Mantepp! ✨", text: "Halaman iki wis rampung!", confirmButtonColor: "#03A9F4", customClass: { popup: "swal-paper" } }).then(() => {
     closeCanvas();
     if (currentPage < aksaraData.length - 1) nextPage();
     else window.location.href = "beranda.html";

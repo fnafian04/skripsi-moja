@@ -155,7 +155,7 @@ function enforceLandscape() {
             title: 'Puter HP Panjenengan!',
             text: 'Aplikasi pasinaon iki dirancang nganggo tampilan layar mujur',
             confirmButtonText: 'OK',
-            confirmButtonColor: '#3E2723',
+            confirmButtonColor: '#03A9F4',
             allowOutsideClick: false,
             allowEscapeKey: false,
             customClass: {

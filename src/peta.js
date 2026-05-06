@@ -6,47 +6,62 @@ window.openIntroCover = () => {
   const introCover = document.getElementById("map-cover-intro");
   
   if(wrapper && frontCover && introCover) {
-    // 1. Hanya buka sampul depannya saja seperti membuka kotak/cover
-    // Biarkan wrapper (halaman tebalnya) tetap pada posisi tilt aslinya tanpa bergerak sedikitpun
-    frontCover.style.transform = "rotateY(-120deg) translateZ(2px)";
+    // 1. Buka sampul depan
+    frontCover.style.transform = "rotateY(-130deg) translateZ(2px)";
     
-    // 2. Tunggu sebentar agar user melihat isinya, lalu zoom in ke peta
+    // 2. Zoom moderat ke isi buku (peta di dalam)
     setTimeout(() => {
-      // Zoom in menembus ke dalam halaman sambil mempertahankan tilt 3D-nya
-      wrapper.style.transform = "rotateY(15deg) rotateX(10deg) scale(15)";
-      wrapper.style.opacity = "0";
-      introCover.style.opacity = "0";
-      introCover.style.pointerEvents = "none";
+      // Bawa buku ke depan dan buat agak datar agar peta terlihat jelas
+      wrapper.style.transform = "rotateY(0deg) rotateX(0deg) scale(1.5) translateY(5%)";
       
       setTimeout(() => {
-        introCover.classList.add("hidden");
+        // 3. Tampilkan Peta Dora (Botol) di atas buku
+        // Hilangkan background intro agar tidak numpuk
+        introCover.style.backgroundColor = "transparent";
+        introCover.style.pointerEvents = "none";
         
-        // Tampilkan Peta Dora
         const doraMap = document.getElementById("dora-map-overlay");
         const doraContent = document.getElementById("dora-map-content");
         if(doraMap && doraContent) {
           doraMap.classList.remove("hidden");
-          // Trigger reflow
           void doraMap.offsetWidth;
           doraMap.classList.remove("opacity-0");
           doraContent.classList.remove("scale-0", "translate-y-20");
           doraContent.classList.add("scale-100", "translate-y-0");
         }
-      }, 1500);
-    }, 1200);
+      }, 800);
+    }, 1000);
   }
 };
 
 window.closeDoraMap = () => {
   const doraMap = document.getElementById("dora-map-overlay");
   const doraContent = document.getElementById("dora-map-content");
+  const introCover = document.getElementById("map-cover-intro");
+  const wrapper = document.getElementById("intro-book-wrapper");
+
   if(doraMap && doraContent) {
-    doraContent.classList.remove("scale-100", "translate-y-0");
-    doraContent.classList.add("scale-150", "translate-y-20", "opacity-0"); // Zoom in effect
-    doraMap.classList.add("opacity-0");
+    // 1. Zoom in sangat besar pada botol peta seolah menembus ke dalamnya
+    doraContent.style.transform = "scale(8) translateY(-10%)";
+    doraContent.style.opacity = "0";
+    doraMap.style.backgroundColor = "transparent";
+    
+    // Ikut zoom wrapper bukunya juga biar sinkron
+    if(wrapper) {
+      wrapper.style.transform = "scale(20)";
+      wrapper.style.opacity = "0";
+    }
     
     setTimeout(() => {
       doraMap.classList.add("hidden");
+      if(introCover) introCover.classList.add("hidden");
+      
+      // 2. Munculkan Peta Utama & Hotspot dengan efek fade-in
+      const mainWrapper = document.getElementById("main-map-wrapper");
+      if(mainWrapper) {
+        mainWrapper.classList.remove("opacity-0", "pointer-events-none");
+        mainWrapper.classList.add("opacity-100");
+      }
     }, 800);
   }
 };
@@ -296,7 +311,7 @@ window.checkAllAnswers = () => {
           icon: "warning",
           title: "Kesempatan pun Telas!",
           text: "Sampeyan wis 3 kali salah ing candhi iki, ayoo deleng katrangane alon2!",
-          confirmButtonColor: "#3E2723",
+          confirmButtonColor: "#03A9F4",
           customClass: { popup: "swal-paper", confirmButton: "swal-paper-confirm" },
         }).then(() => {
           prog.attempts = 0;
