@@ -62,51 +62,55 @@ function renderBook() {
   const items = aksaraData[currentPage];
 
   let leftHTML = `
-    <div class="page-left flex-1 w-1/2 p-1 pl-2 pr-6 md:p-4 md:pl-8 md:pr-12 flex flex-col items-center pointer-events-auto justify-start" style="transform: scale(0.92); transform-origin: top center;">
-      <div class="book-banner w-[95%] md:w-[85%] py-0.5 md:py-1 text-center mb-0 z-10 flex-shrink-0 mt-0">
-        <h2 class="text-[10px] md:text-base font-serif font-bold tracking-wide leading-none">Aksara Dasar</h2>
-      </div>
-      
-      <!-- Konten Utama (Cards) -->
-      <div class="flex flex-col w-full items-center my-auto gap-2 md:gap-4 flex-shrink-0 z-20">
-        <div class="flex flex-row justify-center w-full gap-2 md:gap-4">${createCard(items[0])}${createCard(items[1])}</div>
-        <div class="flex flex-row justify-center w-full gap-2 md:gap-4">${createCard(items[2])}${createCard(items[3])}${createCard(items[4])}</div>
-      </div>
-      
-      <!-- Navigasi Bawah -->
-      <div class="w-full flex justify-start items-center flex-shrink-0">
-        <button onclick="prevPage()" class="btn-modern-3d text-[7px] md:text-[11px] font-bold tracking-wider px-1.5 py-1 md:px-3" ${currentPage === 0 ? "disabled" : ""}>
-          <span style="display: flex; gap: 2px; align-items: center;"><span>⬅</span><span>BALENI</span></span>
-        </button>
+    <div class="page-left flex-1 w-1/2 flex flex-col pointer-events-none relative perspective-container" style="perspective: 1200px;">
+      <div class="page-content-wrapper w-full h-full p-1 pl-2 pr-6 md:p-4 md:pl-8 md:pr-12 flex flex-col items-center pointer-events-auto justify-start" style="transform: scale(0.92); transform-origin: top center;">
+        <div class="book-banner w-[95%] md:w-[85%] py-0.5 md:py-1 text-center mb-0 z-10 flex-shrink-0 mt-0">
+          <h2 class="text-[10px] md:text-base font-serif font-bold tracking-wide leading-none">Aksara Dasar</h2>
+        </div>
+        
+        <!-- Konten Utama (Cards) -->
+        <div class="flex flex-col w-full items-center my-auto gap-2 md:gap-4 flex-shrink-0 z-20">
+          <div class="flex flex-row justify-center w-full gap-2 md:gap-4">${createCard(items[0])}${createCard(items[1])}</div>
+          <div class="flex flex-row justify-center w-full gap-2 md:gap-4">${createCard(items[2])}${createCard(items[3])}${createCard(items[4])}</div>
+        </div>
+        
+        <!-- Navigasi Bawah -->
+        <div class="w-full flex justify-start items-center flex-shrink-0">
+          <button onclick="prevPage()" class="btn-modern-3d text-[7px] md:text-[11px] font-bold tracking-wider px-1.5 py-1 md:px-3" ${currentPage === 0 ? "disabled" : ""}>
+            <span style="display: flex; gap: 2px; align-items: center;"><span>⬅</span><span>BALENI</span></span>
+          </button>
+        </div>
       </div>
     </div>
   `;
 
   let rightHTML = `
-    <div class="page-right flex-1 w-1/2 p-1 pr-2 pl-6 md:p-4 md:pr-8 md:pl-12 flex flex-col items-center pointer-events-auto relative justify-start" style="transform: scale(0.92); transform-origin: top center;">
-      <div class="book-banner w-[95%] md:w-[85%] mx-auto py-0.5 md:py-1 text-center mb-0 z-10 flex-shrink-0 mt-0" style="background: linear-gradient(to bottom, #A1887F, #A1887F);">
-        <h3 class="font-serif text-[10px] md:text-base font-bold text-[#FFF3E0] leading-none">Latihan Nulis</h3>
-      </div>
-      
-      <!-- Konten Utama (Checkboxes) -->
-      <div class="flex flex-col w-full items-center my-auto gap-1 md:gap-3 flex-shrink-0 z-20 relative">
-        <div class="w-full flex justify-end pr-2 md:pr-4 mb-[-2px] md:mb-[-6px]">
-          <span class="text-[4.5px] md:text-[8px] italic text-[#A1887F] font-bold font-serif leading-none">"Pilih maks 2 aksara"</span>
+    <div class="page-right flex-1 w-1/2 flex flex-col pointer-events-none relative perspective-container" style="perspective: 1200px;">
+      <div class="page-content-wrapper w-full h-full p-1 pr-2 pl-6 md:p-4 md:pr-8 md:pl-12 flex flex-col items-center pointer-events-auto relative justify-start" style="transform: scale(0.92); transform-origin: top center;">
+        <div class="book-banner w-[95%] md:w-[85%] mx-auto py-0.5 md:py-1 text-center mb-0 z-10 flex-shrink-0 mt-0" style="background: linear-gradient(to bottom, #A1887F, #A1887F);">
+          <h3 class="font-serif text-[10px] md:text-base font-bold text-[#FFF3E0] leading-none">Latihan Nulis</h3>
         </div>
-        <div class="flex flex-row justify-center w-full gap-1 md:gap-3">${createCheckbox(items[0])}${createCheckbox(items[1])}</div>
-        <div class="flex flex-row justify-center w-full gap-1 md:gap-3">${createCheckbox(items[2])}${createCheckbox(items[3])}${createCheckbox(items[4])}</div>
-      </div>
-      
-      <div class="w-[95%] md:w-[85%] mb-1 flex-shrink-0">
-        <button onclick="startTracing()" class="btn-modern-3d w-full py-1 md:py-1.5 text-[7px] md:text-[12px] font-bold tracking-widest shadow-lg hover:scale-[1.02] transition-transform">MULAI NEBALI ✍️</button>
-      </div>
-      
-      <!-- Navigasi Bawah -->
-      <div class="w-full flex justify-between items-center flex-shrink-0">
-        <span class="text-[#795548] font-bold text-[7px] md:text-[11px]">Hal ${currentPage + 1}/4</span>
-        <button onclick="nextPage()" class="btn-modern-3d text-[7px] md:text-[11px] font-bold tracking-wider px-1.5 py-1 md:px-3" ${currentPage === aksaraData.length - 1 || !completedPages[currentPage] ? "disabled" : ""}>
-          <span style="display: flex; gap: 2px; align-items: center;"><span>LANJUT</span><span>➡</span></span>
-        </button>
+        
+        <!-- Konten Utama (Checkboxes) -->
+        <div class="flex flex-col w-full items-center my-auto gap-1 md:gap-3 flex-shrink-0 z-20 relative">
+          <div class="w-full flex justify-end pr-2 md:pr-4 mb-[-2px] md:mb-[-6px]">
+            <span class="text-[4.5px] md:text-[8px] italic text-[#A1887F] font-bold font-serif leading-none">"Pilih maks 2 aksara"</span>
+          </div>
+          <div class="flex flex-row justify-center w-full gap-1 md:gap-3">${createCheckbox(items[0])}${createCheckbox(items[1])}</div>
+          <div class="flex flex-row justify-center w-full gap-1 md:gap-3">${createCheckbox(items[2])}${createCheckbox(items[3])}${createCheckbox(items[4])}</div>
+        </div>
+        
+        <div class="w-[95%] md:w-[85%] mb-1 flex-shrink-0">
+          <button onclick="startTracing()" class="btn-modern-3d w-full py-1 md:py-1.5 text-[7px] md:text-[12px] font-bold tracking-widest shadow-lg hover:scale-[1.02] transition-transform">MULAI NEBALI ✍️</button>
+        </div>
+        
+        <!-- Navigasi Bawah -->
+        <div class="w-full flex justify-between items-center flex-shrink-0">
+          <span class="text-[#795548] font-bold text-[7px] md:text-[11px]">Hal ${currentPage + 1}/4</span>
+          <button onclick="nextPage()" class="btn-modern-3d text-[7px] md:text-[11px] font-bold tracking-wider px-1.5 py-1 md:px-3" ${currentPage === aksaraData.length - 1 || !completedPages[currentPage] ? "disabled" : ""}>
+            <span style="display: flex; gap: 2px; align-items: center;"><span>LANJUT</span><span>➡</span></span>
+          </button>
+        </div>
       </div>
     </div>
   `;
@@ -120,9 +124,7 @@ window.prevPage = () => {
     const pageRight = bookLayout.querySelector('.page-right');
     const pageLeft = bookLayout.querySelector('.page-left');
     
-    // Animate the left page turning over to the right
     if(pageLeft) pageLeft.classList.add("page-turn-left-out");
-    // Fade out the right page slightly
     if(pageRight) {
       pageRight.style.transition = "opacity 0.4s ease-in";
       pageRight.style.opacity = "0";
@@ -135,10 +137,7 @@ window.prevPage = () => {
       const newPageLeft = bookLayout.querySelector('.page-left');
       const newPageRight = bookLayout.querySelector('.page-right');
       
-      // The new right page continues the flip from the center
       if(newPageRight) newPageRight.classList.add("page-turn-right-in");
-      
-      // The new left page just fades in
       if(newPageLeft) {
          newPageLeft.style.opacity = "0";
          newPageLeft.style.transition = "opacity 0.4s ease-out";
@@ -157,9 +156,7 @@ window.nextPage = () => {
     const pageRight = bookLayout.querySelector('.page-right');
     const pageLeft = bookLayout.querySelector('.page-left');
     
-    // Animate the right page turning over to the left
     if(pageRight) pageRight.classList.add("page-turn-right-out");
-    // Fade out the left page slightly
     if(pageLeft) {
       pageLeft.style.transition = "opacity 0.4s ease-in";
       pageLeft.style.opacity = "0";
@@ -172,10 +169,7 @@ window.nextPage = () => {
       const newPageLeft = bookLayout.querySelector('.page-left');
       const newPageRight = bookLayout.querySelector('.page-right');
       
-      // The new left page continues the flip from the center
       if(newPageLeft) newPageLeft.classList.add("page-turn-left-in");
-      
-      // The new right page just fades in
       if(newPageRight) {
          newPageRight.style.opacity = "0";
          newPageRight.style.transition = "opacity 0.4s ease-out";
