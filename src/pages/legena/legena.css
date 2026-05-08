@@ -288,30 +288,41 @@
   border-color: #03A9F4 !important;
 }
 
- /* =========================================================
-   EFEK ANIMASI BALIK HALAMAN (LEBIH SMOOTH & ELEGAN)
+/* =========================================================
+   EFEK ANIMASI BALIK HALAMAN (REALISTIS KAYA BUKA BUKU)
    ========================================================= */
-.flip-out-next { animation: flipOutNextAnim 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
-.flip-in-next { animation: flipInNextAnim 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
-.flip-out-prev { animation: flipOutPrevAnim 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
-.flip-in-prev { animation: flipInPrevAnim 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
+.page-turn-right-out {
+  transform-origin: left center !important;
+  animation: pageTurnRightOut 0.4s ease-in forwards;
+}
+.page-turn-left-in {
+  transform-origin: right center !important;
+  animation: pageTurnLeftIn 0.4s ease-out forwards;
+}
+.page-turn-left-out {
+  transform-origin: right center !important;
+  animation: pageTurnLeftOut 0.4s ease-in forwards;
+}
+.page-turn-right-in {
+  transform-origin: left center !important;
+  animation: pageTurnRightIn 0.4s ease-out forwards;
+}
 
-@keyframes flipOutNextAnim {
-  0% { transform: perspective(1000px) rotateY(0deg) translateX(0); opacity: 1; }
-  100% { transform: perspective(1000px) rotateY(-15deg) translateX(-20px) scale(0.98); opacity: 0; }
+@keyframes pageTurnRightOut {
+  0% { transform: perspective(1200px) rotateY(0deg); opacity: 1; }
+  100% { transform: perspective(1200px) rotateY(-90deg); opacity: 0; }
 }
-@keyframes flipInNextAnim {
-  0% { transform: perspective(1000px) rotateY(15deg) translateX(20px) scale(0.98); opacity: 0; }
-  100% { transform: perspective(1000px) rotateY(0deg) translateX(0) scale(1); opacity: 1; }
+@keyframes pageTurnLeftIn {
+  0% { transform: perspective(1200px) rotateY(90deg); opacity: 0; }
+  100% { transform: perspective(1200px) rotateY(0deg); opacity: 1; }
 }
-
-@keyframes flipOutPrevAnim {
-  0% { transform: perspective(1000px) rotateY(0deg) translateX(0); opacity: 1; }
-  100% { transform: perspective(1000px) rotateY(15deg) translateX(20px) scale(0.98); opacity: 0; }
+@keyframes pageTurnLeftOut {
+  0% { transform: perspective(1200px) rotateY(0deg); opacity: 1; }
+  100% { transform: perspective(1200px) rotateY(90deg); opacity: 0; }
 }
-@keyframes flipInPrevAnim {
-  0% { transform: perspective(1000px) rotateY(-15deg) translateX(-20px) scale(0.98); opacity: 0; }
-  100% { transform: perspective(1000px) rotateY(0deg) translateX(0) scale(1); opacity: 1; }
+@keyframes pageTurnRightIn {
+  0% { transform: perspective(1200px) rotateY(-90deg); opacity: 0; }
+  100% { transform: perspective(1200px) rotateY(0deg); opacity: 1; }
 }
 
 /* ============================================================
