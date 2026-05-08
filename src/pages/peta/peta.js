@@ -1,4 +1,5 @@
 import "./peta.css";
+import { candiData } from "../../data/candi-data.js";
 
 window.openIntroCover = () => {
   const wrapper = document.getElementById("intro-book-wrapper");
@@ -65,114 +66,6 @@ window.closeDoraMap = () => {
     }, 800);
   }
 };
-
-export const candiData = {
-  brahu: {
-    title: "Candi Brahu",
-    img: "/assets/candi-brahu.png",
-    imgSoal: "",
-    lokasi: "Candi Brahu, Trowulan",
-    desc: "Candi Brahu dumunung ing tlatah Trowulan. Bangunane kagawe saka tatanan bata abang lan diprakirakake fungsine minangka papan suci keagamaan.",
-    q1: "Bangunane digawe saka apa?",
-    a1: ["bata", "ꦧꦠ"],
-    q2: "Werna batane apa?",
-    a2: ["abang", "ꦄꦧꦁ"],
-  },
-  bajang: {
-    title: "Candi Bajang Ratu",
-    img: "/assets/candi-bajang.png",
-    imgSoal: "",
-    lokasi: "Candi Bajang Ratu, Trowulan",
-    desc: "Candi Bajang Ratu minangka gapura paduraksa mawa atap tilaran jaman Majapahit. Bangunan iki kagawe saka bata abang sing ditata rapet tanpa semen.",
-    q1: "Bajang Ratu iku bangunan apa?",
-    a1: ["gapura", "ꦒꦥꦸꦫ"],
-    q2: "Bangunan iki saka apa?",
-    a2: ["bata", "ꦧꦠ"],
-  },
-  tikus: {
-    title: "Candi Tikus",
-    img: "/assets/candi-tikus.png",
-    imgSoal: "",
-    lokasi: "Candi Tikus, Trowulan",
-    desc: "Candi Tikus minangka situs patirtan suci sing wujude miniatur gunung. Nalika sepisanan ditemokake, situs iki kakubur ing ngisor lemah.",
-    q1: "Candi Tikus iku situs apa?",
-    a1: ["patirtan", "ꦥꦠꦶꦂꦠꦤ"],
-    q2: "Nalika ditemokake, ana ing ngendi?",
-    a2: ["lemah", "ꦭꦼꦩꦃ"],
-  },
-  gentong: {
-    title: "Candi Gentong",
-    img: "/assets/candi-gentong.png",
-    imgSoal: "",
-    lokasi: "Candi Gentong, Trowulan",
-    desc: "Candi Gentong manggon cedhak banget karo Candi Brahu. Situs iki dijenengi mangkono amarga akeh ditemokake pecahan gentong ing sakiwa-tengene.",
-    q1: "Candi Gentong cedhak karo candi apa?",
-    a1: ["brahu", "ꦧꦿꦲꦸ"],
-    q2: "Jeneng \"Gentong\" dijupuk saka apa?",
-    a2: ["gentong", "ꦒꦺꦤ꧀ꦠꦺꦴꦁ"],
-  },
-  minakjinggo: {
-    title: "Candi Minak Jinggo",
-    img: "/assets/candi-minakjinggo.png",
-    imgSoal: "",
-    lokasi: "Candi Minak Jinggo, Trowulan",
-    desc: "Candi iki unik amarga dadi siji-sijine bangunan ing Trowulan sing nganggo hiasan saka watu andesit, dudu mung bata abang biasa.",
-    q1: "Hiasane digawe saka apa?",
-    a1: ["watu", "ꦮꦠꦸ"],
-    q2: "Dudu saka bahan apa?",
-    a2: ["bata", "ꦧꦠ"],
-  },
-  wringinlawang: {
-    title: "Candi Wringin Lawang",
-    img: "/assets/candi-wringinlawang.png",
-    imgSoal: "",
-    lokasi: "Candi Wringin Lawang, Trowulan",
-    desc: "Candi Wringin Lawang minangka gapura bentar utawa gerbang sing melah. Ing basa Jawa, jeneng Wringin Lawang nduweni teges lawang wringin.",
-    q1: "Wringin Lawang iku bangunan apa?",
-    a1: ["gapura", "ꦒꦥꦸꦫ"],
-    q2: "Wringin Lawang uga diarani apa?",
-    a2: ["gerbang", "ꦒꦺꦫ꧀ꦧꦁ"],
-  },
-  jedong: {
-    title: "Candi Jedong",
-    img: "/assets/candi-jedong.png",
-    imgSoal: "",
-    lokasi: "Candi Jedong, Ngoro",
-    desc: "Candi Jedong wujude bangunan gapura sing dumunung ing lereng Gunung Penanggungan. Bangunan iki dipercaya minangka lawang mlebu menyang desa perdikan.",
-    q1: "Candi Jedong wujude apa?",
-    a1: ["gapura", "ꦒꦥꦸꦫ"],
-    q2: "Dumunung ing ngendi?",
-    a2: ["gunung", "ꦒꦸꦤꦸꦁ"],
-  },
-  kedaton: {
-    title: "Candi Kedaton",
-    img: "/assets/candi-kedaton.png",
-    imgSoal: "",
-    lokasi: "Candi Kedaton, Trowulan",
-    desc: "Situs Kedaton dipercaya minangka bekas keraton utawa papan dununge para bangsawan. Ing papan iki akeh ditemokake sumur kuna lan sisa lantai bata.",
-    q1: "Panggonané kanggo sapa?",
-    a1: ["bangsawan", "ꦧꦁꦱꦮꦤ"],
-    q2: "Ing kono akeh ditemokake apa?",
-    a2: ["sumur", "ꦱꦸꦩꦸꦂ"],
-  },
-};
-
-// Sidebar Logic
-const hamburger = document.getElementById("hamburger");
-const sidebar = document.getElementById("sidebar");
-const overlay = document.getElementById("sidebar-overlay");
-
-if (hamburger) {
-  hamburger.onclick = () => {
-    sidebar.classList.toggle("-translate-x-full");
-    overlay.classList.toggle("hidden");
-  };
-}
-if (overlay)
-  overlay.onclick = () => {
-    sidebar.classList.add("-translate-x-full");
-    overlay.classList.add("hidden");
-  };
 
 // ==========================================
 // SISTEM KUIS ULTIMATE (Simpan State & Modal Abstrak)

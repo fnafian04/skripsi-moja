@@ -104,7 +104,6 @@ function setupHideOnScroll() {
 function addCompletionBadges() {
   // Cari link menu berdasarkan href
   const legenaLink = document.querySelector('a[href="legena.html"]');
-  const pasanganLink = document.querySelector('a[href="pasangan.html"]');
   const pasinaonLink = document.querySelector('a[href="beranda-pasinaon.html"]') || document.querySelector('a[href="peta.html"]');
   
   // Tambahkan centang jika sudah selesai
@@ -118,15 +117,6 @@ function addCompletionBadges() {
     }
   }
   
-  if (pasanganLink && sessionStorage.getItem('completed_pasangan') === 'true') {
-    if (!pasanganLink.querySelector('.completion-badge')) {
-      const span = document.createElement('span');
-      span.className = 'completion-badge ml-2 text-green-600 font-bold text-lg';
-      span.textContent = '✓';
-      pasanganLink.appendChild(span);
-    }
-  }
-
   if (pasinaonLink && sessionStorage.getItem('completed_pasinaon') === 'true') {
     if (!pasinaonLink.querySelector('.completion-badge')) {
       const span = document.createElement('span');

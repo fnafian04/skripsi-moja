@@ -6,69 +6,115 @@
     <title>Pengenalan Aksara Jawa</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Quicksand:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/src/style.css">
+    <link rel="stylesheet" href="/src/pages/peta/peta.css">
 </head>
-<body class="bg-[#E1F5FE] font-sans overflow-hidden flex h-[100dvh]">
-    <div id="sidebar-overlay" class="fixed inset-0 bg-black/50 z-[80] hidden"></div>
-
-    <aside id="sidebar" class="sidebar-abstrak fixed lg:static inset-y-0 left-0 w-64 bg-[#B3E5FC] border-r-4 border-[#03A9F4] z-[90] transform -translate-x-full lg:translate-x-0 transition-transform duration-300 flex flex-col overflow-hidden">
-        <a href="/index.html" class="hidden lg:block p-5 bg-[#03A9F4] text-[#FFFFFF] text-center font-serif transition-all duration-300 border-b-4 border-[#3E2723]">
-            <span class="text-2xl font-bold block leading-tight">Pasinaon</span>
-            <span class="text-sm font-medium tracking-widest opacity-90">ꦄꦏ꧀ꦱꦫ ꦗꦮ</span>
-        </a>
-        <nav class="flex-1 p-3 pt-20 lg:pt-4 space-y-2 overflow-y-auto text-[#3E2723] font-bold text-sm">
-            <a href="pengenalan.html" class="block p-3 bg-[#81D4FA] text-[#01579B] shadow-md border-l-4 border-[#03A9F4] rounded-xl transition">Pengenalan Aksara Jawa</a>
-            <a href="legena.html" class="block p-3 hover:bg-[#81D4FA] hover:text-[#01579B] rounded-xl transition border-b-2 border-transparent hover:border-[#03A9F4]">Aksara Legena</a>
-            <a href="pasangan.html" class="block p-3 hover:bg-[#81D4FA] hover:text-[#01579B] rounded-xl transition border-b-2 border-transparent hover:border-[#03A9F4]">Pasangan Aksara Legena</a>
-            <details class="group">
-                <summary class="p-3 hover:bg-[#81D4FA] hover:text-[#01579B] rounded-xl cursor-pointer flex justify-between items-center transition">
-                    Sandhangan
-                    <span class="transition-transform duration-300 group-open:rotate-180 text-xs">▼</span>
-                </summary>
-                <div class="pl-6 pb-2 space-y-1 mt-1 text-xs font-semibold">
-                    <a href="#" class="block p-2 hover:text-[#01579B] hover:bg-[#81D4FA]/70 rounded-lg transition">Sandhangan Swara</a>
-                    <a href="#" class="block p-2 hover:text-[#01579B] hover:bg-[#81D4FA]/70 rounded-lg transition">Sandhangan Wyanjana</a>
-                    <a href="#" class="block p-2 hover:text-[#01579B] hover:bg-[#81D4FA]/70 rounded-lg transition">Sandhangan Panyigeg Wanda</a>
+<body class="bg-batik font-sans overflow-hidden flex h-[100dvh]">
+    <main class="flex-1 relative flex items-center justify-center w-full h-full overflow-hidden">
+        
+        <div id="popup-book" class="fixed inset-0 z-[100] flex items-center justify-center p-2 md:p-6 bg-black/70 backdrop-blur-sm">
+            
+            <div class="relative flex items-center justify-center mx-auto" style="aspect-ratio: 8/5; height: 85vh; max-height: 550px; max-width: 95vw; perspective: 1500px;">
+              
+              <!-- LAPISAN 1: BUKU 3D -->
+              <div class="book-container absolute inset-0 w-full h-full bg-wood-css p-2 md:p-4 rounded-sm book-3d-shadow flex flex-col pointer-events-none z-0">
+                <div class="flex flex-row flex-1 book-content rounded-sm shadow-inner bg-[#FEFBF3] relative">
+                  <div class="flex-1 w-1/2 border-r border-[#d7ccc8]/50"></div>
+                  <div class="flex-1 w-1/2"></div>
+                  
+                  <!-- Binder Rings -->
+                  <div class="absolute top-[5%] bottom-[5%] left-1/2 -translate-x-1/2 w-6 md:w-8 flex flex-col justify-evenly items-center z-10">
+                    <!-- Ring 1 -->
+                    <div class="relative w-full h-3 flex items-center justify-center">
+                      <div class="absolute left-[-2px] w-2 h-2 bg-[#795548]/90 rounded-full shadow-[inset_1px_1px_3px_rgba(0,0,0,0.9)]"></div>
+                      <div class="absolute right-[-2px] w-2 h-2 bg-[#795548]/90 rounded-full shadow-[inset_1px_1px_3px_rgba(0,0,0,0.9)]"></div>
+                      <div class="w-[90%] h-1.5 md:h-2 bg-gradient-to-b from-[#e0e0e0] via-[#ffffff] to-[#757575] rounded-full border border-[#424242] shadow-[2px_3px_5px_rgba(0,0,0,0.5),_inset_0_-1px_2px_rgba(0,0,0,0.8)] relative overflow-hidden z-10">
+                         <div class="absolute w-[30%] h-full bg-gradient-to-r from-transparent via-white to-transparent left-[15%]"></div>
+                      </div>
+                    </div>
+                    <!-- Ring 2 -->
+                    <div class="relative w-full h-3 flex items-center justify-center">
+                      <div class="absolute left-[-2px] w-2 h-2 bg-[#795548]/90 rounded-full shadow-[inset_1px_1px_3px_rgba(0,0,0,0.9)]"></div>
+                      <div class="absolute right-[-2px] w-2 h-2 bg-[#795548]/90 rounded-full shadow-[inset_1px_1px_3px_rgba(0,0,0,0.9)]"></div>
+                      <div class="w-[90%] h-1.5 md:h-2 bg-gradient-to-b from-[#e0e0e0] via-[#ffffff] to-[#757575] rounded-full border border-[#424242] shadow-[2px_3px_5px_rgba(0,0,0,0.5),_inset_0_-1px_2px_rgba(0,0,0,0.8)] relative overflow-hidden z-10">
+                         <div class="absolute w-[30%] h-full bg-gradient-to-r from-transparent via-white to-transparent left-[15%]"></div>
+                      </div>
+                    </div>
+                    <!-- Ring 3 -->
+                    <div class="relative w-full h-3 flex items-center justify-center">
+                      <div class="absolute left-[-2px] w-2 h-2 bg-[#795548]/90 rounded-full shadow-[inset_1px_1px_3px_rgba(0,0,0,0.9)]"></div>
+                      <div class="absolute right-[-2px] w-2 h-2 bg-[#795548]/90 rounded-full shadow-[inset_1px_1px_3px_rgba(0,0,0,0.9)]"></div>
+                      <div class="w-[90%] h-1.5 md:h-2 bg-gradient-to-b from-[#e0e0e0] via-[#ffffff] to-[#757575] rounded-full border border-[#424242] shadow-[2px_3px_5px_rgba(0,0,0,0.5),_inset_0_-1px_2px_rgba(0,0,0,0.8)] relative overflow-hidden z-10">
+                         <div class="absolute w-[30%] h-full bg-gradient-to-r from-transparent via-white to-transparent left-[15%]"></div>
+                      </div>
+                    </div>
+                    <!-- Ring 4 -->
+                    <div class="relative w-full h-3 flex items-center justify-center">
+                      <div class="absolute left-[-2px] w-2 h-2 bg-[#795548]/90 rounded-full shadow-[inset_1px_1px_3px_rgba(0,0,0,0.9)]"></div>
+                      <div class="absolute right-[-2px] w-2 h-2 bg-[#795548]/90 rounded-full shadow-[inset_1px_1px_3px_rgba(0,0,0,0.9)]"></div>
+                      <div class="w-[90%] h-1.5 md:h-2 bg-gradient-to-b from-[#e0e0e0] via-[#ffffff] to-[#757575] rounded-full border border-[#424242] shadow-[2px_3px_5px_rgba(0,0,0,0.5),_inset_0_-1px_2px_rgba(0,0,0,0.8)] relative overflow-hidden z-10">
+                         <div class="absolute w-[30%] h-full bg-gradient-to-r from-transparent via-white to-transparent left-[15%]"></div>
+                      </div>
+                    </div>
+                    <!-- Ring 5 -->
+                    <div class="relative w-full h-3 flex items-center justify-center">
+                      <div class="absolute left-[-2px] w-2 h-2 bg-[#795548]/90 rounded-full shadow-[inset_1px_1px_3px_rgba(0,0,0,0.9)]"></div>
+                      <div class="absolute right-[-2px] w-2 h-2 bg-[#795548]/90 rounded-full shadow-[inset_1px_1px_3px_rgba(0,0,0,0.9)]"></div>
+                      <div class="w-[90%] h-1.5 md:h-2 bg-gradient-to-b from-[#e0e0e0] via-[#ffffff] to-[#757575] rounded-full border border-[#424242] shadow-[2px_3px_5px_rgba(0,0,0,0.5),_inset_0_-1px_2px_rgba(0,0,0,0.8)] relative overflow-hidden z-10">
+                         <div class="absolute w-[30%] h-full bg-gradient-to-r from-transparent via-white to-transparent left-[15%]"></div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-            </details>
-            <a href="beranda-pasinaon.html" class="block p-3 hover:bg-[#81D4FA] hover:text-[#01579B] rounded-xl transition border-b-2 border-transparent hover:border-[#03A9F4]">Latihan Pasinaon</a>
-        </nav>
-    </aside>
-
-    <div class="flex-1 flex flex-col h-full overflow-y-auto overflow-x-hidden relative w-full">
-        <header class="lg:hidden bg-[#B3E5FC] text-[#3E2723] p-3 flex-none w-full shadow-md flex justify-between items-center z-[100] border-b-2 border-[#03A9F4]">
-            <button id="hamburger" class="hamburger-abstrak px-3 py-1 bg-[#03A9F4] text-[#FFFFFF] shadow-sm text-xl font-bold leading-none border border-[#3E2723] hover:bg-sky-600 transition transform hover:scale-105">☰</button>
-            <a href="/index.html" class="font-serif text-lg font-bold hover:scale-105 hover:text-[#03A9F4] transition-transform duration-300">Pengenalan 📜</a>
-        </header>
-
-        <main id="main-scroll-area" class="flex-1 p-4 md:p-10 bg-batik flex flex-col items-center">
-            <div class="swal-paper mt-6 md:mt-0 max-w-2xl w-full p-5 md:p-10 mb-10">
-                <h1 class="swal-paper-title text-center text-2xl md:text-5xl mb-4">Aksara Jawa</h1>
+              </div>
+      
+              <!-- LAPISAN 2: KONTEN 2D OVERLAY -->
+              <div class="popup-overlay absolute top-[10%] md:top-[12%] w-full h-[65%] flex flex-row z-10 pointer-events-none">
                 
-                <div class="space-y-4 text-[#795548] leading-relaxed text-justify text-sm md:text-base">
-                    <p class="font-medium">
-                        Aksara Jawa adalah huruf tradisional yang digunakan untuk menulis bahasa Jawa. Huruf ini berbeda dengan huruf alfabet (A, B, C), karena memiliki bentuk dan cara penulisan sendiri. Aksara Jawa biasanya digunakan untuk menulis kata, kalimat, atau cerita dalam bahasa Jawa.
-                    </p>
+                <!-- Halaman Kiri -->
+                <div class="page-left flex-1 w-1/2 p-2 pr-4 md:p-6 md:pr-12 flex flex-col justify-center items-center gap-2 pointer-events-auto relative">
+                    <div class="animate-duarr-1 book-banner w-[80%] md:w-[70%] mx-auto py-1 md:py-2 text-center flex-shrink-0 mb-2 mt-2 md:mt-4 z-50">
+                        <h1 class="font-serif text-sm md:text-2xl font-bold leading-none">Aksara Jawa</h1>
+                    </div>
                     
-                    <p class="font-medium">
-                        Sandhangan swara adalah tanda tambahan dalam Aksara Jawa yang berfungsi untuk mengubah bunyi huruf. Sandhangan swara membantu agar bacaan menjadi jelas, misalnya untuk memberi bunyi vokal seperti i, u, e, atau o.
-                    </p>
-                    
-                    <div class="pt-4 border-t-2 border-[#A1887F]/20 mt-6">
-                        <h3 class="font-serif font-bold text-lg mb-2">Kesimpulan singkat:</h3>
-                        <p class="bg-[#03A9F4]/5 p-3 rounded-xl italic text-sm md:text-base">
-                            "Aksara Jawa adalah hurufnya, sedangkan sandhangan adalah tanda bantu untuk mengubah bunyi huruf tersebut."
+                    <div class="animate-duarr-2 floating-item bg-white/40 border border-[#795548]/10 p-3 md:p-5 rounded-xl w-[90%] space-y-2 md:space-y-4 z-40">
+                        <p class="text-[#795548] leading-relaxed text-justify text-[8px] md:text-sm font-medium m-0">
+                            Aksara Jawa adalah huruf tradisional yang digunakan untuk menulis bahasa Jawa. Huruf ini berbeda dengan huruf alfabet (A, B, C), karena memiliki bentuk dan cara penulisan sendiri.
+                        </p>
+                        <p class="text-[#795548] leading-relaxed text-justify text-[8px] md:text-sm font-medium m-0">
+                            Aksara Jawa biasanya digunakan untuk menulis kata, kalimat, atau cerita dalam bahasa Jawa.
                         </p>
                     </div>
                 </div>
 
-                <div class="mt-8 flex justify-center">
-                    <a href="legena.html" class="swal-paper-confirm inline-block px-6 py-2.5 text-sm md:text-base no-underline hover:scale-105 transition-transform">
+                <!-- Halaman Kanan -->
+                <div class="page-right flex-1 w-1/2 p-2 pl-4 md:p-6 md:pl-12 flex flex-col justify-center items-center gap-2 pointer-events-auto relative">
+                    
+                    <div class="animate-duarr-2 floating-item bg-white/40 border border-[#795548]/10 p-3 md:p-5 rounded-xl w-[90%] mb-2 mt-4 md:mt-8 z-40">
+                        <p class="text-[#795548] leading-relaxed text-justify text-[8px] md:text-sm font-medium m-0">
+                            Sandhangan swara adalah tanda tambahan dalam Aksara Jawa yang berfungsi untuk mengubah bunyi huruf. Sandhangan swara membantu agar bacaan menjadi jelas, misalnya untuk memberi bunyi vokal seperti i, u, e, atau o.
+                        </p>
+                        <div class="pt-2 border-t-2 border-[#A1887F]/20 mt-2 md:mt-4">
+                            <h3 class="font-serif font-bold text-[9px] md:text-sm mb-1 text-[#5D4037]">Kesimpulan singkat:</h3>
+                            <p class="bg-[#03A9F4]/5 p-2 rounded-lg italic text-[8px] md:text-xs text-[#795548] font-medium m-0">
+                                "Aksara Jawa adalah hurufnya, sedangkan sandhangan adalah tanda bantu untuk mengubah bunyi huruf tersebut."
+                            </p>
+                        </div>
+                    </div>
+
+                    <a href="legena.html" class="animate-duarr-3 btn-modern-3d w-[80%] md:w-[70%] mx-auto py-1.5 md:py-2.5 text-[9px] md:text-sm font-serif z-50 flex-shrink-0 text-center uppercase font-bold tracking-wider no-underline hover:scale-105 transition-transform block mt-2">
                         Sinau Aksara Legena →
                     </a>
                 </div>
+
+                <a href="beranda.html" class="btn-close-3d absolute -top-5 -right-3 md:-top-8 md:-right-6 bg-red-800 text-[#FFB300] px-4 py-2 md:px-5 md:py-2.5 rounded-full font-bold border-2 border-[#FFB300] cursor-pointer z-[9999] pointer-events-auto no-underline text-center flex items-center justify-center transition hover:scale-110 shadow-[0_5px_15px_rgba(0,0,0,0.5)]">
+                    ✖
+                </a>
+
+              </div>
+      
             </div>
-        </main>
-    </div>
+        </div>
+    </main>
     <script type="module" src="/src/main.js"></script>
 </body>
 </html>

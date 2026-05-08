@@ -1,0 +1,6 @@
+export const pasanganData = [
+  [{ id: "p-ha", name: "Ha", img: "/assets/pasangan-ha.png" }, { id: "p-na", name: "Na", img: "/assets/pasangan-na.png" }, { id: "p-ca", name: "Ca", img: "/assets/pasangan-ca.png" }, { id: "p-ra", name: "Ra", img: "/assets/pasangan-ra.png" }, { id: "p-ka", name: "Ka", img: "/assets/pasangan-ka.png" }],
+  [{ id: "p-da", name: "Da", img: "/assets/pasangan-da.png" }, { id: "p-ta", name: "Ta", img: "/assets/pasangan-ta.png" }, { id: "p-sa", name: "Sa", img: "/assets/pasangan-sa.png" }, { id: "p-wa", name: "Wa", img: "/assets/pasangan-wa.png" }, { id: "p-la", name: "La", img: "/assets/pasangan-la.png" }],
+  [{ id: "p-pa", name: "Pa", img: "/assets/pasangan-pa.png" }, { id: "p-dha", name: "Dha", img: "/assets/pasangan-dha.png" }, { id: "p-ja", name: "Ja", img: "/assets/pasangan-ja.png" }, { id: "p-ya", name: "Ya", img: "/assets/pasangan-ya.png" }, { id: "p-nya", name: "Nya", img: "/assets/pasangan-nya.png" }],
+  [{ id: "p-ma", name: "Ma", img: "/assets/pasangan-ma.png" }, { id: "p-ga", name: "Ga", img: "/assets/pasangan-ga.png" }, { id: "p-ba", name: "Ba", img: "/assets/pasangan-ba.png" }, { id: "p-tha", name: "Tha", img: "/assets/pasangan-tha.png" }, { id: "p-nga", name: "Nga", img: "/assets/pasangan-nga.png" }],
+];
