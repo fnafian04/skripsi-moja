@@ -6,6 +6,12 @@ const pages = [
   '/assets/sandhangan mandaswara.jpeg'
 ];
 
+// Preload images to avoid loading flickers
+pages.forEach(src => {
+  const img = new Image();
+  img.src = src;
+});
+
 let currentPage = 0;
 const bookLayout = document.getElementById("book-layout");
 
@@ -39,7 +45,9 @@ function renderBook() {
       <div class="page-content-wrapper w-full h-full flex flex-col items-center pointer-events-auto justify-center" style="transform: scale(0.92); transform-origin: center right;">
         
         <!-- Kiri Gambar -->
-        <div class="absolute top-[8%] md:top-[12%] bottom-[15%] right-0 left-[8%] md:left-[12%] rounded-l-xl bg-white/90 z-0 shadow-[-5px_5px_15px_rgba(0,0,0,0.15)]" style="background-image: url('${imgUrl}'); background-size: 200% 100%; background-position: left center; background-repeat: no-repeat; border: 4px solid white; border-right: none;"></div>
+        <div class="animate-duarr-1 absolute top-[8%] md:top-[12%] bottom-[15%] right-0 left-[8%] md:left-[12%] z-0 overflow-hidden flex items-center justify-center" style="transform-origin: center right;">
+          <img src="${imgUrl}" class="absolute h-full w-[200%] max-w-none object-contain pointer-events-none drop-shadow-lg" style="left: 0;" />
+        </div>
 
         <!-- Navigasi Bawah -->
         <div class="w-full flex justify-between items-center flex-shrink-0 absolute bottom-0 left-4 md:left-8 pr-4 md:pr-8 z-[100]">
@@ -56,7 +64,9 @@ function renderBook() {
       <div class="page-content-wrapper w-full h-full flex flex-col items-center pointer-events-auto justify-center" style="transform: scale(0.92); transform-origin: center left;">
         
         <!-- Kanan Gambar -->
-        <div class="absolute top-[8%] md:top-[12%] bottom-[15%] left-0 right-[8%] md:right-[12%] rounded-r-xl bg-white/90 z-0 shadow-[5px_5px_15px_rgba(0,0,0,0.15)]" style="background-image: url('${imgUrl}'); background-size: 200% 100%; background-position: right center; background-repeat: no-repeat; border: 4px solid white; border-left: none;"></div>
+        <div class="animate-duarr-1 absolute top-[8%] md:top-[12%] bottom-[15%] left-0 right-[8%] md:right-[12%] z-0 overflow-hidden flex items-center justify-center" style="transform-origin: center left;">
+          <img src="${imgUrl}" class="absolute h-full w-[200%] max-w-none object-contain pointer-events-none drop-shadow-lg" style="right: 0;" />
+        </div>
 
         <!-- Navigasi Bawah -->
         <div class="w-full flex justify-end items-center flex-shrink-0 absolute bottom-0 right-4 md:right-8 gap-2 md:gap-4 z-[100]">
