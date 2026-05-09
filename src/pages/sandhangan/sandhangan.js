@@ -31,7 +31,6 @@ window.openSandhanganCover = () => {
       
       setTimeout(() => {
         introCover.classList.add("hidden");
-        renderBook();
       }, 1500);
     }, 1200);
   }
@@ -39,13 +38,14 @@ window.openSandhanganCover = () => {
 
 function renderBook() {
   const imgUrl = pages[currentPage];
+  if (!bookLayout) return;
 
   let leftHTML = `
-    <div class="page-left flex-1 w-1/2 flex flex-col pointer-events-none relative perspective-container" style="perspective: 1200px;">
+    <div class="page-left flex-1 w-1/2 flex flex-col pointer-events-none relative perspective-container" style="perspective: 1200px; backface-visibility: hidden;">
       <div class="page-content-wrapper w-full h-full flex flex-col items-center pointer-events-auto justify-center" style="transform: scale(0.92); transform-origin: center right;">
         
         <!-- Kiri Gambar -->
-        <div class="animate-duarr-1 absolute top-[8%] md:top-[12%] bottom-[15%] right-0 left-[8%] md:left-[12%] z-0 overflow-hidden flex items-center justify-center" style="transform-origin: center right;">
+        <div class="absolute top-[8%] md:top-[12%] bottom-[15%] right-0 left-[8%] md:left-[12%] z-0 overflow-hidden flex items-center justify-center" style="transform-origin: center right;">
           <img src="${imgUrl}" class="absolute h-full w-[200%] max-w-none object-contain pointer-events-none drop-shadow-lg" style="left: 0;" />
         </div>
 
@@ -60,11 +60,11 @@ function renderBook() {
   `;
 
   let rightHTML = `
-    <div class="page-right flex-1 w-1/2 flex flex-col pointer-events-none relative perspective-container" style="perspective: 1200px;">
+    <div class="page-right flex-1 w-1/2 flex flex-col pointer-events-none relative perspective-container" style="perspective: 1200px; backface-visibility: hidden;">
       <div class="page-content-wrapper w-full h-full flex flex-col items-center pointer-events-auto justify-center" style="transform: scale(0.92); transform-origin: center left;">
         
         <!-- Kanan Gambar -->
-        <div class="animate-duarr-1 absolute top-[8%] md:top-[12%] bottom-[15%] left-0 right-[8%] md:right-[12%] z-0 overflow-hidden flex items-center justify-center" style="transform-origin: center left;">
+        <div class="absolute top-[8%] md:top-[12%] bottom-[15%] left-0 right-[8%] md:right-[12%] z-0 overflow-hidden flex items-center justify-center" style="transform-origin: center left;">
           <img src="${imgUrl}" class="absolute h-full w-[200%] max-w-none object-contain pointer-events-none drop-shadow-lg" style="right: 0;" />
         </div>
 
@@ -79,36 +79,19 @@ function renderBook() {
     </div>
   `;
 
-  if(bookLayout) {
-    bookLayout.innerHTML = leftHTML + rightHTML;
-  }
+  bookLayout.innerHTML = leftHTML + rightHTML;
 }
 
 window.prevPage = () => {
   if (currentPage > 0) {
-    const pageRight = bookLayout.querySelector('.page-right');
     const pageLeft = bookLayout.querySelector('.page-left');
-    
     if(pageLeft) pageLeft.classList.add("page-turn-left-out");
-    if(pageRight) {
-      pageRight.style.transition = "opacity 0.4s ease-in";
-      pageRight.style.opacity = "0";
-    }
 
     setTimeout(() => {
       currentPage--;
       renderBook();
-      
-      const newPageLeft = bookLayout.querySelector('.page-left');
       const newPageRight = bookLayout.querySelector('.page-right');
-      
       if(newPageRight) newPageRight.classList.add("page-turn-right-in");
-      if(newPageLeft) {
-         newPageLeft.style.opacity = "0";
-         newPageLeft.style.transition = "opacity 0.4s ease-out";
-         setTimeout(() => newPageLeft.style.opacity = "1", 50);
-      }
-
       setTimeout(() => {
         if(newPageRight) newPageRight.classList.remove("page-turn-right-in");
       }, 400);
@@ -119,31 +102,19 @@ window.prevPage = () => {
 window.nextPage = () => {
   if (currentPage < pages.length - 1) {
     const pageRight = bookLayout.querySelector('.page-right');
-    const pageLeft = bookLayout.querySelector('.page-left');
-    
     if(pageRight) pageRight.classList.add("page-turn-right-out");
-    if(pageLeft) {
-      pageLeft.style.transition = "opacity 0.4s ease-in";
-      pageLeft.style.opacity = "0";
-    }
 
     setTimeout(() => {
       currentPage++;
       renderBook();
-      
       const newPageLeft = bookLayout.querySelector('.page-left');
-      const newPageRight = bookLayout.querySelector('.page-right');
-      
       if(newPageLeft) newPageLeft.classList.add("page-turn-left-in");
-      if(newPageRight) {
-         newPageRight.style.opacity = "0";
-         newPageRight.style.transition = "opacity 0.4s ease-out";
-         setTimeout(() => newPageRight.style.opacity = "1", 50);
-      }
-
       setTimeout(() => {
         if(newPageLeft) newPageLeft.classList.remove("page-turn-left-in");
       }, 400);
     }, 400);
   }
 };
+
+// Panggil renderBook di awal supaya konten sudah siap saat cover dibuka
+renderBook();
