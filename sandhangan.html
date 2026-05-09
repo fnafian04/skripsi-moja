@@ -3,25 +3,24 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Pasinaon Aksara Legena</title>
+    <title>Pasinaon Sandhangan</title>
   </head>
 <body class="bg-batik font-sans overflow-hidden flex h-[100dvh]">
     <main class="flex-1 relative flex items-center justify-center w-full h-full overflow-hidden">
         
         <!-- Tampilan Sampul Awal (Intro) -->
-        <div id="legena-cover-intro" class="fixed inset-0 z-[999] flex items-center justify-center bg-[#795548] cursor-pointer transition-opacity duration-[1500ms]" onclick="openLegenaCover()">
+        <div id="sandhangan-cover-intro" class="fixed inset-0 z-[999] flex items-center justify-center bg-[#795548] cursor-pointer transition-opacity duration-[1500ms]" onclick="openSandhanganCover()">
           <div class="w-full h-full flex items-center justify-center" style="perspective: 2000px;">
             <!-- Wrapper Utama Buku -->
-            <div id="legena-intro-book-wrapper" class="relative transition-all duration-[1200ms] ease-in-out h-[65vh] md:h-[75vh] max-h-[500px] aspect-[3/4] max-w-[85vw]" style="transform: rotateY(15deg) rotateX(10deg); transform-style: preserve-3d;">
+            <div id="sandhangan-intro-book-wrapper" class="relative transition-all duration-[1200ms] ease-in-out h-[65vh] md:h-[75vh] max-h-[500px] aspect-[3/4] max-w-[85vw]" style="transform: rotateY(15deg) rotateX(10deg); transform-style: preserve-3d;">
               
               <!-- Cover Belakang & Kertas (1 Layer Tebal) -->
               <div class="absolute inset-0 bg-[#FEFBF3] rounded-r-xl md:rounded-r-2xl border-y-4 border-r-4 border-l-[20px] border-[#03A9F4] flex items-center justify-center overflow-hidden" style="box-shadow: inset 5px 0 10px rgba(0,0,0,0.3), 10px 10px 0px #FEFBF3, 14px 14px 0px #03A9F4, 25px 25px 40px rgba(0,0,0,0.7); transform: translateZ(-2px);">
                 <div class="absolute inset-0 opacity-10 bg-batik"></div>
-                <img src="/assets/aksara-ha.png" class="absolute w-[80%] max-w-none opacity-20 blur-[1px]" />
               </div>
 
               <!-- Cover Depan (Yang bisa dibuka) -->
-              <div id="legena-intro-front-cover" class="absolute inset-0 transition-transform duration-[1200ms] ease-in-out origin-left" style="transform-style: preserve-3d; z-index: 10; transform: translateZ(2px);">
+              <div id="sandhangan-intro-front-cover" class="absolute inset-0 transition-transform duration-[1200ms] ease-in-out origin-left" style="transform-style: preserve-3d; z-index: 10; transform: translateZ(2px);">
                 
                 <!-- Sisi Luar Cover Depan -->
                 <div class="absolute inset-0 bg-[#795548] bg-wood-css rounded-r-xl md:rounded-r-2xl border-l-[20px] border-[#5D4037] border-y-2 border-r-2 flex flex-col items-center justify-center shadow-[-5px_0_15px_rgba(0,0,0,0.5)]" style="backface-visibility: hidden; transform: rotateY(0deg) translateZ(1px); border: 2px solid #03A9F4;">
@@ -29,7 +28,7 @@
                   <div class="absolute inset-3 md:inset-5 border-2 md:border-4 border-[#FFC947]/50 rounded-lg pointer-events-none"></div>
                   
                   <div class="text-center z-10 p-4 md:p-6 bg-[#0288D1]/90 rounded-xl backdrop-blur-sm border-2 border-[#FFC947]/30 w-[85%] flex flex-col items-center justify-center shadow-xl">
-                    <h1 class="text-[#FFC947] font-serif font-bold uppercase leading-snug" style="font-size: min(4.5vh, 32px); text-shadow: 2px 2px 4px rgba(0,0,0,0.9);">AKSARA<br/>LEGENA</h1>
+                    <h1 class="text-[#FFC947] font-serif font-bold uppercase leading-snug" style="font-size: min(4.5vh, 28px); text-shadow: 2px 2px 4px rgba(0,0,0,0.9);">SANDHANGAN</h1>
                   </div>
                 </div>
 
@@ -102,6 +101,7 @@
               <div class="popup-overlay absolute top-[10%] md:top-[12%] w-full h-[65%] flex flex-row z-10 pointer-events-none">
                 
                 <div id="book-layout" class="w-full h-full flex flex-row z-10 pointer-events-none">
+                  <!-- Konten akan dirender oleh JS -->
                 </div>
 
                 <a href="beranda.html" class="btn-close-3d absolute -top-5 -right-6 md:-top-8 md:-right-10 bg-red-800 text-[#FFB300] px-4 py-2 md:px-5 md:py-2.5 rounded-full font-bold border-2 border-[#FFB300] cursor-pointer z-[9999] pointer-events-auto no-underline text-center flex items-center justify-center transition hover:scale-110 shadow-[0_5px_15px_rgba(0,0,0,0.5)]">
@@ -114,36 +114,7 @@
         </div>
     </main>
 
-    <div id="canvas-modal" class="fixed inset-0 z-[100] hidden overflow-y-auto bg-black/80 backdrop-blur-sm">
-      <div id="canvas-modal-inner" style="display: flex; min-height: 100%; align-items: center; justify-content: center; padding: 2rem 1rem;">
-        <div id="canvas-modal-card" class="bg-[#FEFBF3] relative border-4 border-[#03A9F4] flex flex-col items-center" style="margin: auto; padding: 1.25rem 1.5rem 1.25rem; border-radius: 1.5rem; width: fit-content; min-width: 280px; box-shadow: 0 20px 50px rgba(0,0,0,0.8);">
-
-          <!-- Baris atas: spasi | judul | tombol X -->
-          <div style="display:flex; align-items:center; justify-content:space-between; width:100%; gap:0.75rem; margin-bottom:1rem;">
-            <div style="width:30px; flex-shrink:0;"></div>
-            <div class="book-banner text-center" style="padding: 0.35rem 1.25rem; border-radius: 0.75rem; flex:1; min-width:0;">
-              <h2 class="font-serif font-bold tracking-wide" style="font-size: 1rem; white-space: nowrap;">Latihan Nebali</h2>
-            </div>
-            <!-- Tombol X: jajar genjang via skewX, shadow seperti tombol lain -->
-            <button onclick="closeCanvas()" class="btn-close-3d cursor-pointer" style="flex-shrink:0; width:30px; height:20px; display:flex; align-items:center; justify-content:center; font-weight:900; font-size:11px; color:#FFFFFF; background:linear-gradient(135deg,#03A9F4,#0288D1); transform:skewX(-14deg); box-shadow:0 3px 0 #0288D1, 0 4px 8px rgba(0,0,0,0.35); border:1px solid rgba(255,201,71,0.4); border-radius:2px;">
-              <span style="transform:skewX(14deg); display:block;">✖</span>
-            </button>
-          </div>
-
-          <!-- Panel aksara -->
-          <div id="canvas-container" style="display: flex; flex-direction: row; flex-wrap: nowrap; justify-content: center; align-items: flex-start; gap: 1.5rem; margin-bottom: 1rem;"></div>
-
-          <!-- Tombol aksi -->
-          <div style="display: flex; flex-direction: row; flex-wrap: wrap; justify-content: center; gap: 0.75rem; width: 100%;">
-            <button onclick="clearCanvas()" class="btn-modern-3d font-bold shadow-md cursor-pointer active:scale-95 transition-transform duration-150" style="flex: 1; min-width: 120px; padding: 0.65rem; border-radius: 0.75rem; font-size: 0.8rem; background: linear-gradient(135deg, #ef4444, #b91c1c); color: white; border-bottom: 4px solid #7f1d1d; text-shadow: none;">↺ BALENI</button>
-            <button onclick="checkCanvas()" class="btn-modern-3d font-bold shadow-md cursor-pointer active:scale-95 transition-transform duration-150" style="flex: 1; min-width: 120px; padding: 0.65rem; border-radius: 0.75rem; font-size: 0.8rem; background: linear-gradient(135deg, #22c55e, #15803d); color: white; border-bottom: 4px solid #14532d; text-shadow: none;">✅ CEK HASIL</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script type="module" src="/src/main.js"></script>
-    <script type="module" src="/src/pages/legena/legena.js"></script>
+    <script type="module" src="/src/pages/sandhangan/sandhangan.js"></script>
 </body>
 </html>

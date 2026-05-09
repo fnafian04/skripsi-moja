@@ -12,6 +12,7 @@ export default defineConfig({
         peta: "peta.html",
         legena: "legena.html",
         pengenalan: "pengenalan.html",
+        sandhangan: "sandhangan.html",
         stroke_editor: "stroke-editor.html",
       },
     },

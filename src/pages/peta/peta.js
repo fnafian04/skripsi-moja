@@ -95,9 +95,23 @@ function saveProgress() {
 
 // Restore glow visual candi setelah DOM siap
 document.addEventListener('DOMContentLoaded', () => {
+  let finishedCount = 0;
   for (let key in userProgress) {
-    if (userProgress[key].status === 'success') updateCandiGlow(key, 'success');
-    else if (userProgress[key].status === 'error') updateCandiGlow(key, 'error');
+    if (userProgress[key].status === 'success') {
+      updateCandiGlow(key, 'success');
+      finishedCount++;
+    } else if (userProgress[key].status === 'error') {
+      updateCandiGlow(key, 'error');
+    } else if (userProgress[key].status === 'zonk') {
+      updateCandiGlow(key, 'zonk');
+      finishedCount++;
+    }
+  }
+
+  const total = Object.keys(candiData).length;
+  if (finishedCount === total) {
+    const actionBtns = document.getElementById("finished-actions");
+    if(actionBtns) actionBtns.style.display = 'flex';
   }
 
   // Tambahkan efek toel saat gambar candi di dalam buku diklik
@@ -201,23 +215,29 @@ window.checkAllAnswers = () => {
     if (prog.attempts >= 3) {
       setTimeout(() => {
         Swal.fire({
-          icon: "warning",
-          title: "Kesempatan pun Telas!",
-          text: "Sampeyan wis 3 kali salah ing candhi iki, ayoo deleng katrangane alon2!",
+          icon: "error",
+          title: "Kesempatan Telas!",
+          text: "Sampeyan wis 3 kali salah ing candhi iki, ayoo deleng katrangane alon-alon, iki wangsulan kang bener!",
           confirmButtonColor: "#03A9F4",
           customClass: { popup: "swal-paper", confirmButton: "swal-paper-confirm" },
         }).then(() => {
-          prog.attempts = 0;
-          prog.ans1 = "";
-          prog.ans2 = "";
-          prog.q1State = "none";
-          prog.q2State = "none";
-          document.getElementById("ans1").value = "";
-          document.getElementById("ans2").value = "";
-          applyFeedbackState("ans1", "feedback1", "none");
-          applyFeedbackState("ans2", "feedback2", "none");
-          updateCandiGlow(id, "none");
+          let ans1Str = Array.isArray(data.a1) ? data.a1[1] || data.a1[0] : data.a1;
+          let ans2Str = Array.isArray(data.a2) ? data.a2[1] || data.a2[0] : data.a2;
+          
+          prog.ans1 = ans1Str;
+          prog.ans2 = ans2Str;
+          prog.q1State = "correct";
+          prog.q2State = "correct";
+          prog.status = "zonk";
+          
+          document.getElementById("ans1").value = ans1Str;
+          document.getElementById("ans2").value = ans2Str;
+          applyFeedbackState("ans1", "feedback1", "correct");
+          applyFeedbackState("ans2", "feedback2", "correct");
+          
+          updateCandiGlow(id, "zonk");
           saveProgress();
+          checkFinishAll();
         });
       }, 500);
     }
@@ -253,42 +273,102 @@ function applyFeedbackState(inputId, feedbackId, state) {
 function updateCandiGlow(id, status) {
   const hotspot = document.querySelector(`.hotspot[data-id="${id}"]`);
   if (!hotspot) return;
-  hotspot.classList.remove("candi-error", "candi-success");
+  hotspot.classList.remove("candi-error", "candi-success", "candi-zonk");
   if (status === "error") hotspot.classList.add("candi-error");
   if (status === "success") hotspot.classList.add("candi-success");
+  if (status === "zonk") hotspot.classList.add("candi-zonk");
 }
 
 function checkFinishAll() {
   const total = Object.keys(candiData).length;
-  const finished = Object.values(userProgress).filter((p) => p.status === "success").length;
+  const finished = Object.values(userProgress).filter((p) => p.status === "success" || p.status === "zonk").length;
 
   if (finished === total) {
-    let totalKesalahan = 0;
-    Object.values(userProgress).forEach((p) => (totalKesalahan += p.attempts));
+    let score = 0;
+    Object.values(userProgress).forEach((p) => {
+      if (p.status === "success") {
+        score += (100 / total); // 12.5 points per success
+      }
+    });
+    score = Math.round(score);
+    if (score < 0) score = 0;
 
-    let score = 100 - totalKesalahan * 5;
-    if (score < 20) score = 20;
+    // Show floating button block
+    const actionBtns = document.getElementById("finished-actions");
+    if(actionBtns) actionBtns.style.display = 'flex';
 
-    // Simpan status selesai ke sessionStorage agar sinkron dengan progress
     sessionStorage.setItem('completed_pasinaon', 'true');
 
     setTimeout(() => {
       document.getElementById("popup-book").classList.add("hidden");
-      Swal.fire({
-        title: "Luar Biasa!",
-        html: `Misi wis rampung! Kabeh teka-teki candhi wis ditanggulangi<br><br><b>Skor Final Panjenengan: <span style="font-size: 2.5em; color: #166534; display: block; margin-top: 10px;">${score}</span></b>`,
-        confirmButtonText: "Lanjut →",
-        allowOutsideClick: false,
-        customClass: {
-          popup: "swal-paper",
-          title: "swal-paper-title",
-          confirmButton: "swal-paper-confirm",
-        },
-      }).then(() => {
-        window.location.href = "beranda.html";
-      });
+      showFinalResultModal(score);
     }, 1000);
   }
+}
+
+window.showFinalResult = () => {
+  let score = 0;
+  const total = Object.keys(candiData).length;
+  Object.values(userProgress).forEach((p) => {
+    if (p.status === "success") {
+      score += (100 / total);
+    }
+  });
+  score = Math.round(score);
+  showFinalResultModal(score);
+};
+
+window.showFinalResultModal = (score) => {
+  let msg;
+  if (score >= 70) {
+    msg = { icon: "success", title: "Luar Biasa!", text: "Misi wis rampung! Sampeyan pancen pinter ngerjakake kabeh teka-teki candhi iki" };
+  } else if (score >= 50) {
+    msg = { icon: "info", title: "Sae!", text: "Misi wis rampung, ananging taksih ana sawetara wangsulan sing kurang pas, ayo sinau maneh!" };
+  } else if (score >= 25) {
+    msg = { icon: "warning", title: "Kudu Sregep Sinau!", text: "Biji panjenengan isih kurang, coba sinau aksara Jawa maneh kanthi luwih tliti" };
+  } else if (score > 0) {
+    msg = { icon: "error", title: "Aduh, Kirang Pas!", text: "Akeh wangsulan sing luput, ojo nyerah, ayo waca maneh panjelasan saben candhi!" };
+  } else {
+    msg = { icon: "error", title: "Aduh, Coba Maneh!", text: "Kabeh wangsulan isih luput, ora apa-apa, ayo dicoba maneh saka awal ben luwih paham!" };
+  }
+  
+  let color = score >= 50 ? "#166534" : "#d32f2f";
+
+  Swal.fire({
+    icon: msg.icon,
+    title: msg.title,
+    html: `${msg.text}<br><br><b>Skor Final Panjenengan: <span style="font-size: 2.5em; color: ${color}; display: block; margin-top: 10px;">${score}</span></b>`,
+    confirmButtonText: "Tutup",
+    allowOutsideClick: false,
+    customClass: {
+      popup: "swal-paper",
+      title: "swal-paper-title",
+      confirmButton: "swal-paper-confirm",
+    },
+  });
+};
+
+window.restartGame = () => {
+  Swal.fire({
+    title: "Apa panjenengan yakin?",
+    text: "Menapa panjenengan saestu badhe mbaleni kuis iki? Kabeh wangsulan lan biji panjenengan bakal dibusak",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#d33",
+    cancelButtonColor: "#3085d6",
+    confirmButtonText: "Nggih, Baleni!",
+    cancelButtonText: "Batal",
+    customClass: {
+      popup: "swal-paper",
+      title: "swal-paper-title",
+    }
+  }).then((result) => {
+    if (result.isConfirmed) {
+      sessionStorage.removeItem(PROGRESS_KEY);
+      sessionStorage.removeItem('completed_pasinaon');
+      location.reload();
+    }
+  });
 }
 
 // ==========================================

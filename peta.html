@@ -20,7 +20,7 @@
       <nav class="flex-1 p-3 pt-20 lg:pt-4 space-y-2 overflow-y-auto text-[#3E2723] font-bold text-sm">
         <a href="pengenalan.html" class="block p-3 hover:bg-[#81D4FA] hover:text-[#01579B] rounded-xl transition border-b-2 border-transparent hover:border-[#03A9F4]">Pengenalan Aksara Jawa</a>
         <a href="legena.html" class="block p-3 hover:bg-[#81D4FA] hover:text-[#01579B] rounded-xl transition border-b-2 border-transparent hover:border-[#03A9F4]">Aksara Legena</a>
-        <a href="#" class="block p-3 hover:bg-[#81D4FA] hover:text-[#01579B] rounded-xl transition border-b-2 border-transparent hover:border-[#03A9F4]">Sandhangan Swara</a>
+        <a href="sandhangan.html" class="block p-3 hover:bg-[#81D4FA] hover:text-[#01579B] rounded-xl transition border-b-2 border-transparent hover:border-[#03A9F4]">Sandhangan Swara</a>
         <a href="beranda-pasinaon.html" class="block p-3 bg-[#81D4FA] text-[#01579B] shadow-md border-l-4 border-[#03A9F4] rounded-xl transition">Latihan Pasinaon</a>
       </nav>
     </aside>
@@ -111,6 +111,16 @@
               <div class="hotspot-name">Candi Kedaton<span class="font-jawa">ꦕꦤ꧀ꦢꦶ ꦏꦼꦢꦠꦺꦴꦤ꧀</span></div>
             </button>
           </div>
+        </div>
+
+        <!-- Tombol Selesai Kuis -->
+        <div id="finished-actions" class="absolute bottom-5 right-5 flex-col md:flex-row gap-3 z-[150]" style="display: none;">
+          <button onclick="showFinalResult()" class="bg-[#03A9F4] hover:bg-sky-600 text-[#FFFFFF] font-bold py-2 px-4 rounded-xl shadow-lg border-2 border-[#3E2723] transition-transform hover:scale-105 active:scale-95 duration-150 font-serif text-sm md:text-base">
+            Cek Hasil
+          </button>
+          <button onclick="restartGame()" class="bg-red-600 hover:bg-red-700 text-[#FFFFFF] font-bold py-2 px-4 rounded-xl shadow-lg border-2 border-[#3E2723] transition-transform hover:scale-105 active:scale-95 duration-150 font-serif text-sm md:text-base">
+            Baleni (Restart)
+          </button>
         </div>
       </main>
     </div>
@@ -223,7 +233,7 @@
               </div>
             </div>
 
-            <button onclick="checkAllAnswers()" class="animate-duarr-3 btn-modern-3d w-[80%] md:w-[70%] mx-auto py-1.5 md:py-2.5 text-[9px] md:text-sm font-serif z-10 flex-shrink-0 pointer-events-auto mt-3 md:mt-6 mb-1 md:mb-2 uppercase font-bold tracking-wider">PRIKSA WANGSULAN</button>
+            <button onclick="checkAllAnswers()" class="animate-duarr-3 btn-modern-3d w-[80%] md:w-[70%] mx-auto py-1.5 md:py-2.5 text-[9px] md:text-sm font-serif z-10 flex-shrink-0 pointer-events-auto mt-3 md:mt-6 mb-1 md:mb-2 uppercase font-bold tracking-wider active:scale-95 transition-transform duration-150">PRIKSA WANGSULAN</button>
           </div>
         </div>
       </div>

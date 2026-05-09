@@ -76,7 +76,7 @@ function renderBook() {
         
         <!-- Navigasi Bawah -->
         <div class="w-full flex justify-start items-center flex-shrink-0">
-          <button onclick="prevPage()" class="btn-modern-3d text-[7px] md:text-[11px] font-bold tracking-wider px-1.5 py-1 md:px-3" ${currentPage === 0 ? "disabled" : ""}>
+          <button onclick="prevPage()" class="btn-modern-3d text-[7px] md:text-[11px] font-bold tracking-wider px-1.5 py-1 md:px-3 active:scale-95 transition-transform duration-150" ${currentPage === 0 ? "disabled" : ""}>
             <span style="display: flex; gap: 2px; align-items: center;"><span>⬅</span><span>BALENI</span></span>
           </button>
         </div>
@@ -101,13 +101,13 @@ function renderBook() {
         </div>
         
         <div class="w-[95%] md:w-[85%] mb-1 flex-shrink-0">
-          <button onclick="startTracing()" class="btn-modern-3d w-full py-1 md:py-1.5 text-[7px] md:text-[12px] font-bold tracking-widest shadow-lg hover:scale-[1.02] transition-transform">MULAI NEBALI ✍️</button>
+          <button onclick="startTracing()" class="btn-modern-3d w-full py-1 md:py-1.5 text-[7px] md:text-[12px] font-bold tracking-widest shadow-lg active:scale-95 transition-transform duration-150">MULAI NEBALI ✍️</button>
         </div>
         
         <!-- Navigasi Bawah -->
         <div class="w-full flex justify-between items-center flex-shrink-0">
           <span class="text-[#795548] font-bold text-[7px] md:text-[11px]">Hal ${currentPage + 1}/4</span>
-          <button onclick="nextPage()" class="btn-modern-3d text-[7px] md:text-[11px] font-bold tracking-wider px-1.5 py-1 md:px-3" ${currentPage === aksaraData.length - 1 || !completedPages[currentPage] ? "disabled" : ""}>
+          <button onclick="nextPage()" class="btn-modern-3d text-[7px] md:text-[11px] font-bold tracking-wider px-1.5 py-1 md:px-3 active:scale-95 transition-transform duration-150" ${currentPage === aksaraData.length - 1 || !completedPages[currentPage] ? "disabled" : ""}>
             <span style="display: flex; gap: 2px; align-items: center;"><span>LANJUT</span><span>➡</span></span>
           </button>
         </div>
