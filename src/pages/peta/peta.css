@@ -428,6 +428,13 @@
     color: #b45309;
     border: 1px solid #f59e0b;
   }
+
+  .feedback-autocorrect {
+    background-color: #e3f2fd;
+    color: #0277bd;
+    border: 1px solid #0288d1;
+    font-weight: 600;
+  }
   
   /* --- TOMBOL X (2D OVERLAY) --- */
   .btn-close-3d {

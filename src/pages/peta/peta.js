@@ -81,11 +81,11 @@ const savedProgress = sessionStorage.getItem(PROGRESS_KEY);
 if (savedProgress) {
   const parsed = JSON.parse(savedProgress);
   for (let key in candiData) {
-    userProgress[key] = parsed[key] ?? { ans1: "", ans2: "", q1State: "none", q2State: "none", attempts: 0, status: "none" };
+    userProgress[key] = parsed[key] ?? { ans1: "", ans2: "", q1State: "none", q2State: "none", attempts: 0, status: "none", isAutoCorrect: false };
   }
 } else {
   for (let key in candiData) {
-    userProgress[key] = { ans1: "", ans2: "", q1State: "none", q2State: "none", attempts: 0, status: "none" };
+    userProgress[key] = { ans1: "", ans2: "", q1State: "none", q2State: "none", attempts: 0, status: "none", isAutoCorrect: false };
   }
 }
 
@@ -102,9 +102,10 @@ document.addEventListener('DOMContentLoaded', () => {
       finishedCount++;
     } else if (userProgress[key].status === 'error') {
       updateCandiGlow(key, 'error');
-    } else if (userProgress[key].status === 'zonk') {
-      updateCandiGlow(key, 'zonk');
-      finishedCount++;
+      // Jika statusnya error dan isAutoCorrect, tetap error (merah), jangan biru
+      if (userProgress[key].isAutoCorrect) {
+        finishedCount++;
+      }
     }
   }
 
@@ -175,6 +176,11 @@ window.checkAllAnswers = () => {
   const data = candiData[id];
   const prog = userProgress[id];
 
+  // Jika sudah dalam status auto-correct, jangan ubah apa-apa
+  if (prog.isAutoCorrect) {
+    return;
+  }
+
   const v1 = document.getElementById("ans1").value.trim().toLowerCase();
   const v2 = document.getElementById("ans2").value.trim().toLowerCase();
 
@@ -221,21 +227,30 @@ window.checkAllAnswers = () => {
           confirmButtonColor: "#03A9F4",
           customClass: { popup: "swal-paper", confirmButton: "swal-paper-confirm" },
         }).then(() => {
-          let ans1Str = Array.isArray(data.a1) ? data.a1[1] || data.a1[0] : data.a1;
-          let ans2Str = Array.isArray(data.a2) ? data.a2[1] || data.a2[0] : data.a2;
+          // Hanya betulkan jawaban yang salah saja
+          if (prog.q1State === "wrong") {
+            let ans1Str = Array.isArray(data.a1) ? data.a1[1] || data.a1[0] : data.a1;
+            prog.ans1 = ans1Str;
+            prog.q1State = "autocorrect";
+            document.getElementById("ans1").value = ans1Str;
+          }
           
-          prog.ans1 = ans1Str;
-          prog.ans2 = ans2Str;
-          prog.q1State = "correct";
-          prog.q2State = "correct";
-          prog.status = "zonk";
+          if (prog.q2State === "wrong") {
+            let ans2Str = Array.isArray(data.a2) ? data.a2[1] || data.a2[0] : data.a2;
+            prog.ans2 = ans2Str;
+            prog.q2State = "autocorrect";
+            document.getElementById("ans2").value = ans2Str;
+          }
           
-          document.getElementById("ans1").value = ans1Str;
-          document.getElementById("ans2").value = ans2Str;
-          applyFeedbackState("ans1", "feedback1", "correct");
-          applyFeedbackState("ans2", "feedback2", "correct");
+          // Tandai bahwa ini adalah pembenarannya otomatis
+          prog.isAutoCorrect = true;
+          prog.status = "error";
           
-          updateCandiGlow(id, "zonk");
+          applyFeedbackState("ans1", "feedback1", prog.q1State);
+          applyFeedbackState("ans2", "feedback2", prog.q2State);
+          
+          // Tetap merah (error), jangan biru
+          updateCandiGlow(id, "error");
           saveProgress();
           checkFinishAll();
         });
@@ -249,8 +264,8 @@ function applyFeedbackState(inputId, feedbackId, state) {
   const feedback = document.getElementById(feedbackId);
 
   // Bersihkan semua class
-  feedback.classList.remove("feedback-correct", "feedback-wrong", "feedback-empty", "show");
-  input.classList.remove("border-green-500", "border-red-500", "border-yellow-500", "bg-green-50", "bg-red-50", "bg-yellow-50");
+  feedback.classList.remove("feedback-correct", "feedback-wrong", "feedback-empty", "feedback-autocorrect", "show");
+  input.classList.remove("border-green-500", "border-red-500", "border-yellow-500", "border-blue-500", "bg-green-50", "bg-red-50", "bg-yellow-50", "bg-blue-50");
 
   if (state === "none") return;
 
@@ -267,6 +282,10 @@ function applyFeedbackState(inputId, feedbackId, state) {
     feedback.innerText = "Isih Kosong! ⚠️";
     feedback.classList.add("feedback-empty");
     input.classList.add("border-yellow-500", "bg-yellow-50");
+  } else if (state === "autocorrect") {
+    feedback.innerText = "AutoCorrect 🔵";
+    feedback.classList.add("feedback-autocorrect");
+    input.classList.add("border-blue-500", "bg-blue-50");
   }
 }
 
@@ -276,12 +295,11 @@ function updateCandiGlow(id, status) {
   hotspot.classList.remove("candi-error", "candi-success", "candi-zonk");
   if (status === "error") hotspot.classList.add("candi-error");
   if (status === "success") hotspot.classList.add("candi-success");
-  if (status === "zonk") hotspot.classList.add("candi-zonk");
 }
 
 function checkFinishAll() {
   const total = Object.keys(candiData).length;
-  const finished = Object.values(userProgress).filter((p) => p.status === "success" || p.status === "zonk").length;
+  const finished = Object.values(userProgress).filter((p) => p.status === "success" || (p.status === "error" && p.isAutoCorrect)).length;
 
   if (finished === total) {
     let score = 0;
