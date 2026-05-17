@@ -6,25 +6,20 @@
     <title>pasinaon autocorrect</title>
   </head>
   <body class="bg-[#E1F5FE] font-sans overflow-hidden flex h-[100dvh]">
-    <div id="sidebar-overlay" class="fixed inset-0 bg-black/50 z-[80] hidden"></div>
-
-    <aside id="sidebar" class="sidebar-abstrak fixed lg:static inset-y-0 left-0 w-64 bg-[#B3E5FC] border-r-4 border-[#03A9F4] z-[90] transform -translate-x-full lg:translate-x-0 transition-transform duration-300 flex flex-col overflow-hidden">
-      <a href="/index.html" class="hidden lg:block p-5 bg-[#03A9F4] text-[#FFFFFF] text-center font-serif transition-all duration-300 border-b-4 border-[#3E2723]">
-        <span class="text-2xl font-bold block leading-tight">Pasinaon</span>
-        <span class="text-sm font-medium tracking-widest opacity-90">ꦄꦏ꧀ꦱꦫ ꦗꦮ</span>
-      </a>
-      <nav class="flex-1 p-3 pt-20 lg:pt-4 space-y-2 overflow-y-auto text-[#3E2723] font-bold text-sm">
-        <a href="pengenalan.html" class="block p-3 hover:bg-[#81D4FA] hover:text-[#01579B] rounded-xl transition border-b-2 border-transparent hover:border-[#03A9F4]">Pengenalan Aksara Jawa</a>
-        <a href="legena.html" class="block p-3 hover:bg-[#81D4FA] hover:text-[#01579B] rounded-xl transition border-b-2 border-transparent hover:border-[#03A9F4]">Aksara Legena</a>
-        <a href="sandhangan.html" class="block p-3 hover:bg-[#81D4FA] hover:text-[#01579B] rounded-xl transition border-b-2 border-transparent hover:border-[#03A9F4]">Sandhangan Swara</a>
-        <a href="beranda-pasinaon.html" class="block p-3 bg-[#81D4FA] text-[#01579B] shadow-md rounded-xl transition border-l-4 border-[#03A9F4]">Latihan Pasinaon</a>
-      </nav>
-    </aside>
-
     <div class="flex-1 flex flex-col h-full overflow-y-auto overflow-x-hidden relative w-full">
-      <header class="lg:hidden bg-[#B3E5FC] text-[#3E2723] p-3 flex-none w-full shadow-md flex justify-between items-center z-[100] border-b-2 border-[#03A9F4]">
-        <button id="hamburger" class="hamburger-abstrak px-3 py-1 bg-[#03A9F4] text-[#FFFFFF] shadow-sm text-xl font-bold leading-none border border-[#3E2723] hover:bg-sky-600 transition transform hover:scale-105">☰</button>
-        <a href="/index.html" class="font-serif text-lg font-bold hover:scale-105 hover:text-[#03A9F4] transition-transform duration-300">Pasinaon Aksara Jawa 📜</a>
+      <header class="bg-[#B3E5FC] text-[#3E2723] p-3 flex-none w-full shadow-md flex justify-between items-center z-[100] border-b-2 border-[#03A9F4]">
+        <a
+          href="/beranda.html"
+          class="btn-home-header bg-[#03A9F4] hover:bg-sky-600 text-[#FFFFFF] font-bold px-3 py-1 md:px-4 md:py-2 rounded-lg shadow-lg border-2 border-[#FFC947] transition-transform hover:scale-105 active:scale-95 flex items-center justify-center"
+          title="Pulang ke Beranda"
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+            <polyline points="9 22 9 12 15 12 15 22"></polyline>
+          </svg>
+        </a>
+        <span class="font-serif text-lg font-bold">Pasinaon Aksara Jawa 📜</span>
+        <div style="width: 40px;"></div>
       </header>
 
       <main class="flex-1 p-4 md:p-10 bg-batik flex items-center justify-center">
@@ -38,6 +33,5 @@
       </main>
     </div>
     <script type="module" src="/src/main.js"></script>
-
   </body>
 </html>

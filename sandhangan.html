@@ -1,120 +1,154 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="id">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Pasinaon Sandhangan</title>
   </head>
-<body class="bg-batik font-sans overflow-hidden flex h-[100dvh]">
+  <body class="bg-batik font-sans overflow-hidden flex h-[100dvh]">
     <main class="flex-1 relative flex items-center justify-center w-full h-full overflow-hidden">
-        
-        <!-- Tampilan Sampul Awal (Intro) -->
-        <div id="sandhangan-cover-intro" class="fixed inset-0 z-[999] flex items-center justify-center bg-[#795548] cursor-pointer transition-opacity duration-[1500ms]" onclick="openSandhanganCover()">
-          <div class="w-full h-full flex items-center justify-center" style="perspective: 2000px;">
-            <!-- Wrapper Utama Buku -->
-            <div id="sandhangan-intro-book-wrapper" class="relative transition-all duration-[1200ms] ease-in-out h-[65vh] md:h-[75vh] max-h-[500px] aspect-[3/4] max-w-[85vw]" style="transform: rotateY(15deg) rotateX(10deg); transform-style: preserve-3d;">
-              
-              <!-- Cover Belakang & Kertas (1 Layer Tebal) -->
-              <div class="absolute inset-0 bg-[#FEFBF3] rounded-r-xl md:rounded-r-2xl border-y-4 border-r-4 border-l-[20px] border-[#03A9F4] flex items-center justify-center overflow-hidden" style="box-shadow: inset 5px 0 10px rgba(0,0,0,0.3), 10px 10px 0px #FEFBF3, 14px 14px 0px #03A9F4, 25px 25px 40px rgba(0,0,0,0.7); transform: translateZ(-2px);">
-                <div class="absolute inset-0 opacity-10 bg-batik"></div>
+      <!-- Tampilan Sampul Awal (Intro) -->
+      <div id="sandhangan-cover-intro" class="fixed inset-0 z-[999] flex items-center justify-center bg-[#795548] cursor-pointer transition-opacity duration-[1500ms]" onclick="openSandhanganCover()">
+        <div class="w-full h-full flex items-center justify-center" style="perspective: 2000px">
+          <!-- Wrapper Utama Buku -->
+          <div
+            id="sandhangan-intro-book-wrapper"
+            class="relative transition-all duration-[1200ms] ease-in-out h-[65vh] md:h-[75vh] max-h-[500px] aspect-[3/4] max-w-[85vw]"
+            style="transform: rotateY(15deg) rotateX(10deg); transform-style: preserve-3d"
+          >
+            <!-- Cover Belakang & Kertas (1 Layer Tebal) -->
+            <div
+              class="absolute inset-0 bg-[#FEFBF3] rounded-r-xl md:rounded-r-2xl border-y-4 border-r-4 border-l-[20px] border-[#03A9F4] flex items-center justify-center overflow-hidden"
+              style="
+                box-shadow:
+                  inset 5px 0 10px rgba(0, 0, 0, 0.3),
+                  10px 10px 0px #fefbf3,
+                  14px 14px 0px #03a9f4,
+                  25px 25px 40px rgba(0, 0, 0, 0.7);
+                transform: translateZ(-2px);
+              "
+            >
+              <div class="absolute inset-0 opacity-10 bg-batik"></div>
+            </div>
+
+            <!-- Cover Depan (Yang bisa dibuka) -->
+            <div id="sandhangan-intro-front-cover" class="absolute inset-0 transition-transform duration-[1200ms] ease-in-out origin-left" style="transform-style: preserve-3d; z-index: 10; transform: translateZ(2px)">
+              <!-- Sisi Luar Cover Depan -->
+              <div
+                class="absolute inset-0 bg-[#795548] bg-wood-css rounded-r-xl md:rounded-r-2xl border-l-[20px] border-[#5D4037] border-y-2 border-r-2 flex flex-col items-center justify-center shadow-[-5px_0_15px_rgba(0,0,0,0.5)]"
+                style="backface-visibility: hidden; transform: rotateY(0deg) translateZ(1px); border: 2px solid #03a9f4"
+              >
+                <div class="absolute left-0 top-0 bottom-0 w-3 bg-gradient-to-r from-white/30 to-transparent pointer-events-none"></div>
+                <div class="absolute inset-3 md:inset-5 border-2 md:border-4 border-[#FFC947]/50 rounded-lg pointer-events-none"></div>
+
+                <div class="text-center z-10 p-4 md:p-6 bg-[#0288D1]/90 rounded-xl backdrop-blur-sm border-2 border-[#FFC947]/30 w-[85%] flex flex-col items-center justify-center shadow-xl">
+                  <h1 class="text-[#FFC947] font-serif font-bold uppercase leading-snug" style="font-size: min(4.5vh, 28px); text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.9)">SANDHANGAN</h1>
+                </div>
               </div>
 
-              <!-- Cover Depan (Yang bisa dibuka) -->
-              <div id="sandhangan-intro-front-cover" class="absolute inset-0 transition-transform duration-[1200ms] ease-in-out origin-left" style="transform-style: preserve-3d; z-index: 10; transform: translateZ(2px);">
-                
-                <!-- Sisi Luar Cover Depan -->
-                <div class="absolute inset-0 bg-[#795548] bg-wood-css rounded-r-xl md:rounded-r-2xl border-l-[20px] border-[#5D4037] border-y-2 border-r-2 flex flex-col items-center justify-center shadow-[-5px_0_15px_rgba(0,0,0,0.5)]" style="backface-visibility: hidden; transform: rotateY(0deg) translateZ(1px); border: 2px solid #03A9F4;">
-                  <div class="absolute left-0 top-0 bottom-0 w-3 bg-gradient-to-r from-white/30 to-transparent pointer-events-none"></div>
-                  <div class="absolute inset-3 md:inset-5 border-2 md:border-4 border-[#FFC947]/50 rounded-lg pointer-events-none"></div>
-                  
-                  <div class="text-center z-10 p-4 md:p-6 bg-[#0288D1]/90 rounded-xl backdrop-blur-sm border-2 border-[#FFC947]/30 w-[85%] flex flex-col items-center justify-center shadow-xl">
-                    <h1 class="text-[#FFC947] font-serif font-bold uppercase leading-snug" style="font-size: min(4.5vh, 28px); text-shadow: 2px 2px 4px rgba(0,0,0,0.9);">SANDHANGAN</h1>
-                  </div>
-                </div>
-
-                <!-- Sisi Dalam Cover Depan (Bagian dalam sampul coklat) -->
-                <div class="absolute inset-0 bg-[#795548] bg-wood-css rounded-l-xl md:rounded-l-2xl border-y-2 border-l-2 border-r-[20px] border-[#5D4037] flex items-center justify-center overflow-hidden" style="backface-visibility: hidden; transform: rotateY(180deg) translateZ(1px); border: 2px solid #03A9F4;">
-                </div>
-              </div>
-
+              <!-- Sisi Dalam Cover Depan (Bagian dalam sampul coklat) -->
+              <div
+                class="absolute inset-0 bg-[#795548] bg-wood-css rounded-l-xl md:rounded-l-2xl border-y-2 border-l-2 border-r-[20px] border-[#5D4037] flex items-center justify-center overflow-hidden"
+                style="backface-visibility: hidden; transform: rotateY(180deg) translateZ(1px); border: 2px solid #03a9f4"
+              ></div>
             </div>
           </div>
         </div>
+      </div>
 
-        <div id="popup-book" class="fixed inset-0 z-[100] flex items-center justify-center p-2 md:p-6 bg-black/70 backdrop-blur-sm">
-            
-            <div class="relative flex items-center justify-center mx-auto" style="aspect-ratio: 8/5; height: 85vh; max-height: 550px; max-width: 95vw; perspective: 1500px;">
-              
-              <!-- LAPISAN 1: BUKU 3D -->
-              <div class="book-container absolute inset-0 w-full h-full bg-wood-css p-2 md:p-4 rounded-sm book-3d-shadow flex flex-col pointer-events-none z-0">
-                <div class="flex flex-row flex-1 book-content rounded-sm shadow-inner bg-[#FEFBF3] relative">
-                  <div class="flex-1 w-1/2 border-r border-[#d7ccc8]/50"></div>
-                  <div class="flex-1 w-1/2"></div>
-                  
-                  <!-- Binder Rings -->
-                  <div class="absolute top-[5%] bottom-[5%] left-1/2 -translate-x-1/2 w-6 md:w-8 flex flex-col justify-evenly items-center z-10">
-                    <!-- Ring 1 -->
-                    <div class="relative w-full h-3 flex items-center justify-center">
-                      <div class="absolute left-[-2px] w-2 h-2 bg-[#795548]/90 rounded-full shadow-[inset_1px_1px_3px_rgba(0,0,0,0.9)]"></div>
-                      <div class="absolute right-[-2px] w-2 h-2 bg-[#795548]/90 rounded-full shadow-[inset_1px_1px_3px_rgba(0,0,0,0.9)]"></div>
-                      <div class="w-[90%] h-1.5 md:h-2 bg-gradient-to-b from-[#e0e0e0] via-[#ffffff] to-[#757575] rounded-full border border-[#424242] shadow-[2px_3px_5px_rgba(0,0,0,0.5),_inset_0_-1px_2px_rgba(0,0,0,0.8)] relative overflow-hidden z-10">
-                         <div class="absolute w-[30%] h-full bg-gradient-to-r from-transparent via-white to-transparent left-[15%]"></div>
-                      </div>
-                    </div>
-                    <!-- Ring 2 -->
-                    <div class="relative w-full h-3 flex items-center justify-center">
-                      <div class="absolute left-[-2px] w-2 h-2 bg-[#795548]/90 rounded-full shadow-[inset_1px_1px_3px_rgba(0,0,0,0.9)]"></div>
-                      <div class="absolute right-[-2px] w-2 h-2 bg-[#795548]/90 rounded-full shadow-[inset_1px_1px_3px_rgba(0,0,0,0.9)]"></div>
-                      <div class="w-[90%] h-1.5 md:h-2 bg-gradient-to-b from-[#e0e0e0] via-[#ffffff] to-[#757575] rounded-full border border-[#424242] shadow-[2px_3px_5px_rgba(0,0,0,0.5),_inset_0_-1px_2px_rgba(0,0,0,0.8)] relative overflow-hidden z-10">
-                         <div class="absolute w-[30%] h-full bg-gradient-to-r from-transparent via-white to-transparent left-[15%]"></div>
-                      </div>
-                    </div>
-                    <!-- Ring 3 -->
-                    <div class="relative w-full h-3 flex items-center justify-center">
-                      <div class="absolute left-[-2px] w-2 h-2 bg-[#795548]/90 rounded-full shadow-[inset_1px_1px_3px_rgba(0,0,0,0.9)]"></div>
-                      <div class="absolute right-[-2px] w-2 h-2 bg-[#795548]/90 rounded-full shadow-[inset_1px_1px_3px_rgba(0,0,0,0.9)]"></div>
-                      <div class="w-[90%] h-1.5 md:h-2 bg-gradient-to-b from-[#e0e0e0] via-[#ffffff] to-[#757575] rounded-full border border-[#424242] shadow-[2px_3px_5px_rgba(0,0,0,0.5),_inset_0_-1px_2px_rgba(0,0,0,0.8)] relative overflow-hidden z-10">
-                         <div class="absolute w-[30%] h-full bg-gradient-to-r from-transparent via-white to-transparent left-[15%]"></div>
-                      </div>
-                    </div>
-                    <!-- Ring 4 -->
-                    <div class="relative w-full h-3 flex items-center justify-center">
-                      <div class="absolute left-[-2px] w-2 h-2 bg-[#795548]/90 rounded-full shadow-[inset_1px_1px_3px_rgba(0,0,0,0.9)]"></div>
-                      <div class="absolute right-[-2px] w-2 h-2 bg-[#795548]/90 rounded-full shadow-[inset_1px_1px_3px_rgba(0,0,0,0.9)]"></div>
-                      <div class="w-[90%] h-1.5 md:h-2 bg-gradient-to-b from-[#e0e0e0] via-[#ffffff] to-[#757575] rounded-full border border-[#424242] shadow-[2px_3px_5px_rgba(0,0,0,0.5),_inset_0_-1px_2px_rgba(0,0,0,0.8)] relative overflow-hidden z-10">
-                         <div class="absolute w-[30%] h-full bg-gradient-to-r from-transparent via-white to-transparent left-[15%]"></div>
-                      </div>
-                    </div>
-                    <!-- Ring 5 -->
-                    <div class="relative w-full h-3 flex items-center justify-center">
-                      <div class="absolute left-[-2px] w-2 h-2 bg-[#795548]/90 rounded-full shadow-[inset_1px_1px_3px_rgba(0,0,0,0.9)]"></div>
-                      <div class="absolute right-[-2px] w-2 h-2 bg-[#795548]/90 rounded-full shadow-[inset_1px_1px_3px_rgba(0,0,0,0.9)]"></div>
-                      <div class="w-[90%] h-1.5 md:h-2 bg-gradient-to-b from-[#e0e0e0] via-[#ffffff] to-[#757575] rounded-full border border-[#424242] shadow-[2px_3px_5px_rgba(0,0,0,0.5),_inset_0_-1px_2px_rgba(0,0,0,0.8)] relative overflow-hidden z-10">
-                         <div class="absolute w-[30%] h-full bg-gradient-to-r from-transparent via-white to-transparent left-[15%]"></div>
-                      </div>
-                    </div>
+      <div id="popup-book" class="fixed inset-0 z-[100] flex items-center justify-center p-2 md:p-6 bg-black/70 backdrop-blur-sm">
+        <div class="relative flex items-center justify-center mx-auto" style="aspect-ratio: 8/5; height: 85vh; max-height: 550px; max-width: 95vw; perspective: 1500px">
+          <!-- LAPISAN 1: BUKU 3D -->
+          <div class="book-container absolute inset-0 w-full h-full bg-wood-css p-2 md:p-4 rounded-sm book-3d-shadow flex flex-col pointer-events-none z-0">
+            <div class="flex flex-row flex-1 book-content rounded-sm shadow-inner bg-[#FEFBF3] relative">
+              <div class="flex-1 w-1/2 border-r border-[#d7ccc8]/50"></div>
+              <div class="flex-1 w-1/2"></div>
+
+              <!-- Binder Rings -->
+              <div class="absolute top-[5%] bottom-[5%] left-1/2 -translate-x-1/2 w-6 md:w-8 flex flex-col justify-evenly items-center z-10">
+                <!-- Ring 1 -->
+                <div class="relative w-full h-3 flex items-center justify-center">
+                  <div class="absolute left-[-2px] w-2 h-2 bg-[#795548]/90 rounded-full shadow-[inset_1px_1px_3px_rgba(0,0,0,0.9)]"></div>
+                  <div class="absolute right-[-2px] w-2 h-2 bg-[#795548]/90 rounded-full shadow-[inset_1px_1px_3px_rgba(0,0,0,0.9)]"></div>
+                  <div
+                    class="w-[90%] h-1.5 md:h-2 bg-gradient-to-b from-[#e0e0e0] via-[#ffffff] to-[#757575] rounded-full border border-[#424242] shadow-[2px_3px_5px_rgba(0,0,0,0.5),_inset_0_-1px_2px_rgba(0,0,0,0.8)] relative overflow-hidden z-10"
+                  >
+                    <div class="absolute w-[30%] h-full bg-gradient-to-r from-transparent via-white to-transparent left-[15%]"></div>
+                  </div>
+                </div>
+                <!-- Ring 2 -->
+                <div class="relative w-full h-3 flex items-center justify-center">
+                  <div class="absolute left-[-2px] w-2 h-2 bg-[#795548]/90 rounded-full shadow-[inset_1px_1px_3px_rgba(0,0,0,0.9)]"></div>
+                  <div class="absolute right-[-2px] w-2 h-2 bg-[#795548]/90 rounded-full shadow-[inset_1px_1px_3px_rgba(0,0,0,0.9)]"></div>
+                  <div
+                    class="w-[90%] h-1.5 md:h-2 bg-gradient-to-b from-[#e0e0e0] via-[#ffffff] to-[#757575] rounded-full border border-[#424242] shadow-[2px_3px_5px_rgba(0,0,0,0.5),_inset_0_-1px_2px_rgba(0,0,0,0.8)] relative overflow-hidden z-10"
+                  >
+                    <div class="absolute w-[30%] h-full bg-gradient-to-r from-transparent via-white to-transparent left-[15%]"></div>
+                  </div>
+                </div>
+                <!-- Ring 3 -->
+                <div class="relative w-full h-3 flex items-center justify-center">
+                  <div class="absolute left-[-2px] w-2 h-2 bg-[#795548]/90 rounded-full shadow-[inset_1px_1px_3px_rgba(0,0,0,0.9)]"></div>
+                  <div class="absolute right-[-2px] w-2 h-2 bg-[#795548]/90 rounded-full shadow-[inset_1px_1px_3px_rgba(0,0,0,0.9)]"></div>
+                  <div
+                    class="w-[90%] h-1.5 md:h-2 bg-gradient-to-b from-[#e0e0e0] via-[#ffffff] to-[#757575] rounded-full border border-[#424242] shadow-[2px_3px_5px_rgba(0,0,0,0.5),_inset_0_-1px_2px_rgba(0,0,0,0.8)] relative overflow-hidden z-10"
+                  >
+                    <div class="absolute w-[30%] h-full bg-gradient-to-r from-transparent via-white to-transparent left-[15%]"></div>
+                  </div>
+                </div>
+                <!-- Ring 4 -->
+                <div class="relative w-full h-3 flex items-center justify-center">
+                  <div class="absolute left-[-2px] w-2 h-2 bg-[#795548]/90 rounded-full shadow-[inset_1px_1px_3px_rgba(0,0,0,0.9)]"></div>
+                  <div class="absolute right-[-2px] w-2 h-2 bg-[#795548]/90 rounded-full shadow-[inset_1px_1px_3px_rgba(0,0,0,0.9)]"></div>
+                  <div
+                    class="w-[90%] h-1.5 md:h-2 bg-gradient-to-b from-[#e0e0e0] via-[#ffffff] to-[#757575] rounded-full border border-[#424242] shadow-[2px_3px_5px_rgba(0,0,0,0.5),_inset_0_-1px_2px_rgba(0,0,0,0.8)] relative overflow-hidden z-10"
+                  >
+                    <div class="absolute w-[30%] h-full bg-gradient-to-r from-transparent via-white to-transparent left-[15%]"></div>
+                  </div>
+                </div>
+                <!-- Ring 5 -->
+                <div class="relative w-full h-3 flex items-center justify-center">
+                  <div class="absolute left-[-2px] w-2 h-2 bg-[#795548]/90 rounded-full shadow-[inset_1px_1px_3px_rgba(0,0,0,0.9)]"></div>
+                  <div class="absolute right-[-2px] w-2 h-2 bg-[#795548]/90 rounded-full shadow-[inset_1px_1px_3px_rgba(0,0,0,0.9)]"></div>
+                  <div
+                    class="w-[90%] h-1.5 md:h-2 bg-gradient-to-b from-[#e0e0e0] via-[#ffffff] to-[#757575] rounded-full border border-[#424242] shadow-[2px_3px_5px_rgba(0,0,0,0.5),_inset_0_-1px_2px_rgba(0,0,0,0.8)] relative overflow-hidden z-10"
+                  >
+                    <div class="absolute w-[30%] h-full bg-gradient-to-r from-transparent via-white to-transparent left-[15%]"></div>
                   </div>
                 </div>
               </div>
-      
-              <!-- LAPISAN 2: KONTEN 2D OVERLAY -->
-              <div class="popup-overlay absolute top-[10%] md:top-[12%] w-full h-[65%] flex flex-row z-10 pointer-events-none">
-                
-                <div id="book-layout" class="w-full h-full flex flex-row z-10 pointer-events-none">
-                  <!-- Konten akan dirender oleh JS -->
-                </div>
-
-                <a href="beranda.html" class="btn-close-3d absolute -top-5 -right-6 md:-top-8 md:-right-10 bg-red-800 text-[#FFB300] px-4 py-2 md:px-5 md:py-2.5 rounded-full font-bold border-2 border-[#FFB300] cursor-pointer z-[9999] pointer-events-auto no-underline text-center flex items-center justify-center transition hover:scale-110 shadow-[0_5px_15px_rgba(0,0,0,0.5)]">
-                    ✖
-                </a>
-
-              </div>
-      
             </div>
+          </div>
+
+          <!-- LAPISAN 2: KONTEN 2D OVERLAY -->
+          <div class="popup-overlay absolute top-[10%] md:top-[12%] w-full h-[65%] flex flex-row z-10 pointer-events-none">
+            <div id="book-layout" class="w-full h-full flex flex-row z-10 pointer-events-none">
+              <!-- Konten akan dirender oleh JS -->
+            </div>
+
+            <a
+              href="beranda.html"
+              class="btn-home-popup absolute -top-5 -left-6 md:-top-8 md:-left-10 bg-[#03A9F4] hover:bg-sky-600 text-[#FFFFFF] px-4 py-2 md:px-5 md:py-2.5 rounded-full font-bold border-2 border-[#FFC947] cursor-pointer z-[9999] pointer-events-auto no-underline text-center flex items-center justify-center transition hover:scale-110 shadow-[0_5px_15px_rgba(0,0,0,0.5)]"
+              title="Pulang ke Beranda"
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                <polyline points="9 22 9 12 15 12 15 22"></polyline>
+              </svg>
+            </a>
+
+            <a
+              href="beranda.html"
+              class="btn-close-3d absolute -top-5 -right-6 md:-top-8 md:-right-10 bg-red-800 text-[#FFB300] px-4 py-2 md:px-5 md:py-2.5 rounded-full font-bold border-2 border-[#FFB300] cursor-pointer z-[9999] pointer-events-auto no-underline text-center flex items-center justify-center transition hover:scale-110 shadow-[0_5px_15px_rgba(0,0,0,0.5)]"
+            >
+              ✖
+            </a>
+          </div>
         </div>
+      </div>
     </main>
 
     <script type="module" src="/src/main.js"></script>
     <script type="module" src="/src/pages/sandhangan/sandhangan.js"></script>
-</body>
+  </body>
 </html>

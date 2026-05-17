@@ -1,122 +1,135 @@
 <!doctype html>
 <html lang="id">
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Pengenalan Aksara Jawa</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Quicksand:wght@400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/src/style.css">
-    <link rel="stylesheet" href="/src/pages/peta/peta.css">
-</head>
-<body class="bg-batik font-sans overflow-hidden flex h-[100dvh]">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Quicksand:wght@400;500;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/src/style.css" />
+    <link rel="stylesheet" href="/src/pages/peta/peta.css" />
+  </head>
+  <body class="bg-batik font-sans overflow-hidden flex h-[100dvh]">
     <main class="flex-1 relative flex items-center justify-center w-full h-full overflow-hidden">
-        
-        <div id="popup-book" class="fixed inset-0 z-[100] flex items-center justify-center p-2 md:p-6 bg-black/70 backdrop-blur-sm">
-            
-            <div class="relative flex items-center justify-center mx-auto" style="aspect-ratio: 8/5; height: 85vh; max-height: 550px; max-width: 95vw; perspective: 1500px;">
-              
-              <!-- LAPISAN 1: BUKU 3D -->
-              <div class="book-container absolute inset-0 w-full h-full bg-wood-css p-2 md:p-4 rounded-sm book-3d-shadow flex flex-col pointer-events-none z-0">
-                <div class="flex flex-row flex-1 book-content rounded-sm shadow-inner bg-[#FEFBF3] relative">
-                  <div class="flex-1 w-1/2 border-r border-[#d7ccc8]/50"></div>
-                  <div class="flex-1 w-1/2"></div>
-                  
-                  <!-- Binder Rings -->
-                  <div class="absolute top-[5%] bottom-[5%] left-1/2 -translate-x-1/2 w-6 md:w-8 flex flex-col justify-evenly items-center z-10">
-                    <!-- Ring 1 -->
-                    <div class="relative w-full h-3 flex items-center justify-center">
-                      <div class="absolute left-[-2px] w-2 h-2 bg-[#795548]/90 rounded-full shadow-[inset_1px_1px_3px_rgba(0,0,0,0.9)]"></div>
-                      <div class="absolute right-[-2px] w-2 h-2 bg-[#795548]/90 rounded-full shadow-[inset_1px_1px_3px_rgba(0,0,0,0.9)]"></div>
-                      <div class="w-[90%] h-1.5 md:h-2 bg-gradient-to-b from-[#e0e0e0] via-[#ffffff] to-[#757575] rounded-full border border-[#424242] shadow-[2px_3px_5px_rgba(0,0,0,0.5),_inset_0_-1px_2px_rgba(0,0,0,0.8)] relative overflow-hidden z-10">
-                         <div class="absolute w-[30%] h-full bg-gradient-to-r from-transparent via-white to-transparent left-[15%]"></div>
-                      </div>
-                    </div>
-                    <!-- Ring 2 -->
-                    <div class="relative w-full h-3 flex items-center justify-center">
-                      <div class="absolute left-[-2px] w-2 h-2 bg-[#795548]/90 rounded-full shadow-[inset_1px_1px_3px_rgba(0,0,0,0.9)]"></div>
-                      <div class="absolute right-[-2px] w-2 h-2 bg-[#795548]/90 rounded-full shadow-[inset_1px_1px_3px_rgba(0,0,0,0.9)]"></div>
-                      <div class="w-[90%] h-1.5 md:h-2 bg-gradient-to-b from-[#e0e0e0] via-[#ffffff] to-[#757575] rounded-full border border-[#424242] shadow-[2px_3px_5px_rgba(0,0,0,0.5),_inset_0_-1px_2px_rgba(0,0,0,0.8)] relative overflow-hidden z-10">
-                         <div class="absolute w-[30%] h-full bg-gradient-to-r from-transparent via-white to-transparent left-[15%]"></div>
-                      </div>
-                    </div>
-                    <!-- Ring 3 -->
-                    <div class="relative w-full h-3 flex items-center justify-center">
-                      <div class="absolute left-[-2px] w-2 h-2 bg-[#795548]/90 rounded-full shadow-[inset_1px_1px_3px_rgba(0,0,0,0.9)]"></div>
-                      <div class="absolute right-[-2px] w-2 h-2 bg-[#795548]/90 rounded-full shadow-[inset_1px_1px_3px_rgba(0,0,0,0.9)]"></div>
-                      <div class="w-[90%] h-1.5 md:h-2 bg-gradient-to-b from-[#e0e0e0] via-[#ffffff] to-[#757575] rounded-full border border-[#424242] shadow-[2px_3px_5px_rgba(0,0,0,0.5),_inset_0_-1px_2px_rgba(0,0,0,0.8)] relative overflow-hidden z-10">
-                         <div class="absolute w-[30%] h-full bg-gradient-to-r from-transparent via-white to-transparent left-[15%]"></div>
-                      </div>
-                    </div>
-                    <!-- Ring 4 -->
-                    <div class="relative w-full h-3 flex items-center justify-center">
-                      <div class="absolute left-[-2px] w-2 h-2 bg-[#795548]/90 rounded-full shadow-[inset_1px_1px_3px_rgba(0,0,0,0.9)]"></div>
-                      <div class="absolute right-[-2px] w-2 h-2 bg-[#795548]/90 rounded-full shadow-[inset_1px_1px_3px_rgba(0,0,0,0.9)]"></div>
-                      <div class="w-[90%] h-1.5 md:h-2 bg-gradient-to-b from-[#e0e0e0] via-[#ffffff] to-[#757575] rounded-full border border-[#424242] shadow-[2px_3px_5px_rgba(0,0,0,0.5),_inset_0_-1px_2px_rgba(0,0,0,0.8)] relative overflow-hidden z-10">
-                         <div class="absolute w-[30%] h-full bg-gradient-to-r from-transparent via-white to-transparent left-[15%]"></div>
-                      </div>
-                    </div>
-                    <!-- Ring 5 -->
-                    <div class="relative w-full h-3 flex items-center justify-center">
-                      <div class="absolute left-[-2px] w-2 h-2 bg-[#795548]/90 rounded-full shadow-[inset_1px_1px_3px_rgba(0,0,0,0.9)]"></div>
-                      <div class="absolute right-[-2px] w-2 h-2 bg-[#795548]/90 rounded-full shadow-[inset_1px_1px_3px_rgba(0,0,0,0.9)]"></div>
-                      <div class="w-[90%] h-1.5 md:h-2 bg-gradient-to-b from-[#e0e0e0] via-[#ffffff] to-[#757575] rounded-full border border-[#424242] shadow-[2px_3px_5px_rgba(0,0,0,0.5),_inset_0_-1px_2px_rgba(0,0,0,0.8)] relative overflow-hidden z-10">
-                         <div class="absolute w-[30%] h-full bg-gradient-to-r from-transparent via-white to-transparent left-[15%]"></div>
-                      </div>
-                    </div>
+      <div id="popup-book" class="fixed inset-0 z-[100] flex items-center justify-center p-2 md:p-6 bg-black/70 backdrop-blur-sm">
+        <div class="relative flex items-center justify-center mx-auto" style="aspect-ratio: 8/5; height: 85vh; max-height: 550px; max-width: 95vw; perspective: 1500px">
+          <!-- LAPISAN 1: BUKU 3D -->
+          <div class="book-container absolute inset-0 w-full h-full bg-wood-css p-2 md:p-4 rounded-sm book-3d-shadow flex flex-col pointer-events-none z-0">
+            <div class="flex flex-row flex-1 book-content rounded-sm shadow-inner bg-[#FEFBF3] relative">
+              <div class="flex-1 w-1/2 border-r border-[#d7ccc8]/50"></div>
+              <div class="flex-1 w-1/2"></div>
+
+              <!-- Binder Rings -->
+              <div class="absolute top-[5%] bottom-[5%] left-1/2 -translate-x-1/2 w-6 md:w-8 flex flex-col justify-evenly items-center z-10">
+                <!-- Ring 1 -->
+                <div class="relative w-full h-3 flex items-center justify-center">
+                  <div class="absolute left-[-2px] w-2 h-2 bg-[#795548]/90 rounded-full shadow-[inset_1px_1px_3px_rgba(0,0,0,0.9)]"></div>
+                  <div class="absolute right-[-2px] w-2 h-2 bg-[#795548]/90 rounded-full shadow-[inset_1px_1px_3px_rgba(0,0,0,0.9)]"></div>
+                  <div
+                    class="w-[90%] h-1.5 md:h-2 bg-gradient-to-b from-[#e0e0e0] via-[#ffffff] to-[#757575] rounded-full border border-[#424242] shadow-[2px_3px_5px_rgba(0,0,0,0.5),_inset_0_-1px_2px_rgba(0,0,0,0.8)] relative overflow-hidden z-10"
+                  >
+                    <div class="absolute w-[30%] h-full bg-gradient-to-r from-transparent via-white to-transparent left-[15%]"></div>
+                  </div>
+                </div>
+                <!-- Ring 2 -->
+                <div class="relative w-full h-3 flex items-center justify-center">
+                  <div class="absolute left-[-2px] w-2 h-2 bg-[#795548]/90 rounded-full shadow-[inset_1px_1px_3px_rgba(0,0,0,0.9)]"></div>
+                  <div class="absolute right-[-2px] w-2 h-2 bg-[#795548]/90 rounded-full shadow-[inset_1px_1px_3px_rgba(0,0,0,0.9)]"></div>
+                  <div
+                    class="w-[90%] h-1.5 md:h-2 bg-gradient-to-b from-[#e0e0e0] via-[#ffffff] to-[#757575] rounded-full border border-[#424242] shadow-[2px_3px_5px_rgba(0,0,0,0.5),_inset_0_-1px_2px_rgba(0,0,0,0.8)] relative overflow-hidden z-10"
+                  >
+                    <div class="absolute w-[30%] h-full bg-gradient-to-r from-transparent via-white to-transparent left-[15%]"></div>
+                  </div>
+                </div>
+                <!-- Ring 3 -->
+                <div class="relative w-full h-3 flex items-center justify-center">
+                  <div class="absolute left-[-2px] w-2 h-2 bg-[#795548]/90 rounded-full shadow-[inset_1px_1px_3px_rgba(0,0,0,0.9)]"></div>
+                  <div class="absolute right-[-2px] w-2 h-2 bg-[#795548]/90 rounded-full shadow-[inset_1px_1px_3px_rgba(0,0,0,0.9)]"></div>
+                  <div
+                    class="w-[90%] h-1.5 md:h-2 bg-gradient-to-b from-[#e0e0e0] via-[#ffffff] to-[#757575] rounded-full border border-[#424242] shadow-[2px_3px_5px_rgba(0,0,0,0.5),_inset_0_-1px_2px_rgba(0,0,0,0.8)] relative overflow-hidden z-10"
+                  >
+                    <div class="absolute w-[30%] h-full bg-gradient-to-r from-transparent via-white to-transparent left-[15%]"></div>
+                  </div>
+                </div>
+                <!-- Ring 4 -->
+                <div class="relative w-full h-3 flex items-center justify-center">
+                  <div class="absolute left-[-2px] w-2 h-2 bg-[#795548]/90 rounded-full shadow-[inset_1px_1px_3px_rgba(0,0,0,0.9)]"></div>
+                  <div class="absolute right-[-2px] w-2 h-2 bg-[#795548]/90 rounded-full shadow-[inset_1px_1px_3px_rgba(0,0,0,0.9)]"></div>
+                  <div
+                    class="w-[90%] h-1.5 md:h-2 bg-gradient-to-b from-[#e0e0e0] via-[#ffffff] to-[#757575] rounded-full border border-[#424242] shadow-[2px_3px_5px_rgba(0,0,0,0.5),_inset_0_-1px_2px_rgba(0,0,0,0.8)] relative overflow-hidden z-10"
+                  >
+                    <div class="absolute w-[30%] h-full bg-gradient-to-r from-transparent via-white to-transparent left-[15%]"></div>
+                  </div>
+                </div>
+                <!-- Ring 5 -->
+                <div class="relative w-full h-3 flex items-center justify-center">
+                  <div class="absolute left-[-2px] w-2 h-2 bg-[#795548]/90 rounded-full shadow-[inset_1px_1px_3px_rgba(0,0,0,0.9)]"></div>
+                  <div class="absolute right-[-2px] w-2 h-2 bg-[#795548]/90 rounded-full shadow-[inset_1px_1px_3px_rgba(0,0,0,0.9)]"></div>
+                  <div
+                    class="w-[90%] h-1.5 md:h-2 bg-gradient-to-b from-[#e0e0e0] via-[#ffffff] to-[#757575] rounded-full border border-[#424242] shadow-[2px_3px_5px_rgba(0,0,0,0.5),_inset_0_-1px_2px_rgba(0,0,0,0.8)] relative overflow-hidden z-10"
+                  >
+                    <div class="absolute w-[30%] h-full bg-gradient-to-r from-transparent via-white to-transparent left-[15%]"></div>
                   </div>
                 </div>
               </div>
-      
-              <!-- LAPISAN 2: KONTEN 2D OVERLAY -->
-              <div class="popup-overlay absolute top-[10%] md:top-[12%] w-full h-[65%] flex flex-row z-10 pointer-events-none">
-                
-                <!-- Halaman Kiri -->
-                <div class="page-left flex-1 w-1/2 p-2 pr-4 md:p-6 md:pr-12 flex flex-col justify-center items-center gap-2 pointer-events-auto relative">
-                    <div class="animate-duarr-1 book-banner w-[80%] md:w-[70%] mx-auto py-1 md:py-2 text-center flex-shrink-0 mb-2 mt-2 md:mt-4 z-50">
-                        <h1 class="font-serif text-sm md:text-2xl font-bold leading-none">Aksara Jawa</h1>
-                    </div>
-                    
-                    <div class="animate-duarr-2 floating-item bg-white/40 border border-[#795548]/10 p-3 md:p-5 rounded-xl w-[90%] space-y-2 md:space-y-4 z-40 flex-1 overflow-y-auto min-h-0">
-                        <p class="text-[#795548] leading-relaxed text-justify text-[8px] md:text-[13px] font-medium m-0">
-                            Aksara Jawa yaiku huruf tradisional sing digunakake kanggo nulis basa Jawa. Huruf iki beda karo huruf alfabet (A, B, C), amarga nduweni wujud lan cara nulis dhewe.
-                        </p>
-                        <p class="text-[#795548] leading-relaxed text-justify text-[8px] md:text-[13px] font-medium m-0">
-                            Aksara Jawa biasane digunakake kanggo nulis tembung, ukara, utawa crita nganggo basa Jawa.
-                        </p>
-                    </div>
-                </div>
-
-                <!-- Halaman Kanan -->
-                <div class="page-right flex-1 w-1/2 p-2 pl-4 md:p-6 md:pl-12 flex flex-col justify-center items-center gap-2 pointer-events-auto relative">
-                    
-                    <div class="animate-duarr-1 book-banner w-[80%] md:w-[70%] mx-auto py-1 md:py-2 text-center flex-shrink-0 mb-2 mt-2 md:mt-4 z-50">
-                        <h1 class="font-serif text-sm md:text-2xl font-bold leading-none">Sandhangan</h1>
-                    </div>
-                    <div class="animate-duarr-2 floating-item bg-white/40 border border-[#795548]/10 p-3 md:p-5 rounded-xl w-[90%] z-40 flex-1 overflow-y-auto min-h-0 flex flex-col gap-1 md:gap-2">
-                        <p class="text-[#795548] leading-relaxed text-justify text-[7px] md:text-[12px] font-medium m-0">
-                            Sandhangan yaiku tandha ing Aksara Jawa sing digunakake kanggo ngowahi swara aksara. Sandhangan bisa menehi swara vokal, swara sengau, utawa tandha mati ing aksara Jawa. Sandhangan ditulis ing ndhuwur, ngisor, utawa jejere aksara miturut jinisé.
-                        </p>
-                        <p class="text-[#795548] leading-relaxed text-justify text-[7px] md:text-[12px] font-medium m-0 mt-1 md:mt-2">
-                            Sandhangan ing Aksara Jawa diperang dadi telu, yaiku:
-                        </p>
-                        <ol class="text-[#795548] leading-relaxed text-justify text-[7px] md:text-[11px] font-medium m-0 pl-3 md:pl-5 space-y-0.5 md:space-y-1 list-decimal">
-                            <li><strong class="font-bold text-[#5D4037]">Sandhangan Swara</strong> yaiku sandhangan kanggo ngowahi swara vokal aksara.</li>
-                            <li><strong class="font-bold text-[#5D4037]">Sandhangan Panyigeg Wanda</strong> yaiku sandhangan kanggo nutup utawa mungkasi swara ing wanda.</li>
-                            <li><strong class="font-bold text-[#5D4037]">Sandhangan Wyanjana</strong> yaiku sandhangan kanggo nambah swara konsonan ing aksara Jawa.</li>
-                        </ol>
-                    </div>
-
-                </div>
-
-                <a href="beranda.html" class="btn-close-3d absolute -top-5 -right-6 md:-top-8 md:-right-10 bg-red-800 text-[#FFB300] px-4 py-2 md:px-5 md:py-2.5 rounded-full font-bold border-2 border-[#FFB300] cursor-pointer z-[9999] pointer-events-auto no-underline text-center flex items-center justify-center transition hover:scale-110 shadow-[0_5px_15px_rgba(0,0,0,0.5)]">
-                    ✖
-                </a>
-
-              </div>
-      
             </div>
+          </div>
+
+          <!-- LAPISAN 2: KONTEN 2D OVERLAY -->
+          <div class="popup-overlay absolute top-[10%] md:top-[12%] w-full h-[65%] flex flex-row z-10 pointer-events-none">
+            <!-- Halaman Kiri -->
+            <div class="page-left flex-1 w-1/2 p-2 pr-4 md:p-6 md:pr-12 flex flex-col justify-center items-center gap-2 pointer-events-auto relative">
+              <div class="animate-duarr-1 book-banner w-[80%] md:w-[70%] mx-auto py-1 md:py-2 text-center flex-shrink-0 mb-2 mt-2 md:mt-4 z-50">
+                <h1 class="font-serif text-sm md:text-2xl font-bold leading-none">Aksara Jawa</h1>
+              </div>
+
+              <div class="animate-duarr-2 floating-item bg-white/40 border border-[#795548]/10 p-3 md:p-5 rounded-xl w-[90%] space-y-2 md:space-y-4 z-40 flex-1 overflow-y-auto min-h-0">
+                <p class="text-[#795548] leading-relaxed text-justify text-[8px] md:text-[13px] font-medium m-0">
+                  Aksara Jawa yaiku huruf tradisional sing digunakake kanggo nulis basa Jawa. Huruf iki beda karo huruf alfabet (A, B, C), amarga nduweni wujud lan cara nulis dhewe.
+                </p>
+                <p class="text-[#795548] leading-relaxed text-justify text-[8px] md:text-[13px] font-medium m-0">Aksara Jawa biasane digunakake kanggo nulis tembung, ukara, utawa crita nganggo basa Jawa.</p>
+              </div>
+            </div>
+
+            <!-- Halaman Kanan -->
+            <div class="page-right flex-1 w-1/2 p-2 pl-4 md:p-6 md:pl-12 flex flex-col justify-center items-center gap-2 pointer-events-auto relative">
+              <div class="animate-duarr-1 book-banner w-[80%] md:w-[70%] mx-auto py-1 md:py-2 text-center flex-shrink-0 mb-2 mt-2 md:mt-4 z-50">
+                <h1 class="font-serif text-sm md:text-2xl font-bold leading-none">Sandhangan</h1>
+              </div>
+              <div class="animate-duarr-2 floating-item bg-white/40 border border-[#795548]/10 p-3 md:p-5 rounded-xl w-[90%] z-40 flex-1 overflow-y-auto min-h-0 flex flex-col gap-1 md:gap-2">
+                <p class="text-[#795548] leading-relaxed text-justify text-[7px] md:text-[12px] font-medium m-0">
+                  Sandhangan yaiku tandha ing Aksara Jawa sing digunakake kanggo ngowahi swara aksara. Sandhangan bisa menehi swara vokal, swara sengau, utawa tandha mati ing aksara Jawa. Sandhangan ditulis ing ndhuwur, ngisor, utawa jejere
+                  aksara miturut jinisé.
+                </p>
+                <p class="text-[#795548] leading-relaxed text-justify text-[7px] md:text-[12px] font-medium m-0 mt-1 md:mt-2">Sandhangan ing Aksara Jawa diperang dadi telu, yaiku:</p>
+                <ol class="text-[#795548] leading-relaxed text-justify text-[7px] md:text-[11px] font-medium m-0 pl-3 md:pl-5 space-y-0.5 md:space-y-1 list-decimal">
+                  <li><strong class="font-bold text-[#5D4037]">Sandhangan Swara</strong> yaiku sandhangan kanggo ngowahi swara vokal aksara.</li>
+                  <li><strong class="font-bold text-[#5D4037]">Sandhangan Panyigeg Wanda</strong> yaiku sandhangan kanggo nutup utawa mungkasi swara ing wanda.</li>
+                  <li><strong class="font-bold text-[#5D4037]">Sandhangan Wyanjana</strong> yaiku sandhangan kanggo nambah swara konsonan ing aksara Jawa.</li>
+                </ol>
+              </div>
+            </div>
+
+            <a
+              href="beranda.html"
+              class="btn-home-popup absolute -top-5 -left-6 md:-top-8 md:-left-10 bg-[#03A9F4] hover:bg-sky-600 text-[#FFFFFF] px-4 py-2 md:px-5 md:py-2.5 rounded-full font-bold border-2 border-[#FFC947] cursor-pointer z-[9999] pointer-events-auto no-underline text-center flex items-center justify-center transition hover:scale-110 shadow-[0_5px_15px_rgba(0,0,0,0.5)]"
+              title="Pulang ke Beranda"
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                <polyline points="9 22 9 12 15 12 15 22"></polyline>
+              </svg>
+            </a>
+
+            <a
+              href="beranda.html"
+              class="btn-close-3d absolute -top-5 -right-6 md:-top-8 md:-right-10 bg-red-800 text-[#FFB300] px-4 py-2 md:px-5 md:py-2.5 rounded-full font-bold border-2 border-[#FFB300] cursor-pointer z-[9999] pointer-events-auto no-underline text-center flex items-center justify-center transition hover:scale-110 shadow-[0_5px_15px_rgba(0,0,0,0.5)]"
+            >
+              ✖
+            </a>
+          </div>
         </div>
+      </div>
     </main>
     <script type="module" src="/src/main.js"></script>
-</body>
+  </body>
 </html>

@@ -13,14 +13,16 @@
 }
 
 .bg-batik {
-  background-color: #E1F5FE; /* Light Sky Blue background stays for sky feel */
+  background-color: #E1F5FE;
+  /* Light Sky Blue background stays for sky feel */
   background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%2303A9F4' stroke-width='1' stroke-opacity='0.1'%3E%3Cpath d='M0 0c10 0 15 5 15 15s-5 15-15 15M100 0c-10 0-15 5-15 15s5 15 15 15M0 100c10 0 15-5 15-15s-5-15-15-15M100 100c-10 0-15-5-15-15s5-15 15-15M50 50c-10 0-15-5-15-15s5-15 15-15 15 5 15 15-5 15-15 15zM50 50c0 10-5 15-15 15s-15-5-15-15M50 50c0-10 5-15 15-15s15 5 15 15M50 50c10 0 15 5 15 15s-5 15-15 15M50 50c-10 0-15 5-15 15s5 15 15 15'/%3E%3Cpath d='M25 25c5 5 10 0 10-5s-5-10-10-5-10 0-5 5 0 10 5 5zM75 75c5 5 10 0 10-5s-5-10-10-5-10 0-5 5 0 10 5 5zM25 75c-5 5-10 0-10-5s5-10 10-5 10 0 5 5 0 10-5 5zM75 25c-5 5-10 0-10-5s5-10 10-5 10 0 5 5 0 10-5 5z'/%3E%3C/g%3E%3C/svg%3E");
   background-repeat: repeat;
   background-size: 80px 80px;
 }
 
 .bg-batik-dark {
-  background-color: #03A9F4; /* Vibrant Sky Blue */
+  background-color: #03A9F4;
+  /* Vibrant Sky Blue */
   background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%23FFFFFF' stroke-width='1' stroke-opacity='0.2'%3E%3Cpath d='M0 0c10 0 15 5 15 15s-5 15-15 15M100 0c-10 0-15 5-15 15s5 15 15 15M0 100c10 0 15-5 15-15s-5-15-15-15M100 100c-10 0-15-5-15-15s5-15 15-15M50 50c-10 0-15-5-15-15s5-15 15-15 15 5 15 15-5 15-15 15zM50 50c0 10-5 15-15 15s-15-5-15-15M50 50c0-10 5-15 15-15s15 5 15 15M50 50c10 0 15 5 15 15s-5 15-15 15M50 50c-10 0-15 5-15 15s5 15 15 15'/%3E%3Cpath d='M25 25c5 5 10 0 10-5s-5-10-10-5-10 0-5 5 0 10 5 5zM75 75c5 5 10 0 10-5s-5-10-10-5-10 0-5 5 0 10 5 5zM25 75c-5 5-10 0-10-5s5-10 10-5 10 0 5 5 0 10-5 5zM75 25c-5 5-10 0-10-5s5-10 10-5 10 0 5 5 0 10-5 5z'/%3E%3C/g%3E%3C/svg%3E");
   background-repeat: repeat;
   background-size: 100px 100px;
@@ -29,185 +31,225 @@
 /* =========================================================
    2. EFEK ANIMASI & SWEETALERT
    ========================================================= */
-   .animate-dive-in {
-    animation: diveIn 1.2s ease-out forwards;
+.animate-dive-in {
+  animation: diveIn 1.2s ease-out forwards;
+}
+
+@keyframes diveIn {
+  0% {
+    transform: scale(1.2);
+    opacity: 0;
+    filter: blur(5px);
   }
-  
-  @keyframes diveIn {
-    0% {
-      transform: scale(1.2);
-      opacity: 0;
-      filter: blur(5px);
-    }
-  
-    100% {
-      transform: scale(1);
-      opacity: 1;
-      filter: blur(0);
-    }
+
+  100% {
+    transform: scale(1);
+    opacity: 1;
+    filter: blur(0);
   }
-  
-  .candi-error img {
-    filter: drop-shadow(0 0 12px red) !important;
-    animation: pulseRed 2s infinite;
+}
+
+.candi-error img {
+  filter: drop-shadow(0 0 12px red) !important;
+  animation: pulseRed 2s infinite;
+}
+
+.candi-success img {
+  filter: drop-shadow(0 0 12px #22c55e) !important;
+}
+
+@keyframes pulseRed {
+  0% {
+    filter: drop-shadow(0 0 8px red);
   }
-  
-  .candi-success img {
-    filter: drop-shadow(0 0 12px #22c55e) !important;
+
+  50% {
+    filter: drop-shadow(0 0 16px red);
   }
-  
-  @keyframes pulseRed {
-    0% {
-      filter: drop-shadow(0 0 8px red);
-    }
-  
-    50% {
-      filter: drop-shadow(0 0 16px red);
-    }
-  
-    100% {
-      filter: drop-shadow(0 0 8px red);
-    }
+
+  100% {
+    filter: drop-shadow(0 0 8px red);
   }
-  
+}
+
+.swal-paper {
+  background-color: #FEFBF3 !important;
+  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2303A9F4' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") !important;
+  border: 4px solid #03A9F4 !important;
+  /* Blue lines */
+  border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px !important;
+  box-shadow: 12px 12px 0px rgba(121, 85, 72, 0.2) !important;
+  /* Brown shadow */
+  color: #3E2723 !important;
+  /* Brown text */
+}
+
+.swal-paper-title {
+  font-family: 'Playfair Display', serif !important;
+  color: #3E2723 !important;
+  font-size: 2.2rem !important;
+  font-weight: 900 !important;
+  text-shadow: 2px 2px 0px #03A9F4;
+  /* Blue shadow on text */
+}
+
+.swal-paper-confirm {
+  background-color: #EF5350 !important;
+  /* Red Ribbon Color */
+  color: #FFFFFF !important;
+  border: 2px solid #03A9F4 !important;
+  /* Blue Border */
+  border-radius: 10px !important;
+  font-weight: bold !important;
+  box-shadow: 3px 3px 0px #3E2723 !important;
+  transition: all 0.2s !important;
+}
+
+.swal-paper-confirm:active {
+  transform: translate(2px, 2px) !important;
+  box-shadow: 0px 0px 0px #FFB300 !important;
+}
+
+/* --- FIX HP LANDSCAPE & MOBILE SWEETALERT --- */
+@media (max-width: 768px) {
   .swal-paper {
-    background-color: #FEFBF3 !important; 
-    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2303A9F4' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") !important;
-    border: 4px solid #03A9F4 !important; /* Blue lines */
-    border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px !important;
-    box-shadow: 12px 12px 0px rgba(121, 85, 72, 0.2) !important; /* Brown shadow */
-    color: #3E2723 !important; /* Brown text */
+    padding: 1em 1.5em !important;
+    width: 90% !important;
+    max-width: 450px !important;
   }
-  
+
   .swal-paper-title {
-    font-family: 'Playfair Display', serif !important;
-    color: #3E2723 !important;
-    font-size: 2.2rem !important;
-    font-weight: 900 !important;
-    text-shadow: 2px 2px 0px #03A9F4; /* Blue shadow on text */
+    font-size: 1.2rem !important;
+    margin: 0 !important;
+    padding: 0 !important;
   }
-  
+
+  .swal2-html-container {
+    font-size: 0.85rem !important;
+    margin: 0.5em 0 !important;
+  }
+
   .swal-paper-confirm {
-    background-color: #EF5350 !important; /* Red Ribbon Color */
-    color: #FFFFFF !important;
-    border: 2px solid #03A9F4 !important; /* Blue Border */
-    border-radius: 10px !important;
-    font-weight: bold !important;
-    box-shadow: 3px 3px 0px #3E2723 !important;
-    transition: all 0.2s !important;
-  }
-  
-  .swal-paper-confirm:active {
-    transform: translate(2px, 2px) !important;
-    box-shadow: 0px 0px 0px #FFB300 !important;
+    padding: 0.4em 1em !important;
+    font-size: 0.85rem !important;
   }
 
-  /* --- FIX HP LANDSCAPE & MOBILE SWEETALERT --- */
-  @media (max-width: 768px) {
-    .swal-paper {
-      padding: 1em 1.5em !important;
-      width: 90% !important;
-      max-width: 450px !important;
-    }
-    .swal-paper-title {
-      font-size: 1.2rem !important;
-      margin: 0 !important;
-      padding: 0 !important;
-    }
-    .swal2-html-container {
-      font-size: 0.85rem !important;
-      margin: 0.5em 0 !important;
-    }
-    .swal-paper-confirm {
-      padding: 0.4em 1em !important;
-      font-size: 0.85rem !important;
-    }
-    .swal2-icon {
-      transform: scale(0.6) !important;
-      margin: -10px auto -15px !important;
-    }
+  .swal2-icon {
+    transform: scale(0.6) !important;
+    margin: -10px auto -15px !important;
+  }
+}
+
+@media (max-height: 500px) and (orientation: landscape) {
+  .swal-paper {
+    padding: 0.5em 2em !important;
+    width: 90% !important;
+    max-width: 550px !important;
+    /* Lebar lebih besar biar teks gak numpuk ke bawah */
   }
 
-  @media (max-height: 500px) and (orientation: landscape) {
-    .swal-paper {
-      padding: 0.5em 2em !important;
-      width: 90% !important;
-      max-width: 550px !important; /* Lebar lebih besar biar teks gak numpuk ke bawah */
-    }
-    .swal-paper-title {
-      font-size: 1.1rem !important;
-    }
-    .swal2-html-container {
-      font-size: 0.8rem !important;
-      margin: 0.3em 0 !important;
-    }
-    .swal2-icon {
-      display: none !important; /* Sembunyikan icon agar ruang vertikal lebih lega */
-    }
-    .swal2-actions {
-      margin: 0.3em 0 0 !important;
-    }
+  .swal-paper-title {
+    font-size: 1.1rem !important;
   }
-  
-  /* =========================================================
+
+  .swal2-html-container {
+    font-size: 0.8rem !important;
+    margin: 0.3em 0 !important;
+  }
+
+  .swal2-icon {
+    display: none !important;
+    /* Sembunyikan icon agar ruang vertikal lebih lega */
+  }
+
+  .swal2-actions {
+    margin: 0.3em 0 0 !important;
+  }
+}
+
+/* =========================================================
      3. SIDEBAR & NAVIGASI
      ========================================================= */
-  .sidebar-abstrak {
-    border-radius: 0 35px 15px 0 / 0 15px 45px 0;
-    box-shadow: 5px 0 15px rgba(3, 169, 244, 0.2);
-    background-color: #B3E5FC !important; /* Light Sky Blue like the bottle */
-    border-right: 4px solid #03A9F4 !important; /* Vibrant Blue Outline */
-  }
+.sidebar-abstrak {
+  border-radius: 0 35px 15px 0 / 0 15px 45px 0;
+  box-shadow: 5px 0 15px rgba(3, 169, 244, 0.2);
+  background-color: #B3E5FC !important;
+  /* Light Sky Blue like the bottle */
+  border-right: 4px solid #03A9F4 !important;
+  /* Vibrant Blue Outline */
+}
 
-  .sidebar-abstrak nav a {
-    color: #3E2723 !important; /* Dark Brown Text for contrast */
-  }
+.sidebar-abstrak nav a {
+  color: #3E2723 !important;
+  /* Dark Brown Text for contrast */
+}
 
-  .sidebar-abstrak nav a:hover {
-    background-color: #81D4FA !important; /* Brighter Blue on hover */
-    color: #01579B !important;
-  }
-  
-  .hamburger-abstrak {
-    border-radius: 12px 5px 15px 4px / 5px 15px 4px 12px !important;
-  }
+.sidebar-abstrak nav a:hover {
+  background-color: #81D4FA !important;
+  /* Brighter Blue on hover */
+  color: #01579B !important;
+}
 
-  /* Style untuk Navbar Hide-on-Scroll */
-  header.lg\:hidden {
-    position: sticky;
-    top: 0;
-    width: 100%;
-    z-index: 100;
-    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), 
-                margin-bottom 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-                opacity 0.3s ease;
-    will-change: transform, margin-bottom;
-  }
+.hamburger-abstrak {
+  border-radius: 12px 5px 15px 4px / 5px 15px 4px 12px !important;
+}
 
-  /* Class yang dipasang lewat JS saat scroll ke bawah */
-  /* margin-bottom negatif menarik konten di bawahnya naik, menghilangkan 'jejak' */
-  .navbar-hidden {
-    transform: translateY(-100%);
-    margin-bottom: -60px; /* Sesuaikan dengan tinggi rata-rata header mobile */
-    opacity: 0;
-    pointer-events: none;
-  }
-  
-  details>summary {
-    list-style: none;
-  }
-  
-  details>summary::-webkit-details-marker {
-    display: none;
-  }
-  
+/* Style untuk Navbar Hide-on-Scroll */
+header.lg\:hidden {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  z-index: 100;
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+    margin-bottom 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 0.3s ease;
+  will-change: transform, margin-bottom;
+}
+
+/* Class yang dipasang lewat JS saat scroll ke bawah */
+/* margin-bottom negatif menarik konten di bawahnya naik, menghilangkan 'jejak' */
+.navbar-hidden {
+  transform: translateY(-100%);
+  margin-bottom: -60px;
+  /* Sesuaikan dengan tinggi rata-rata header mobile */
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Home Button Styles */
+.btn-home-header, .btn-home-popup {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.btn-home-header:hover, .btn-home-popup:hover {
+  transform: scale(1.08);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25) !important;
+}
+
+.btn-home-header:active, .btn-home-popup:active {
+  transform: scale(0.95);
+}
+
+details>summary {
+  list-style: none;
+}
+
+details>summary::-webkit-details-marker {
+  display: none;
+}
 
 
-  /* Hilangkan Scrollbar tapi tetap bisa di-scroll */
-  .no-scrollbar::-webkit-scrollbar {
-    display: none;
-  }
-  .no-scrollbar {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-  }
+
+/* Hilangkan Scrollbar tapi tetap bisa di-scroll */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
