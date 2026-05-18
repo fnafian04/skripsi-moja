@@ -187,7 +187,7 @@ window.handleCheck = (cb) => {
   const checked = document.querySelectorAll(".aksara-checkbox:checked");
   if (checked.length > 2) {
     cb.checked = false;
-    Swal.fire({ icon: "warning", title: "Kebak!", text: "Maksimal milih 2 aksara ae yo!", confirmButtonColor: "#03A9F4", customClass: { popup: "swal-paper", confirmButton: "swal-paper-confirm" } });
+    Swal.fire({ icon: "warning", title: "Kebak!", text: "Pilih 2 aksara ae yo!", confirmButtonColor: "#03A9F4", customClass: { popup: "swal-paper", confirmButton: "swal-paper-confirm" } });
     return;
   }
 

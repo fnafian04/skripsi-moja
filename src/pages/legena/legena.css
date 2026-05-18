@@ -387,12 +387,6 @@
     gap: 0.4rem !important;
   }
 
-  /* Tombol X lebih kecil di mobile */
-  #canvas-modal-card .btn-close-3d {
-    width: 20px !important;
-    height: 14px !important;
-    font-size: 8px !important;
-  }
 
   /* Panel aksara: lebih besar karena satu-satu */
   #canvas-container {
