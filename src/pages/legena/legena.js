@@ -283,28 +283,28 @@ function renderGuidedPanel(cb, pi, strokes) {
   tracingPanelStates[pi]      = { currentStroke: 0, completed: false, drawn: [], isDrawing: false };
   currentlyTrackedStrokes[pi] = strokes;
 
-  // --- Wrapper ---
-  const wrap = document.createElement('div');
-  wrap.className = 'bg-[#fdf5e6] flex-shrink-0';
-  wrap.style.cssText = 'display:flex;flex-direction:column;align-items:center;padding:1.25rem;border-radius:1rem;box-shadow:0 5px 15px rgba(0,0,0,0.15);border:2px solid #A1887F;';
-  wrap.innerHTML = `
-    <h3 class="font-serif text-[#795548] bg-white"
-        style="font-weight:bold;font-size:.875rem;margin-bottom:.6rem;padding:.25rem 1.5rem;border-radius:999px;border:1px solid rgba(62,39,35,.3);box-shadow:0 2px 4px rgba(0,0,0,.05);">
-      Aksara ${name}
-    </h3>`;
-
   // --- Area tracing ---
   const area = document.createElement('div');
-  area.style.cssText = 'position:relative;width:250px;height:250px;border:2px dashed rgba(93,64,55,.5);border-radius:.75rem;background:#fff;overflow:hidden;touch-action:none;user-select:none;-webkit-user-select:none;';
+  area.className = 'flex-shrink-0 w-[200px] sm:w-[250px] md:w-[280px] bg-white';
+  area.style.cssText = 'position:relative;aspect-ratio:1/1;border:2px dashed rgba(93,64,55,.5);border-radius:.75rem;overflow:hidden;touch-action:none;user-select:none;-webkit-user-select:none;box-shadow:inset 0 0 10px rgba(0,0,0,0.05);';
+
+  // Title inside area
+  const h3 = document.createElement('div');
+  h3.innerHTML = `<span style="font-family: serif; font-weight: bold; font-size: 0.75rem; color: #795548; background: rgba(253, 245, 230, 0.95); padding: 4px 12px; border-radius: 999px; border: 1px solid rgba(62,39,35,0.3); box-shadow: 0 2px 4px rgba(0,0,0,0.1);">Aksara ${name}</span>`;
+  h3.style.cssText = 'position: absolute; top: 12px; left: 50%; transform: translateX(-50%); z-index: 20; pointer-events: none; white-space: nowrap;';
+  area.appendChild(h3);
+
+  const innerScaleWrap = document.createElement('div');
+  innerScaleWrap.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;transform:scale(1.35);transform-origin:center;';
 
   const wm = document.createElement('img');
   wm.src = img;
-  wm.style.cssText = 'position:absolute;left:40px;top:40px;width:170px;height:170px;object-fit:contain;opacity:.18;filter:grayscale(100%);pointer-events:none;z-index:1;';
-  area.appendChild(wm);
+  wm.style.cssText = 'position:absolute;left:16%;top:16%;width:68%;height:68%;object-fit:contain;opacity:.18;filter:grayscale(100%);pointer-events:none;z-index:1;';
+  innerScaleWrap.appendChild(wm);
 
   // SVG layer untuk guide path + hotspot
   const svg = document.createElementNS(NS, 'svg');
-  svg.setAttribute('width', '250'); svg.setAttribute('height', '250');
+  svg.setAttribute('width', '100%'); svg.setAttribute('height', '100%');
   svg.setAttribute('viewBox', '0 0 180 180'); // MAPPING KOORDINAT TETAP 180x180
   svg.style.cssText = 'position:absolute;top:0;left:0;pointer-events:none;z-index:2;overflow:visible;';
   svg.id = `tsvg-${pi}`;
@@ -366,24 +366,24 @@ function renderGuidedPanel(cb, pi, strokes) {
     }
   });
 
-  area.appendChild(svg);
+  innerScaleWrap.appendChild(svg);
 
   // Canvas bawah: menyimpan bekas stroke SELESAI (tidak pernah dihapus kecuali reset)
   const doneCvs = document.createElement('canvas');
   doneCvs.width = 250; doneCvs.height = 250;
   doneCvs.style.cssText = 'position:absolute;top:0;left:0;z-index:8;pointer-events:none;touch-action:none;width:100%;height:100%;';
   doneCvs.id = `donecvs-${pi}`;
-  area.appendChild(doneCvs);
+  innerScaleWrap.appendChild(doneCvs);
 
   const cvs = document.createElement('canvas');
   cvs.width = 250; cvs.height = 250;
   cvs.style.cssText = 'position:absolute;top:0;left:0;z-index:10;cursor:crosshair;touch-action:none;width:100%;height:100%;';
   cvs.id = `ucvs-${pi}`;
-  area.appendChild(cvs);
+  innerScaleWrap.appendChild(cvs);
 
-  wrap.appendChild(area);
+  area.appendChild(innerScaleWrap);
   setTimeout(() => attachStrokeEvents(cvs, strokes, pi), 80);
-  return wrap;
+  return area;
 }
 
 // ================================================================
@@ -747,11 +747,13 @@ function renderCurrentTracingAksara() {
     tracingPanelStates[index] = { completed: false, isFree: true };
     currentlyTrackedStrokes[index] = null;
     container.innerHTML += `
-      <div class="bg-[#fdf5e6] flex-shrink-0" style="display:flex;flex-direction:column;align-items:center;padding:1.25rem;border-radius:1rem;box-shadow:0 5px 15px rgba(0,0,0,0.15);border:2px solid #5D4037;">
-        <h3 class="font-serif text-[#3E2723] bg-white" style="font-weight:bold;font-size:.875rem;margin-bottom:1.25rem;padding:.25rem 1.5rem;border-radius:999px;border:1px solid rgba(62,39,35,.3);box-shadow:0 2px 4px rgba(0,0,0,.05);">Aksara ${cb.getAttribute("data-name")}</h3>
-        <div class="bg-white touch-none overflow-hidden" style="position:relative;display:flex;align-items:center;justify-content:center;border:2px dashed rgba(93,64,55,.5);border-radius:.75rem;width:250px;height:250px;">
-          <img src="${cb.getAttribute("data-img")}" class="pointer-events-none" style="position:absolute;width:170px;height:170px;object-fit:contain;opacity:0.25;filter:grayscale(100%);" alt="Watermark" />
-          <canvas id="board-0" width="250" height="250" class="cursor-crosshair" style="position:absolute;top:0;left:0;z-index:10;"></canvas>
+      <div class="flex-shrink-0 w-[200px] sm:w-[250px] md:w-[280px] bg-white touch-none overflow-hidden" style="position:relative;aspect-ratio:1/1;border:2px dashed rgba(93,64,55,.5);border-radius:.75rem;box-shadow:inset 0 0 10px rgba(0,0,0,0.05);">
+        <div style="position: absolute; top: 12px; left: 50%; transform: translateX(-50%); z-index: 20; pointer-events: none; white-space: nowrap;">
+          <span style="font-family: serif; font-weight: bold; font-size: 0.75rem; color: #795548; background: rgba(253, 245, 230, 0.95); padding: 4px 12px; border-radius: 999px; border: 1px solid rgba(62,39,35,0.3); box-shadow: 0 2px 4px rgba(0,0,0,0.1);">Aksara ${cb.getAttribute("data-name")}</span>
+        </div>
+        <div style="position:absolute;inset:0;width:100%;height:100%;transform:scale(1.35);transform-origin:center;">
+          <img src="${cb.getAttribute("data-img")}" class="pointer-events-none" style="position:absolute;left:16%;top:16%;width:68%;height:68%;object-fit:contain;opacity:0.25;filter:grayscale(100%);" alt="Watermark" />
+          <canvas id="board-0" width="250" height="250" class="cursor-crosshair" style="position:absolute;top:0;left:0;z-index:10;width:100%;height:100%;"></canvas>
         </div>
       </div>`;
 

@@ -143,18 +143,42 @@ window.startTracing = () => {
   const modal = document.getElementById('canvas-modal');
   const container = document.getElementById('canvas-container');
   container.innerHTML = ''; canvases = []; contexts = [];
+  const NS = "http://www.w3.org/2000/svg";
 
   checked.forEach((cb, index) => {
-    // PERBAIKAN: Gambar background di dalam kanvas di-ZOOM jadi 160px (sebelumnya 120px)
-    container.innerHTML += `
-      <div class="bg-[#fdf5e6] flex-shrink-0" style="display: flex; flex-direction: column; align-items: center; padding: 1.25rem; border-radius: 1rem; box-shadow: 0 5px 15px rgba(0,0,0,0.15); border: 2px solid #A1887F;">
-        <h3 class="font-serif text-[#795548] bg-white" style="font-weight: bold; font-size: 0.875rem; margin-bottom: 1.25rem; padding: 0.25rem 1.5rem; border-radius: 999px; border: 1px solid rgba(62,39,35,0.3); box-shadow: 0 2px 4px rgba(0,0,0,0.05);">Pasangan ${cb.getAttribute('data-name')}</h3>
-        <div class="bg-white touch-none overflow-hidden" style="position: relative; display: flex; align-items: center; justify-content: center; border: 2px dashed rgba(93,64,55,0.5); border-radius: 0.75rem; width: 180px; height: 180px;">
-          <img src="${cb.getAttribute('data-img')}" class="pointer-events-none" style="position: absolute; width: 160px; height: 160px; object-fit: contain; opacity: 0.25; filter: grayscale(100%);" alt="Watermark" />
-          <canvas id="board-${index}" width="180" height="180" class="cursor-crosshair" style="position: absolute; top: 0; left: 0; z-index: 10;"></canvas>
-        </div>
-      </div>
-    `;
+    const img = cb.getAttribute('data-img');
+    const area = document.createElement('div');
+    area.className = 'flex-shrink-0 w-[200px] sm:w-[250px] md:w-[280px] bg-white touch-none overflow-hidden';
+    area.style.cssText = 'position:relative;aspect-ratio:1/1;border:2px dashed rgba(93,64,55,.5);border-radius:.75rem;box-shadow:inset 0 0 10px rgba(0,0,0,0.05);';
+
+    const h3 = document.createElement('div');
+    h3.innerHTML = `<span style="font-family: serif; font-weight: bold; font-size: 0.75rem; color: #795548; background: rgba(253, 245, 230, 0.95); padding: 4px 12px; border-radius: 999px; border: 1px solid rgba(62,39,35,0.3); box-shadow: 0 2px 4px rgba(0,0,0,0.1);">Pasangan ${cb.getAttribute('data-name')}</span>`;
+    h3.style.cssText = 'position: absolute; top: 12px; left: 50%; transform: translateX(-50%); z-index: 20; pointer-events: none; white-space: nowrap;';
+    area.appendChild(h3);
+
+    const innerScaleWrap = document.createElement('div');
+    innerScaleWrap.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;transform:scale(1.35);transform-origin:center;';
+
+    const wm = document.createElement('img');
+    wm.src = img;
+    wm.style.cssText = 'position:absolute;left:16%;top:16%;width:68%;height:68%;object-fit:contain;opacity:.18;filter:grayscale(100%);pointer-events:none;z-index:1;';
+    innerScaleWrap.appendChild(wm);
+
+    const cvs = document.createElement('canvas');
+    cvs.id = `board-${index}`;
+    cvs.width = 180; cvs.height = 180;
+    cvs.className = 'cursor-crosshair';
+    cvs.style.cssText = 'position:absolute;top:0;left:0;width:100%;height:100%;z-index:10;touch-action:none;';
+    innerScaleWrap.appendChild(cvs);
+
+    const svg = document.createElementNS(NS, 'svg');
+    svg.setAttribute('width', '100%'); svg.setAttribute('height', '100%');
+    svg.setAttribute('viewBox', '0 0 180 180');
+    svg.style.cssText = 'position:absolute;top:0;left:0;z-index:5;pointer-events:none;';
+    innerScaleWrap.appendChild(svg);
+
+    area.appendChild(innerScaleWrap);
+    container.appendChild(area);
   });
 
   modal.classList.remove('hidden');
