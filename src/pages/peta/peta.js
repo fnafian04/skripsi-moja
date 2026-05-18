@@ -366,6 +366,28 @@ window.showFinalResultModal = (score) => {
   });
 };
 
+window.showDetailDesc = () => {
+  if (!currentCandiId) return;
+  const data = candiData[currentCandiId];
+  if (!data || !data.detailDesc) return;
+
+  // Format detailDesc with <br><br> for paragraphs
+  const formattedDesc = data.detailDesc.replace(/\n\n/g, '<br><br>');
+
+  Swal.fire({
+    title: data.title,
+    html: `<div style="text-align: justify; font-size: 0.95rem; line-height: 1.6; max-height: 60vh; overflow-y: auto; padding: 0 10px; color: #3E2723;">
+             ${formattedDesc}
+           </div>`,
+    confirmButtonText: "Tutup",
+    customClass: {
+      popup: "swal-paper",
+      title: "swal-paper-title",
+      confirmButton: "swal-paper-confirm",
+    },
+  });
+};
+
 window.restartGame = () => {
   Swal.fire({
     title: "Apa panjenengan yakin?",
