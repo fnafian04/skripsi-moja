@@ -1,13 +1,25 @@
 import "./sandhangan.css";
 
 const pages = [
-  '/assets/sandhangan.jpeg',
-  '/assets/sandhangan panyigeg.jpeg',
-  '/assets/sandhangan mandaswara.jpeg'
+  "/assets/sandhangan.jpeg",
+  "/assets/sandhangan - wulu.jpeg",
+  "/assets/sandhangan - taling.jpeg",
+  "/assets/sandhangan - taling tarung.jpeg",
+  "/assets/sandhangan - suku.jpeg",
+  "/assets/sandhangan - pepet.jpeg",
+  "/assets/sandhangan panyigeg.jpeg",
+  "/assets/sandhangan panyigeg - wignyan.jpeg",
+  "/assets/sandhangan panyigeg - pangkon.jpeg",
+  "/assets/sandhangan panyigeg - layar.jpeg",
+  "/assets/sandhangan panyigeg - cecak.jpeg",
+  "/assets/sandhangan mandaswara.jpeg",
+  "/assets/sandhangan mandaswara - pengkal.jpeg",
+  "/assets/sandhangan mandaswara - cakra.jpeg",
+  "/assets/sandhangan mandaswara - cakra keret.jpeg",
 ];
 
 // Preload images to avoid loading flickers
-pages.forEach(src => {
+pages.forEach((src) => {
   const img = new Image();
   img.src = src;
 });
@@ -19,16 +31,16 @@ window.openSandhanganCover = () => {
   const wrapper = document.getElementById("sandhangan-intro-book-wrapper");
   const frontCover = document.getElementById("sandhangan-intro-front-cover");
   const introCover = document.getElementById("sandhangan-cover-intro");
-  
-  if(wrapper && frontCover && introCover) {
+
+  if (wrapper && frontCover && introCover) {
     frontCover.style.transform = "rotateY(-120deg) translateZ(2px)";
-    
+
     setTimeout(() => {
       wrapper.style.transform = "rotateY(15deg) rotateX(10deg) scale(15)";
       wrapper.style.opacity = "0";
       introCover.style.opacity = "0";
       introCover.style.pointerEvents = "none";
-      
+
       setTimeout(() => {
         introCover.classList.add("hidden");
       }, 1500);
@@ -84,16 +96,16 @@ function renderBook() {
 
 window.prevPage = () => {
   if (currentPage > 0) {
-    const pageLeft = bookLayout.querySelector('.page-left');
-    if(pageLeft) pageLeft.classList.add("page-turn-left-out");
+    const pageLeft = bookLayout.querySelector(".page-left");
+    if (pageLeft) pageLeft.classList.add("page-turn-left-out");
 
     setTimeout(() => {
       currentPage--;
       renderBook();
-      const newPageRight = bookLayout.querySelector('.page-right');
-      if(newPageRight) newPageRight.classList.add("page-turn-right-in");
+      const newPageRight = bookLayout.querySelector(".page-right");
+      if (newPageRight) newPageRight.classList.add("page-turn-right-in");
       setTimeout(() => {
-        if(newPageRight) newPageRight.classList.remove("page-turn-right-in");
+        if (newPageRight) newPageRight.classList.remove("page-turn-right-in");
       }, 400);
     }, 400);
   }
@@ -101,16 +113,16 @@ window.prevPage = () => {
 
 window.nextPage = () => {
   if (currentPage < pages.length - 1) {
-    const pageRight = bookLayout.querySelector('.page-right');
-    if(pageRight) pageRight.classList.add("page-turn-right-out");
+    const pageRight = bookLayout.querySelector(".page-right");
+    if (pageRight) pageRight.classList.add("page-turn-right-out");
 
     setTimeout(() => {
       currentPage++;
       renderBook();
-      const newPageLeft = bookLayout.querySelector('.page-left');
-      if(newPageLeft) newPageLeft.classList.add("page-turn-left-in");
+      const newPageLeft = bookLayout.querySelector(".page-left");
+      if (newPageLeft) newPageLeft.classList.add("page-turn-left-in");
       setTimeout(() => {
-        if(newPageLeft) newPageLeft.classList.remove("page-turn-left-in");
+        if (newPageLeft) newPageLeft.classList.remove("page-turn-left-in");
       }, 400);
     }, 400);
   }
