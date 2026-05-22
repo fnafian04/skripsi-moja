@@ -163,18 +163,30 @@ window.openQuiz = (id) => {
     applyFeedbackState("ans1", "feedback1", prog.q1State);
     applyFeedbackState("ans2", "feedback2", prog.q2State);
 
-    // Disable input jika sudah autocorrect
+    // Disable/Enable input berdasarkan state soal (HANYA SOAL ITU, bukan yang lain)
+    const ans1Input = document.getElementById("ans1");
+    const ans2Input = document.getElementById("ans2");
+
     if (prog.q1State === "autocorrect") {
-      const ans1Input = document.getElementById("ans1");
       ans1Input.disabled = true;
       ans1Input.style.opacity = "0.6";
       ans1Input.style.cursor = "not-allowed";
+    } else {
+      // RE-ENABLE jika bukan autocorrect (ini yang sebelumnya hilang!)
+      ans1Input.disabled = false;
+      ans1Input.style.opacity = "1";
+      ans1Input.style.cursor = "text";
     }
+
     if (prog.q2State === "autocorrect") {
-      const ans2Input = document.getElementById("ans2");
       ans2Input.disabled = true;
       ans2Input.style.opacity = "0.6";
       ans2Input.style.cursor = "not-allowed";
+    } else {
+      // RE-ENABLE jika bukan autocorrect (ini yang sebelumnya hilang!)
+      ans2Input.disabled = false;
+      ans2Input.style.opacity = "1";
+      ans2Input.style.cursor = "text";
     }
 
     document.getElementById("popup-book").classList.remove("hidden");
