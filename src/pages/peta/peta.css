@@ -583,6 +583,32 @@
     }
   }
 
+  /* --- EXTRA SMALL MOBILE --- */
+  @media (max-width: 480px) {
+    .swal-paper {
+      padding: 0.8em 1em !important;
+      width: 95% !important;
+      max-width: 350px !important;
+    }
+    .swal-paper-title {
+      font-size: 1rem !important;
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+    .swal2-html-container {
+      font-size: 0.75rem !important;
+      margin: 0.3em 0 !important;
+    }
+    .swal-paper-confirm {
+      padding: 0.35em 0.8em !important;
+      font-size: 0.75rem !important;
+    }
+    .swal2-icon {
+      transform: scale(0.5) !important;
+      margin: -15px auto -20px !important;
+    }
+  }
+
   @media (max-height: 500px) and (orientation: landscape) {
     .swal-paper {
       padding: 0.5em 2em !important;
