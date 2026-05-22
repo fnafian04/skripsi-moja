@@ -5,25 +5,25 @@ window.openIntroCover = () => {
   const wrapper = document.getElementById("intro-book-wrapper");
   const frontCover = document.getElementById("intro-front-cover");
   const introCover = document.getElementById("map-cover-intro");
-  
-  if(wrapper && frontCover && introCover) {
+
+  if (wrapper && frontCover && introCover) {
     // 1. Buka sampul depan
     frontCover.style.transform = "rotateY(-130deg) translateZ(2px)";
-    
+
     // 2. Zoom moderat ke isi buku (peta di dalam)
     setTimeout(() => {
       // Bawa buku ke depan dan buat agak datar agar peta terlihat jelas
       wrapper.style.transform = "rotateY(0deg) rotateX(0deg) scale(1.5) translateY(5%)";
-      
+
       setTimeout(() => {
         // 3. Tampilkan Peta Dora (Botol) di atas buku
         // Hilangkan background intro agar tidak numpuk
         introCover.style.backgroundColor = "transparent";
         introCover.style.pointerEvents = "none";
-        
+
         const doraMap = document.getElementById("dora-map-overlay");
         const doraContent = document.getElementById("dora-map-content");
-        if(doraMap && doraContent) {
+        if (doraMap && doraContent) {
           doraMap.classList.remove("hidden");
           void doraMap.offsetWidth;
           doraMap.classList.remove("opacity-0");
@@ -41,25 +41,25 @@ window.closeDoraMap = () => {
   const introCover = document.getElementById("map-cover-intro");
   const wrapper = document.getElementById("intro-book-wrapper");
 
-  if(doraMap && doraContent) {
+  if (doraMap && doraContent) {
     // 1. Zoom in sangat besar pada botol peta seolah menembus ke dalamnya
     doraContent.style.transform = "scale(8) translateY(-10%)";
     doraContent.style.opacity = "0";
     doraMap.style.backgroundColor = "transparent";
-    
+
     // Ikut zoom wrapper bukunya juga biar sinkron
-    if(wrapper) {
+    if (wrapper) {
       wrapper.style.transform = "scale(20)";
       wrapper.style.opacity = "0";
     }
-    
+
     setTimeout(() => {
       doraMap.classList.add("hidden");
-      if(introCover) introCover.classList.add("hidden");
-      
+      if (introCover) introCover.classList.add("hidden");
+
       // 2. Munculkan Peta Utama & Hotspot dengan efek fade-in
       const mainWrapper = document.getElementById("main-map-wrapper");
-      if(mainWrapper) {
+      if (mainWrapper) {
         mainWrapper.classList.remove("opacity-0", "pointer-events-none");
         mainWrapper.classList.add("opacity-100");
       }
@@ -73,10 +73,10 @@ window.closeDoraMap = () => {
 let currentCandiId = null;
 
 // Menyimpan progres: jawaban, status tiap soal (none/empty/correct/wrong), jumlah salah, status candi
-const PROGRESS_KEY = 'pasinaon_progress';
+const PROGRESS_KEY = "pasinaon_progress";
 const userProgress = {};
-const POINTS_PER_SOAL = 6.5;  // 6.5 poin per soal
-const PENALTY_PER_KESALAHAN = 1;  // -1 poin per kesalahan
+const POINTS_PER_SOAL = 6.5; // 6.5 poin per soal
+const PENALTY_PER_KESALAHAN = 1; // -1 poin per kesalahan
 
 // Init: coba load dari sessionStorage dulu (reset otomatis saat browser ditutup)
 const savedProgress = sessionStorage.getItem(PROGRESS_KEY);
@@ -96,29 +96,29 @@ function saveProgress() {
 }
 
 // Restore glow visual candi setelah DOM siap
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener("DOMContentLoaded", () => {
   let finishedCount = 0;
   for (let key in userProgress) {
     const p = userProgress[key];
     const q1Done = p.q1State === "correct" || p.q1State === "autocorrect";
     const q2Done = p.q2State === "correct" || p.q2State === "autocorrect";
-    
+
     if (q1Done && q2Done) {
-      if (p.status === 'success') {
-        updateCandiGlow(key, 'success');
-      } else if (p.status === 'error') {
-        updateCandiGlow(key, 'error');
+      if (p.status === "success") {
+        updateCandiGlow(key, "success");
+      } else if (p.status === "error") {
+        updateCandiGlow(key, "error");
       }
       finishedCount++;
-    } else if (p.status === 'error') {
-      updateCandiGlow(key, 'error');
+    } else if (p.status === "error") {
+      updateCandiGlow(key, "error");
     }
   }
 
   const total = Object.keys(candiData).length;
   if (finishedCount === total) {
     const actionBtns = document.getElementById("finished-actions");
-    if(actionBtns) actionBtns.style.display = 'flex';
+    if (actionBtns) actionBtns.style.display = "flex";
   }
 
   // Tambahkan efek toel saat gambar candi di dalam buku diklik
@@ -163,6 +163,20 @@ window.openQuiz = (id) => {
     applyFeedbackState("ans1", "feedback1", prog.q1State);
     applyFeedbackState("ans2", "feedback2", prog.q2State);
 
+    // Disable input jika sudah autocorrect
+    if (prog.q1State === "autocorrect") {
+      const ans1Input = document.getElementById("ans1");
+      ans1Input.disabled = true;
+      ans1Input.style.opacity = "0.6";
+      ans1Input.style.cursor = "not-allowed";
+    }
+    if (prog.q2State === "autocorrect") {
+      const ans2Input = document.getElementById("ans2");
+      ans2Input.disabled = true;
+      ans2Input.style.opacity = "0.6";
+      ans2Input.style.cursor = "not-allowed";
+    }
+
     document.getElementById("popup-book").classList.remove("hidden");
   }, 250);
 };
@@ -202,7 +216,7 @@ window.checkAllAnswers = () => {
   // Eksekusi validasi - tapi jangan ganti yang sudah autocorrect
   const newQ1State = validateAnswer(v1, data.a1);
   const newQ2State = validateAnswer(v2, data.a2);
-  
+
   // Update state hanya jika belum autocorrect & hitung attempts
   if (prog.q1State !== "autocorrect") {
     prog.q1State = newQ1State;
@@ -230,8 +244,12 @@ window.checkAllAnswers = () => {
         let ans1Str = Array.isArray(data.a1) ? data.a1[1] || data.a1[0] : data.a1;
         prog.ans1 = ans1Str;
         prog.q1State = "autocorrect";
-        document.getElementById("ans1").value = ans1Str;
-        
+        const ans1Input = document.getElementById("ans1");
+        ans1Input.value = ans1Str;
+        ans1Input.disabled = true;
+        ans1Input.style.opacity = "0.6";
+        ans1Input.style.cursor = "not-allowed";
+
         applyFeedbackState("ans1", "feedback1", prog.q1State);
         updateCandiGlow(id, "error");
         saveProgress();
@@ -253,8 +271,12 @@ window.checkAllAnswers = () => {
         let ans2Str = Array.isArray(data.a2) ? data.a2[1] || data.a2[0] : data.a2;
         prog.ans2 = ans2Str;
         prog.q2State = "autocorrect";
-        document.getElementById("ans2").value = ans2Str;
-        
+        const ans2Input = document.getElementById("ans2");
+        ans2Input.value = ans2Str;
+        ans2Input.disabled = true;
+        ans2Input.style.opacity = "0.6";
+        ans2Input.style.cursor = "not-allowed";
+
         applyFeedbackState("ans2", "feedback2", prog.q2State);
         updateCandiGlow(id, "error");
         saveProgress();
@@ -267,6 +289,20 @@ window.checkAllAnswers = () => {
   // Tampilkan Tooltips "Benar/Salah/Kosong"
   applyFeedbackState("ans1", "feedback1", prog.q1State);
   applyFeedbackState("ans2", "feedback2", prog.q2State);
+
+  // Disable input jika sudah autocorrect
+  if (prog.q1State === "autocorrect") {
+    const ans1Input = document.getElementById("ans1");
+    ans1Input.disabled = true;
+    ans1Input.style.opacity = "0.6";
+    ans1Input.style.cursor = "not-allowed";
+  }
+  if (prog.q2State === "autocorrect") {
+    const ans2Input = document.getElementById("ans2");
+    ans2Input.disabled = true;
+    ans2Input.style.opacity = "0.6";
+    ans2Input.style.cursor = "not-allowed";
+  }
 
   // Logika Cek Status Candi
   if (prog.q1State === "correct" && prog.q2State === "correct") {
@@ -335,38 +371,38 @@ function checkFinishAll() {
       // Jika salah N kali (N < 3) = 6 - N poin (dengan penalty -1)
       // Jika autocorrect = 0 poin
       // Jika kosong = 0 poin
-      
+
       let q1Points = 0;
       if (p.q1State === "correct") {
         q1Points = POINTS_PER_SOAL; // 6 poin
       } else if (p.q1State === "wrong") {
-        q1Points = Math.max(0, POINTS_PER_SOAL - (p.q1Attempts * PENALTY_PER_KESALAHAN));
+        q1Points = Math.max(0, POINTS_PER_SOAL - p.q1Attempts * PENALTY_PER_KESALAHAN);
       }
       // autocorrect & empty = 0 poin
-      
+
       let q2Points = 0;
       if (p.q2State === "correct") {
         q2Points = POINTS_PER_SOAL; // 6 poin
       } else if (p.q2State === "wrong") {
-        q2Points = Math.max(0, POINTS_PER_SOAL - (p.q2Attempts * PENALTY_PER_KESALAHAN));
+        q2Points = Math.max(0, POINTS_PER_SOAL - p.q2Attempts * PENALTY_PER_KESALAHAN);
       }
       // autocorrect & empty = 0 poin
-      
+
       score += q1Points + q2Points;
     });
-    
+
     // Score max = 8 candi × 12 poin = 96 poin
     // Tapi kita normalisasi ke 0-100
     const maxScore = total * POINTS_PER_SOAL * 2; // 96
     const normalizedScore = Math.round((score / maxScore) * 100);
-    
+
     // Show floating button block
     const cekBtn = document.getElementById("btn-cek-hasil");
     const baleniBtn = document.getElementById("btn-baleni");
-    if(cekBtn) cekBtn.classList.remove('hidden');
-    if(baleniBtn) baleniBtn.classList.remove('hidden');
+    if (cekBtn) cekBtn.classList.remove("hidden");
+    if (baleniBtn) baleniBtn.classList.remove("hidden");
 
-    sessionStorage.setItem('completed_pasinaon', 'true');
+    sessionStorage.setItem("completed_pasinaon", "true");
 
     setTimeout(() => {
       document.getElementById("popup-book").classList.add("hidden");
@@ -391,7 +427,7 @@ window.showFinalResultModal = (score) => {
   } else {
     msg = { icon: "error", title: "Aduh, Coba Maneh!", text: "Kabeh wangsulan isih luput, ora apa-apa, ayo dicoba maneh saka awal ben luwih paham!" };
   }
-  
+
   let color = score >= 50 ? "#166534" : "#d32f2f";
 
   Swal.fire({
@@ -414,7 +450,7 @@ window.showDetailDesc = () => {
   if (!data || !data.detailDesc) return;
 
   // Format detailDesc with <br><br> for paragraphs
-  const formattedDesc = data.detailDesc.replace(/\n\n/g, '<br><br>');
+  const formattedDesc = data.detailDesc.replace(/\n\n/g, "<br><br>");
 
   Swal.fire({
     title: data.title,
@@ -437,7 +473,7 @@ window.showDetailScore = (score, maxScore) => {
     score = null;
     maxScore = total * POINTS_PER_SOAL * 2;
   }
-  
+
   const detailHtml = `
     <div style="text-align: left; background: #f5f5f5; padding: 15px; border-radius: 8px; font-size: 14px;">
       
@@ -467,7 +503,7 @@ window.showDetailScore = (score, maxScore) => {
       </div>
     </div>
   `;
-  
+
   Swal.fire({
     title: "Penjelasan Pambiji",
     html: detailHtml,
@@ -480,61 +516,61 @@ window.showDetailScore = (score, maxScore) => {
       confirmButton: "swal-paper-confirm",
     },
     didRender: () => {
-      const confirmBtn = document.querySelector('.swal2-confirm');
+      const confirmBtn = document.querySelector(".swal2-confirm");
       if (confirmBtn) {
         confirmBtn.style.transition = "all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)";
-        confirmBtn.addEventListener('mouseenter', () => {
+        confirmBtn.addEventListener("mouseenter", () => {
           confirmBtn.style.transform = "scale(1.1)";
         });
-        confirmBtn.addEventListener('mouseleave', () => {
+        confirmBtn.addEventListener("mouseleave", () => {
           confirmBtn.style.transform = "scale(1)";
         });
-        confirmBtn.addEventListener('click', (e) => {
+        confirmBtn.addEventListener("click", (e) => {
           // Ripple effect
           const rect = confirmBtn.getBoundingClientRect();
-          const ripple = document.createElement('span');
-          ripple.style.position = 'absolute';
-          ripple.style.borderRadius = '50%';
-          ripple.style.backgroundColor = 'rgba(255, 201, 71, 0.6)';
-          ripple.style.transform = 'scale(0)';
-          ripple.style.animation = 'rippleEffect 0.6s ease-out';
-          ripple.style.pointerEvents = 'none';
-          ripple.style.width = '30px';
-          ripple.style.height = '30px';
-          ripple.style.left = (e.clientX - rect.left - 15) + 'px';
-          ripple.style.top = (e.clientY - rect.top - 15) + 'px';
-          confirmBtn.style.position = 'relative';
-          confirmBtn.style.overflow = 'hidden';
+          const ripple = document.createElement("span");
+          ripple.style.position = "absolute";
+          ripple.style.borderRadius = "50%";
+          ripple.style.backgroundColor = "rgba(255, 201, 71, 0.6)";
+          ripple.style.transform = "scale(0)";
+          ripple.style.animation = "rippleEffect 0.6s ease-out";
+          ripple.style.pointerEvents = "none";
+          ripple.style.width = "30px";
+          ripple.style.height = "30px";
+          ripple.style.left = e.clientX - rect.left - 15 + "px";
+          ripple.style.top = e.clientY - rect.top - 15 + "px";
+          confirmBtn.style.position = "relative";
+          confirmBtn.style.overflow = "hidden";
           confirmBtn.appendChild(ripple);
           setTimeout(() => ripple.remove(), 600);
 
           // Button animations
-          confirmBtn.style.animation = 'clickPulse 0.6s cubic-bezier(0.34, 1.56, 0.64, 1)';
-          confirmBtn.style.transform = 'scale(0.92)';
-          
+          confirmBtn.style.animation = "clickPulse 0.6s cubic-bezier(0.34, 1.56, 0.64, 1)";
+          confirmBtn.style.transform = "scale(0.92)";
+
           setTimeout(() => {
-            confirmBtn.style.transform = 'scale(1.05)';
+            confirmBtn.style.transform = "scale(1.05)";
           }, 150);
-          
+
           setTimeout(() => {
-            confirmBtn.style.transform = 'scale(0.98)';
+            confirmBtn.style.transform = "scale(0.98)";
           }, 300);
-          
+
           setTimeout(() => {
-            confirmBtn.style.transform = 'scale(1)';
+            confirmBtn.style.transform = "scale(1)";
           }, 450);
         });
       }
     },
     willClose: () => {
-      const popup = document.querySelector('.swal2-popup');
+      const popup = document.querySelector(".swal2-popup");
       if (popup) {
         popup.style.animation = "fadeOut 0.4s ease-out";
       }
     },
   }).then(() => {
     // Optional: Add a brief success flash effect
-    const icon = document.querySelector('.swal2-icon');
+    const icon = document.querySelector(".swal2-icon");
     if (icon) {
       icon.style.animation = "pulse 0.6s ease-in-out";
     }
@@ -545,28 +581,28 @@ window.showFinalResultWithScore = () => {
   // Hitung skor dari userProgress
   let score = 0;
   const total = Object.keys(candiData).length;
-  
+
   Object.values(userProgress).forEach((p) => {
     let q1Points = 0;
     if (p.q1State === "correct") {
       q1Points = POINTS_PER_SOAL;
     } else if (p.q1State === "wrong") {
-      q1Points = Math.max(0, POINTS_PER_SOAL - (p.q1Attempts * PENALTY_PER_KESALAHAN));
+      q1Points = Math.max(0, POINTS_PER_SOAL - p.q1Attempts * PENALTY_PER_KESALAHAN);
     }
-    
+
     let q2Points = 0;
     if (p.q2State === "correct") {
       q2Points = POINTS_PER_SOAL;
     } else if (p.q2State === "wrong") {
-      q2Points = Math.max(0, POINTS_PER_SOAL - (p.q2Attempts * PENALTY_PER_KESALAHAN));
+      q2Points = Math.max(0, POINTS_PER_SOAL - p.q2Attempts * PENALTY_PER_KESALAHAN);
     }
-    
+
     score += q1Points + q2Points;
   });
-  
+
   const maxScore = total * POINTS_PER_SOAL * 2;
   const normalizedScore = Math.round((score / maxScore) * 100);
-  
+
   // Tampilkan langsung di hasil akhir
   showFinalResult(normalizedScore);
 };
@@ -584,15 +620,15 @@ window.restartGame = () => {
     customClass: {
       popup: "swal-paper",
       title: "swal-paper-title",
-    }
+    },
   }).then((result) => {
     if (result.isConfirmed) {
       sessionStorage.removeItem(PROGRESS_KEY);
-      sessionStorage.removeItem('completed_pasinaon');
+      sessionStorage.removeItem("completed_pasinaon");
       location.reload();
     }
   });
-}
+};
 
 // ==========================================
 // FITUR EDIT (GESER + UKURAN) - SUPER SMOOTH DRAG
@@ -603,8 +639,8 @@ const btnScaleUp = document.getElementById("btn-scale-up");
 const btnScaleDown = document.getElementById("btn-scale-down");
 
 let isEditMode = false;
-let activeHotspot = null; 
-let isDragging = false; 
+let activeHotspot = null;
+let isDragging = false;
 
 if (btnEdit && btnSave) {
   btnEdit.onclick = () => {
@@ -656,7 +692,7 @@ function scaleHotspot(amount) {
   if (!activeHotspot) return Swal.fire("Pilih Candi Dulu!", "Klik candi yang mau diubah ukurannya.", "warning");
   const img = activeHotspot.querySelector("img");
   let currentWidth = parseInt(img.style.width || window.getComputedStyle(img).width);
-  img.style.width = (currentWidth + amount) + "px";
+  img.style.width = currentWidth + amount + "px";
 }
 
 // --- FUNGSI DRAG INTI ---
@@ -671,7 +707,7 @@ function enableDrag() {
 
   hotspots.forEach((hotspot) => {
     hotspot.style.cursor = "move";
-    
+
     // Matikan klik pop-up kuis sementara saat edit
     if (hotspot.getAttribute("onclick")) {
       hotspot.setAttribute("data-onclick", hotspot.getAttribute("onclick"));
@@ -685,7 +721,7 @@ function enableDrag() {
     const startDrag = (e) => {
       if (!isEditMode) return;
       if (activeHotspot) activeHotspot.classList.remove("edit-active");
-      
+
       activeHotspot = hotspot;
       activeHotspot.classList.add("edit-active");
       isDragging = true;
@@ -704,7 +740,7 @@ function enableDrag() {
 
 function handleMove(e) {
   if (!isEditMode || !isDragging || !activeHotspot) return;
-  
+
   // Cegah layar nge-scroll pas kita lagi asyik geser candi
   if (e.cancelable) e.preventDefault();
 
