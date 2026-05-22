@@ -172,4 +172,15 @@ document.addEventListener("DOMContentLoaded", () => {
   addCompletionBadges();
   setupHideOnScroll();
   enforceLandscape();
+
+  // Conditional import untuk page-specific modules
+  if (document.querySelector('#map-cover-intro')) {
+    import('./pages/peta/peta.js');
+  }
+  if (document.querySelector('#book-legena')) {
+    import('./pages/legena/legena.js');
+  }
+  if (document.querySelector('#pasangan-wrapper')) {
+    import('./pages/pasangan/pasangan.js');
+  }
 });

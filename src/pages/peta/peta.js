@@ -75,17 +75,19 @@ let currentCandiId = null;
 // Menyimpan progres: jawaban, status tiap soal (none/empty/correct/wrong), jumlah salah, status candi
 const PROGRESS_KEY = 'pasinaon_progress';
 const userProgress = {};
+const POINTS_PER_SOAL = 6.5;  // 6.5 poin per soal
+const PENALTY_PER_KESALAHAN = 1;  // -1 poin per kesalahan
 
 // Init: coba load dari sessionStorage dulu (reset otomatis saat browser ditutup)
 const savedProgress = sessionStorage.getItem(PROGRESS_KEY);
 if (savedProgress) {
   const parsed = JSON.parse(savedProgress);
   for (let key in candiData) {
-    userProgress[key] = parsed[key] ?? { ans1: "", ans2: "", q1State: "none", q2State: "none", attempts: 0, status: "none", isAutoCorrect: false };
+    userProgress[key] = parsed[key] ?? { ans1: "", ans2: "", q1State: "none", q2State: "none", q1Attempts: 0, q2Attempts: 0, status: "none" };
   }
 } else {
   for (let key in candiData) {
-    userProgress[key] = { ans1: "", ans2: "", q1State: "none", q2State: "none", attempts: 0, status: "none", isAutoCorrect: false };
+    userProgress[key] = { ans1: "", ans2: "", q1State: "none", q2State: "none", q1Attempts: 0, q2Attempts: 0, status: "none" };
   }
 }
 
@@ -97,15 +99,19 @@ function saveProgress() {
 document.addEventListener('DOMContentLoaded', () => {
   let finishedCount = 0;
   for (let key in userProgress) {
-    if (userProgress[key].status === 'success') {
-      updateCandiGlow(key, 'success');
-      finishedCount++;
-    } else if (userProgress[key].status === 'error') {
-      updateCandiGlow(key, 'error');
-      // Jika statusnya error dan isAutoCorrect, tetap error (merah), jangan biru
-      if (userProgress[key].isAutoCorrect) {
-        finishedCount++;
+    const p = userProgress[key];
+    const q1Done = p.q1State === "correct" || p.q1State === "autocorrect";
+    const q2Done = p.q2State === "correct" || p.q2State === "autocorrect";
+    
+    if (q1Done && q2Done) {
+      if (p.status === 'success') {
+        updateCandiGlow(key, 'success');
+      } else if (p.status === 'error') {
+        updateCandiGlow(key, 'error');
       }
+      finishedCount++;
+    } else if (p.status === 'error') {
+      updateCandiGlow(key, 'error');
     }
   }
 
@@ -176,11 +182,6 @@ window.checkAllAnswers = () => {
   const data = candiData[id];
   const prog = userProgress[id];
 
-  // Jika sudah dalam status auto-correct, jangan ubah apa-apa
-  if (prog.isAutoCorrect) {
-    return;
-  }
-
   const v1 = document.getElementById("ans1").value.trim().toLowerCase();
   const v2 = document.getElementById("ans2").value.trim().toLowerCase();
 
@@ -198,64 +199,85 @@ window.checkAllAnswers = () => {
     return input.includes(answerData.toLowerCase()) ? "correct" : "wrong";
   };
 
-  // Eksekusi validasi
-  prog.q1State = validateAnswer(v1, data.a1);
-  prog.q2State = validateAnswer(v2, data.a2);
+  // Eksekusi validasi - tapi jangan ganti yang sudah autocorrect
+  const newQ1State = validateAnswer(v1, data.a1);
+  const newQ2State = validateAnswer(v2, data.a2);
+  
+  // Update state hanya jika belum autocorrect & hitung attempts
+  if (prog.q1State !== "autocorrect") {
+    prog.q1State = newQ1State;
+    if (newQ1State === "wrong") {
+      prog.q1Attempts += 1;
+    }
+  }
+  if (prog.q2State !== "autocorrect") {
+    prog.q2State = newQ2State;
+    if (newQ2State === "wrong") {
+      prog.q2Attempts += 1;
+    }
+  }
+
+  // Cek apakah soal sudah mencapai 3x salah
+  if (prog.q1State === "wrong" && prog.q1Attempts >= 3) {
+    setTimeout(() => {
+      Swal.fire({
+        icon: "error",
+        title: "Kesempatan Soal 1 Telas!",
+        text: "Sampeyan wis 3 kali salah, sistem akan memberikan jawaban otomatis.",
+        confirmButtonColor: "#03A9F4",
+        customClass: { popup: "swal-paper", confirmButton: "swal-paper-confirm" },
+      }).then(() => {
+        let ans1Str = Array.isArray(data.a1) ? data.a1[1] || data.a1[0] : data.a1;
+        prog.ans1 = ans1Str;
+        prog.q1State = "autocorrect";
+        document.getElementById("ans1").value = ans1Str;
+        
+        applyFeedbackState("ans1", "feedback1", prog.q1State);
+        updateCandiGlow(id, "error");
+        saveProgress();
+        checkFinishAll();
+      });
+    }, 300);
+    return;
+  }
+
+  if (prog.q2State === "wrong" && prog.q2Attempts >= 3) {
+    setTimeout(() => {
+      Swal.fire({
+        icon: "error",
+        title: "Kesempatan Soal 2 Telas!",
+        text: "Sampeyan wis 3 kali salah, sistem akan memberikan jawaban otomatis.",
+        confirmButtonColor: "#03A9F4",
+        customClass: { popup: "swal-paper", confirmButton: "swal-paper-confirm" },
+      }).then(() => {
+        let ans2Str = Array.isArray(data.a2) ? data.a2[1] || data.a2[0] : data.a2;
+        prog.ans2 = ans2Str;
+        prog.q2State = "autocorrect";
+        document.getElementById("ans2").value = ans2Str;
+        
+        applyFeedbackState("ans2", "feedback2", prog.q2State);
+        updateCandiGlow(id, "error");
+        saveProgress();
+        checkFinishAll();
+      });
+    }, 300);
+    return;
+  }
 
   // Tampilkan Tooltips "Benar/Salah/Kosong"
   applyFeedbackState("ans1", "feedback1", prog.q1State);
   applyFeedbackState("ans2", "feedback2", prog.q2State);
 
-  // Logika Cek Status Candi & Hitung Kesalahan
+  // Logika Cek Status Candi
   if (prog.q1State === "correct" && prog.q2State === "correct") {
     prog.status = "success";
     updateCandiGlow(id, "success");
     saveProgress();
     checkFinishAll();
-  } else if (prog.q1State === "wrong" || prog.q2State === "wrong") {
+  } else if (prog.q1State === "wrong" || prog.q2State === "wrong" || prog.q1State === "empty" || prog.q2State === "empty") {
     prog.status = "error";
-    prog.attempts += 1;
     updateCandiGlow(id, "error");
     saveProgress();
-
-    if (prog.attempts >= 3) {
-      setTimeout(() => {
-        Swal.fire({
-          icon: "error",
-          title: "Kesempatan Telas!",
-          text: "Sampeyan wis 3 kali salah ing candhi iki, ayoo deleng katrangane alon-alon, iki wangsulan kang bener!",
-          confirmButtonColor: "#03A9F4",
-          customClass: { popup: "swal-paper", confirmButton: "swal-paper-confirm" },
-        }).then(() => {
-          // Hanya betulkan jawaban yang salah saja
-          if (prog.q1State === "wrong") {
-            let ans1Str = Array.isArray(data.a1) ? data.a1[1] || data.a1[0] : data.a1;
-            prog.ans1 = ans1Str;
-            prog.q1State = "autocorrect";
-            document.getElementById("ans1").value = ans1Str;
-          }
-          
-          if (prog.q2State === "wrong") {
-            let ans2Str = Array.isArray(data.a2) ? data.a2[1] || data.a2[0] : data.a2;
-            prog.ans2 = ans2Str;
-            prog.q2State = "autocorrect";
-            document.getElementById("ans2").value = ans2Str;
-          }
-          
-          // Tandai bahwa ini adalah pembenarannya otomatis
-          prog.isAutoCorrect = true;
-          prog.status = "error";
-          
-          applyFeedbackState("ans1", "feedback1", prog.q1State);
-          applyFeedbackState("ans2", "feedback2", prog.q2State);
-          
-          // Tetap merah (error), jangan biru
-          updateCandiGlow(id, "error");
-          saveProgress();
-          checkFinishAll();
-        });
-      }, 500);
-    }
   }
 };
 
@@ -299,18 +321,45 @@ function updateCandiGlow(id, status) {
 
 function checkFinishAll() {
   const total = Object.keys(candiData).length;
-  const finished = Object.values(userProgress).filter((p) => p.status === "success" || (p.status === "error" && p.isAutoCorrect)).length;
+  const finished = Object.values(userProgress).filter((p) => {
+    const q1Done = p.q1State === "correct" || p.q1State === "autocorrect";
+    const q2Done = p.q2State === "correct" || p.q2State === "autocorrect";
+    return q1Done && q2Done;
+  }).length;
 
   if (finished === total) {
     let score = 0;
     Object.values(userProgress).forEach((p) => {
-      if (p.status === "success") {
-        score += (100 / total); // 12.5 points per success
+      // Hitung poin per soal (6 poin per soal)
+      // Jika benar = 6 poin
+      // Jika salah N kali (N < 3) = 6 - N poin (dengan penalty -1)
+      // Jika autocorrect = 0 poin
+      // Jika kosong = 0 poin
+      
+      let q1Points = 0;
+      if (p.q1State === "correct") {
+        q1Points = POINTS_PER_SOAL; // 6 poin
+      } else if (p.q1State === "wrong") {
+        q1Points = Math.max(0, POINTS_PER_SOAL - (p.q1Attempts * PENALTY_PER_KESALAHAN));
       }
+      // autocorrect & empty = 0 poin
+      
+      let q2Points = 0;
+      if (p.q2State === "correct") {
+        q2Points = POINTS_PER_SOAL; // 6 poin
+      } else if (p.q2State === "wrong") {
+        q2Points = Math.max(0, POINTS_PER_SOAL - (p.q2Attempts * PENALTY_PER_KESALAHAN));
+      }
+      // autocorrect & empty = 0 poin
+      
+      score += q1Points + q2Points;
     });
-    score = Math.round(score);
-    if (score < 0) score = 0;
-
+    
+    // Score max = 8 candi × 12 poin = 96 poin
+    // Tapi kita normalisasi ke 0-100
+    const maxScore = total * POINTS_PER_SOAL * 2; // 96
+    const normalizedScore = Math.round((score / maxScore) * 100);
+    
     // Show floating button block
     const actionBtns = document.getElementById("finished-actions");
     if(actionBtns) actionBtns.style.display = 'flex';
@@ -319,20 +368,13 @@ function checkFinishAll() {
 
     setTimeout(() => {
       document.getElementById("popup-book").classList.add("hidden");
-      showFinalResultModal(score);
+      showFinalResult(normalizedScore);
+      showDetailScore(score, maxScore);
     }, 1000);
   }
 }
 
-window.showFinalResult = () => {
-  let score = 0;
-  const total = Object.keys(candiData).length;
-  Object.values(userProgress).forEach((p) => {
-    if (p.status === "success") {
-      score += (100 / total);
-    }
-  });
-  score = Math.round(score);
+window.showFinalResult = (score) => {
   showFinalResultModal(score);
 };
 
@@ -385,6 +427,122 @@ window.showDetailDesc = () => {
       title: "swal-paper-title",
       confirmButton: "swal-paper-confirm",
     },
+  });
+};
+
+window.showDetailScore = (score, maxScore) => {
+  const total = Object.keys(candiData).length;
+  // If called without parameters (from header button), show generic info
+  if (score === undefined || maxScore === undefined) {
+    score = null;
+    maxScore = total * POINTS_PER_SOAL * 2;
+  }
+  
+  const detailHtml = `
+    <div style="text-align: left; background: #f5f5f5; padding: 15px; border-radius: 8px; font-size: 14px;">
+      
+      <div style="margin-bottom: 12px; padding: 10px; background: white; border-left: 4px solid #22c55e; border-radius: 4px;">
+        <strong style="color: #22c55e;">✅ Wangsulan Bener</strong><br/>
+        <small style="color: #666;">Entuk poin lengkap kanggo saben soal sing dijawab kanthi bener.</small><br/>
+        <strong style="color: #03A9F4; font-size: 16px;">13 poin / candi (6.5 poin per soal)</strong>
+      </div>
+
+      <div style="margin-bottom: 12px; padding: 10px; background: white; border-left: 4px solid #f59e0b; border-radius: 4px;">
+        <strong style="color: #f59e0b;">⚠️ Wangsulan Kosong</strong><br/>
+        <small style="color: #666;">Soal sing ora dijawab ora entuk poin.</small><br/>
+        <strong style="color: #03A9F4; font-size: 16px;">0 poin</strong>
+      </div>
+
+      <div style="margin-bottom: 12px; padding: 10px; background: white; border-left: 4px solid #3b82f6; border-radius: 4px;">
+        <strong style="color: #3b82f6;">🔵 Koreksian Otomatis (Salah 3x)</strong><br/>
+        <small style="color: #666;">Sawise salah 3 kali, sistem otomatis menehi wangsulan kanggo soal kuwi.</small><br/>
+        <strong style="color: #03A9F4; font-size: 16px;">0 poin (Candi dihitung rampung)</strong>
+      </div>
+
+      <div style="margin-bottom: 12px; padding: 10px; background: white; border-left: 4px solid #ef4444; border-radius: 4px;">
+        <strong style="color: #ef4444;">❌ Wangsulan Salah</strong><br/>
+        <small style="color: #666;">Saben kesalahan bakal dikurangi 1 poin.</small><br/>
+        <strong style="color: #03A9F4; font-size: 16px;">-1 poin / kesalahan</strong><br/>
+        <small style="color: #999;">Conto: Salah 1x = 5.5 poin, Salah 2x = 4.5 poin</small>
+      </div>
+
+      <div style="margin-top: 15px; padding: 10px; background: #E3F2FD; border-radius: 4px; border: 1px solid #03A9F4; text-align: center;">
+        <strong style="color: #03A9F4; font-size: 14px;">Skor Maksimal</strong><br/>
+        <strong style="color: #03A9F4; font-size: 20px;">${maxScore} poin</strong>${score !== null ? `<br/><small style="color: #666; margin-top: 8px;">Skor Sampeyan: ${score} / ${maxScore}</small>` : ''}
+      </div>
+    </div>
+  `;
+  
+  Swal.fire({
+    title: "Penjelasan Penilaian",
+    html: detailHtml,
+    icon: "info",
+    confirmButtonColor: "#03A9F4",
+    confirmButtonText: "Paham",
+    customClass: {
+      popup: "swal-paper",
+      title: "swal-paper-title",
+      confirmButton: "swal-paper-confirm",
+    },
+    didRender: () => {
+      const confirmBtn = document.querySelector('.swal2-confirm');
+      if (confirmBtn) {
+        confirmBtn.style.transition = "all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)";
+        confirmBtn.addEventListener('mouseenter', () => {
+          confirmBtn.style.transform = "scale(1.1)";
+        });
+        confirmBtn.addEventListener('mouseleave', () => {
+          confirmBtn.style.transform = "scale(1)";
+        });
+        confirmBtn.addEventListener('click', (e) => {
+          // Ripple effect
+          const rect = confirmBtn.getBoundingClientRect();
+          const ripple = document.createElement('span');
+          ripple.style.position = 'absolute';
+          ripple.style.borderRadius = '50%';
+          ripple.style.backgroundColor = 'rgba(255, 201, 71, 0.6)';
+          ripple.style.transform = 'scale(0)';
+          ripple.style.animation = 'rippleEffect 0.6s ease-out';
+          ripple.style.pointerEvents = 'none';
+          ripple.style.width = '30px';
+          ripple.style.height = '30px';
+          ripple.style.left = (e.clientX - rect.left - 15) + 'px';
+          ripple.style.top = (e.clientY - rect.top - 15) + 'px';
+          confirmBtn.style.position = 'relative';
+          confirmBtn.style.overflow = 'hidden';
+          confirmBtn.appendChild(ripple);
+          setTimeout(() => ripple.remove(), 600);
+
+          // Button animations
+          confirmBtn.style.animation = 'clickPulse 0.6s cubic-bezier(0.34, 1.56, 0.64, 1)';
+          confirmBtn.style.transform = 'scale(0.92)';
+          
+          setTimeout(() => {
+            confirmBtn.style.transform = 'scale(1.05)';
+          }, 150);
+          
+          setTimeout(() => {
+            confirmBtn.style.transform = 'scale(0.98)';
+          }, 300);
+          
+          setTimeout(() => {
+            confirmBtn.style.transform = 'scale(1)';
+          }, 450);
+        });
+      }
+    },
+    willClose: () => {
+      const popup = document.querySelector('.swal2-popup');
+      if (popup) {
+        popup.style.animation = "fadeOut 0.4s ease-out";
+      }
+    },
+  }).then(() => {
+    // Optional: Add a brief success flash effect
+    const icon = document.querySelector('.swal2-icon');
+    if (icon) {
+      icon.style.animation = "pulse 0.6s ease-in-out";
+    }
   });
 };
 

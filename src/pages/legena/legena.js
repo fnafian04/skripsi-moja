@@ -4,11 +4,11 @@ window.openLegenaCover = () => {
   const wrapper = document.getElementById("legena-intro-book-wrapper");
   const frontCover = document.getElementById("legena-intro-front-cover");
   const introCover = document.getElementById("legena-cover-intro");
-  
-  if(wrapper && frontCover && introCover) {
+
+  if (wrapper && frontCover && introCover) {
     // 1. Hanya buka sampul depannya saja seperti membuka kotak/cover
     frontCover.style.transform = "rotateY(-120deg) translateZ(2px)";
-    
+
     // 2. Tunggu sebentar agar user melihat isinya, lalu zoom in ke buku yang sudah terbuka
     setTimeout(() => {
       // Zoom in menembus ke dalam halaman
@@ -16,7 +16,7 @@ window.openLegenaCover = () => {
       wrapper.style.opacity = "0";
       introCover.style.opacity = "0";
       introCover.style.pointerEvents = "none";
-      
+
       setTimeout(() => {
         introCover.classList.add("hidden");
       }, 1500);
@@ -121,11 +121,11 @@ function renderBook() {
 // --- LOGIKA ANIMASI BALIK HALAMAN (REALISTIS BUKA BUKU) ---
 window.prevPage = () => {
   if (currentPage > 0) {
-    const pageRight = bookLayout.querySelector('.page-right');
-    const pageLeft = bookLayout.querySelector('.page-left');
-    
-    if(pageLeft) pageLeft.classList.add("page-turn-left-out");
-    if(pageRight) {
+    const pageRight = bookLayout.querySelector(".page-right");
+    const pageLeft = bookLayout.querySelector(".page-left");
+
+    if (pageLeft) pageLeft.classList.add("page-turn-left-out");
+    if (pageRight) {
       pageRight.style.transition = "opacity 0.4s ease-in";
       pageRight.style.opacity = "0";
     }
@@ -133,19 +133,19 @@ window.prevPage = () => {
     setTimeout(() => {
       currentPage--;
       renderBook();
-      
-      const newPageLeft = bookLayout.querySelector('.page-left');
-      const newPageRight = bookLayout.querySelector('.page-right');
-      
-      if(newPageRight) newPageRight.classList.add("page-turn-right-in");
-      if(newPageLeft) {
-         newPageLeft.style.opacity = "0";
-         newPageLeft.style.transition = "opacity 0.4s ease-out";
-         setTimeout(() => newPageLeft.style.opacity = "1", 50);
+
+      const newPageLeft = bookLayout.querySelector(".page-left");
+      const newPageRight = bookLayout.querySelector(".page-right");
+
+      if (newPageRight) newPageRight.classList.add("page-turn-right-in");
+      if (newPageLeft) {
+        newPageLeft.style.opacity = "0";
+        newPageLeft.style.transition = "opacity 0.4s ease-out";
+        setTimeout(() => (newPageLeft.style.opacity = "1"), 50);
       }
 
       setTimeout(() => {
-        if(newPageRight) newPageRight.classList.remove("page-turn-right-in");
+        if (newPageRight) newPageRight.classList.remove("page-turn-right-in");
       }, 400);
     }, 400);
   }
@@ -153,11 +153,11 @@ window.prevPage = () => {
 
 window.nextPage = () => {
   if (currentPage < aksaraData.length - 1 && completedPages[currentPage]) {
-    const pageRight = bookLayout.querySelector('.page-right');
-    const pageLeft = bookLayout.querySelector('.page-left');
-    
-    if(pageRight) pageRight.classList.add("page-turn-right-out");
-    if(pageLeft) {
+    const pageRight = bookLayout.querySelector(".page-right");
+    const pageLeft = bookLayout.querySelector(".page-left");
+
+    if (pageRight) pageRight.classList.add("page-turn-right-out");
+    if (pageLeft) {
       pageLeft.style.transition = "opacity 0.4s ease-in";
       pageLeft.style.opacity = "0";
     }
@@ -165,19 +165,19 @@ window.nextPage = () => {
     setTimeout(() => {
       currentPage++;
       renderBook();
-      
-      const newPageLeft = bookLayout.querySelector('.page-left');
-      const newPageRight = bookLayout.querySelector('.page-right');
-      
-      if(newPageLeft) newPageLeft.classList.add("page-turn-left-in");
-      if(newPageRight) {
-         newPageRight.style.opacity = "0";
-         newPageRight.style.transition = "opacity 0.4s ease-out";
-         setTimeout(() => newPageRight.style.opacity = "1", 50);
+
+      const newPageLeft = bookLayout.querySelector(".page-left");
+      const newPageRight = bookLayout.querySelector(".page-right");
+
+      if (newPageLeft) newPageLeft.classList.add("page-turn-left-in");
+      if (newPageRight) {
+        newPageRight.style.opacity = "0";
+        newPageRight.style.transition = "opacity 0.4s ease-out";
+        setTimeout(() => (newPageRight.style.opacity = "1"), 50);
       }
 
       setTimeout(() => {
-        if(newPageLeft) newPageLeft.classList.remove("page-turn-left-in");
+        if (newPageLeft) newPageLeft.classList.remove("page-turn-left-in");
       }, 400);
     }, 400);
   }
@@ -205,30 +205,29 @@ window.handleCheck = (cb) => {
 // Canvas size: 180×180 | Koordinat sudah dalam ruang 0–180
 // ================================================================
 
-
 // ================================================================
 // STATE GLOBAL NEBALI BERTAHAP
 // ================================================================
-let tracingPanelStates = [];      // { currentStroke, completed, drawn, isDrawing }
+let tracingPanelStates = []; // { currentStroke, completed, drawn, isDrawing }
 let currentlyTrackedStrokes = []; // strokes[] per panel
-let canvases     = [];            // fallback free-canvas
-let contexts     = [];
+let canvases = []; // fallback free-canvas
+let contexts = [];
 
-let tracingAksaras = [];          // List aksara yang dipilih
-let currentTracingIndex = 0;      // Index aksara yang sedang ditebali
+let tracingAksaras = []; // List aksara yang dipilih
+let currentTracingIndex = 0; // Index aksara yang sedang ditebali
 
 // ================================================================
 // HELPER: SVG SMOOTH PATH dari array titik
 // ================================================================
 // segments (optional): [[cp1x,cp1y,cp2x,cp2y], ...] dari stroke editor bezier
 function pointsToSmoothPath(pts, segments) {
-  if (pts.length < 2) return '';
+  if (pts.length < 2) return "";
   // --- Mode cubic bezier (dari stroke editor) ---
   if (segments && segments.length === pts.length - 1) {
     let d = `M ${pts[0][0]} ${pts[0][1]}`;
     for (let i = 0; i < segments.length; i++) {
       const [cp1x, cp1y, cp2x, cp2y] = segments[i];
-      d += ` C ${cp1x} ${cp1y} ${cp2x} ${cp2y} ${pts[i+1][0]} ${pts[i+1][1]}`;
+      d += ` C ${cp1x} ${cp1y} ${cp2x} ${cp2y} ${pts[i + 1][0]} ${pts[i + 1][1]}`;
     }
     return d;
   }
@@ -245,7 +244,8 @@ function pointsToSmoothPath(pts, segments) {
 
 // Jarak titik (px,py) ke segmen garis (ax,ay)-(bx,by)
 function distToSeg(px, py, ax, ay, bx, by) {
-  const dx = bx - ax, dy = by - ay;
+  const dx = bx - ax,
+    dy = by - ay;
   const lenSq = dx * dx + dy * dy;
   if (!lenSq) return Math.hypot(px - ax, py - ay);
   const t = Math.max(0, Math.min(1, ((px - ax) * dx + (py - ay) * dy) / lenSq));
@@ -258,14 +258,14 @@ function calcStrokeProgress(drawn, pts, thr) {
   let totalLen = 0;
   const cumLens = [0];
   for (let i = 0; i < pts.length - 1; i++) {
-    totalLen += Math.hypot(pts[i+1][0]-pts[i][0], pts[i+1][1]-pts[i][1]);
+    totalLen += Math.hypot(pts[i + 1][0] - pts[i][0], pts[i + 1][1] - pts[i][1]);
     cumLens.push(totalLen);
   }
   if (!totalLen) return 0;
   let maxCum = 0;
   for (const dp of drawn) {
     for (let i = 0; i < pts.length - 1; i++) {
-      const d = distToSeg(dp.x, dp.y, pts[i][0], pts[i][1], pts[i+1][0], pts[i+1][1]);
+      const d = distToSeg(dp.x, dp.y, pts[i][0], pts[i][1], pts[i + 1][0], pts[i + 1][1]);
       if (d < thr && cumLens[i + 1] > maxCum) maxCum = cumLens[i + 1];
     }
   }
@@ -276,90 +276,108 @@ function calcStrokeProgress(drawn, pts, thr) {
 // RENDER PANEL NEBALI (SVG guide + Canvas input)
 // ================================================================
 function renderGuidedPanel(cb, pi, strokes) {
-  const NS   = 'http://www.w3.org/2000/svg';
-  const name = cb.getAttribute('data-name');
-  const img  = cb.getAttribute('data-img');
+  const NS = "http://www.w3.org/2000/svg";
+  const name = cb.getAttribute("data-name");
+  const img = cb.getAttribute("data-img");
 
-  tracingPanelStates[pi]      = { currentStroke: 0, completed: false, drawn: [], isDrawing: false };
+  tracingPanelStates[pi] = { currentStroke: 0, completed: false, drawn: [], isDrawing: false };
   currentlyTrackedStrokes[pi] = strokes;
 
   // --- Area tracing ---
-  const area = document.createElement('div');
-  area.className = 'flex-shrink-0 w-[200px] sm:w-[250px] md:w-[280px] bg-white';
-  area.style.cssText = 'position:relative;aspect-ratio:1/1;border:2px dashed rgba(93,64,55,.5);border-radius:.75rem;overflow:hidden;touch-action:none;user-select:none;-webkit-user-select:none;box-shadow:inset 0 0 10px rgba(0,0,0,0.05);';
+  const area = document.createElement("div");
+  area.className = "flex-shrink-0 w-[200px] sm:w-[250px] md:w-[280px] bg-white";
+  area.style.cssText = "position:relative;aspect-ratio:1/1;border:2px dashed rgba(93,64,55,.5);border-radius:.75rem;overflow:hidden;touch-action:none;user-select:none;-webkit-user-select:none;box-shadow:inset 0 0 10px rgba(0,0,0,0.05);";
 
   // Title inside area
-  const h3 = document.createElement('div');
+  const h3 = document.createElement("div");
   h3.innerHTML = `<span style="font-family: serif; font-weight: bold; font-size: 0.75rem; color: #795548; background: rgba(253, 245, 230, 0.95); padding: 4px 12px; border-radius: 999px; border: 1px solid rgba(62,39,35,0.3); box-shadow: 0 2px 4px rgba(0,0,0,0.1);">Aksara ${name}</span>`;
-  h3.style.cssText = 'position: absolute; top: 12px; left: 50%; transform: translateX(-50%); z-index: 20; pointer-events: none; white-space: nowrap;';
+  h3.style.cssText = "position: absolute; top: 12px; left: 50%; transform: translateX(-50%); z-index: 20; pointer-events: none; white-space: nowrap;";
   area.appendChild(h3);
 
-  const innerScaleWrap = document.createElement('div');
-  innerScaleWrap.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;transform:scale(1.35);transform-origin:center;';
+  const innerScaleWrap = document.createElement("div");
+  innerScaleWrap.style.cssText = "position:absolute;inset:0;width:100%;height:100%;transform:scale(1.35);transform-origin:center;";
 
-  const wm = document.createElement('img');
+  const wm = document.createElement("img");
   wm.src = img;
-  wm.style.cssText = 'position:absolute;left:16%;top:16%;width:68%;height:68%;object-fit:contain;opacity:.18;filter:grayscale(100%);pointer-events:none;z-index:1;';
+  wm.style.cssText = "position:absolute;left:16%;top:16%;width:68%;height:68%;object-fit:contain;opacity:.18;filter:grayscale(100%);pointer-events:none;z-index:1;";
   innerScaleWrap.appendChild(wm);
 
   // SVG layer untuk guide path + hotspot
-  const svg = document.createElementNS(NS, 'svg');
-  svg.setAttribute('width', '100%'); svg.setAttribute('height', '100%');
-  svg.setAttribute('viewBox', '0 0 180 180'); // MAPPING KOORDINAT TETAP 180x180
-  svg.style.cssText = 'position:absolute;top:0;left:0;pointer-events:none;z-index:2;overflow:visible;';
+  const svg = document.createElementNS(NS, "svg");
+  svg.setAttribute("width", "100%");
+  svg.setAttribute("height", "100%");
+  svg.setAttribute("viewBox", "0 0 180 180"); // MAPPING KOORDINAT TETAP 180x180
+  svg.style.cssText = "position:absolute;top:0;left:0;pointer-events:none;z-index:2;overflow:visible;";
   svg.id = `tsvg-${pi}`;
 
   strokes.forEach((stroke, si) => {
     const active = si === 0;
-    const pathClr = active ? '#03A9F4' : '#B3E5FC';
-    const hotClr  = active ? '#01579B' : '#D4EBF8';
-    const d  = pointsToSmoothPath(stroke.points, stroke.segments);
+    const pathClr = active ? "#03A9F4" : "#B3E5FC";
+    const hotClr = active ? "#01579B" : "#D4EBF8";
+    const d = pointsToSmoothPath(stroke.points, stroke.segments);
     const sp = stroke.points[0];
     const ep = stroke.points[stroke.points.length - 1];
 
     // Jalur putus-putus (dashed guide)
-    const gp = document.createElementNS(NS, 'path');
-    gp.setAttribute('d', d); gp.setAttribute('fill', 'none');
-    gp.setAttribute('stroke', pathClr); gp.setAttribute('stroke-width', '2.5');
-    gp.setAttribute('stroke-dasharray', '7 5'); gp.setAttribute('stroke-linecap', 'round');
-    gp.style.opacity = active ? '0.85' : '0.28';
+    const gp = document.createElementNS(NS, "path");
+    gp.setAttribute("d", d);
+    gp.setAttribute("fill", "none");
+    gp.setAttribute("stroke", pathClr);
+    gp.setAttribute("stroke-width", "2.5");
+    gp.setAttribute("stroke-dasharray", "7 5");
+    gp.setAttribute("stroke-linecap", "round");
+    gp.style.opacity = active ? "0.85" : "0.28";
     gp.id = `gp-${pi}-${si}`;
     svg.appendChild(gp);
 
     // Titik akhir — hanya dot kecil, tanpa angka
-    const endDot = document.createElementNS(NS, 'circle');
-    endDot.setAttribute('cx', ep[0]); endDot.setAttribute('cy', ep[1]); endDot.setAttribute('r', '3.5');
-    endDot.setAttribute('fill', active ? '#03A9F4' : '#B3E5FC');
-    endDot.setAttribute('stroke', '#795548'); endDot.setAttribute('stroke-width', '1');
-    endDot.style.opacity = active ? '0.9' : '0.28';
+    const endDot = document.createElementNS(NS, "circle");
+    endDot.setAttribute("cx", ep[0]);
+    endDot.setAttribute("cy", ep[1]);
+    endDot.setAttribute("r", "3.5");
+    endDot.setAttribute("fill", active ? "#03A9F4" : "#B3E5FC");
+    endDot.setAttribute("stroke", "#795548");
+    endDot.setAttribute("stroke-width", "1");
+    endDot.style.opacity = active ? "0.9" : "0.28";
     endDot.id = `ge-${pi}-${si}`;
     svg.appendChild(endDot);
 
     // Ring pulse (hanya hotspot aktif)
     if (active) {
-      const ring = document.createElementNS(NS, 'circle');
-      ring.setAttribute('cx', sp[0]); ring.setAttribute('cy', sp[1]); ring.setAttribute('r', '15');
-      ring.setAttribute('fill', '#FFB30030'); ring.setAttribute('stroke', 'none');
-      ring.classList.add('hotspot-ring');
+      const ring = document.createElementNS(NS, "circle");
+      ring.setAttribute("cx", sp[0]);
+      ring.setAttribute("cy", sp[1]);
+      ring.setAttribute("r", "15");
+      ring.setAttribute("fill", "#FFB30030");
+      ring.setAttribute("stroke", "none");
+      ring.classList.add("hotspot-ring");
       ring.id = `gr-${pi}-${si}`;
       svg.appendChild(ring);
     }
 
     // Lingkaran hotspot — lebih kecil
-    const hs = document.createElementNS(NS, 'circle');
-    hs.setAttribute('cx', sp[0]); hs.setAttribute('cy', sp[1]); hs.setAttribute('r', '8');
-    hs.setAttribute('fill', hotClr); hs.setAttribute('stroke', '#795548'); hs.setAttribute('stroke-width', '1.5');
-    hs.style.opacity = active ? '1' : '0.32';
+    const hs = document.createElementNS(NS, "circle");
+    hs.setAttribute("cx", sp[0]);
+    hs.setAttribute("cy", sp[1]);
+    hs.setAttribute("r", "8");
+    hs.setAttribute("fill", hotClr);
+    hs.setAttribute("stroke", "#795548");
+    hs.setAttribute("stroke-width", "1.5");
+    hs.style.opacity = active ? "1" : "0.32";
     hs.id = `gh-${pi}-${si}`;
     svg.appendChild(hs);
 
     // Angka — hanya tampil di hotspot aktif, ukuran kecil
     if (active) {
-      const lbl = document.createElementNS(NS, 'text');
-      lbl.setAttribute('x', sp[0]); lbl.setAttribute('y', sp[1] + 4);
-      lbl.setAttribute('text-anchor', 'middle'); lbl.setAttribute('font-size', '9');
-      lbl.setAttribute('font-weight', 'bold'); lbl.setAttribute('fill', '#795548');
-      lbl.setAttribute('font-family', 'sans-serif'); lbl.setAttribute('pointer-events', 'none');
+      const lbl = document.createElementNS(NS, "text");
+      lbl.setAttribute("x", sp[0]);
+      lbl.setAttribute("y", sp[1] + 4);
+      lbl.setAttribute("text-anchor", "middle");
+      lbl.setAttribute("font-size", "9");
+      lbl.setAttribute("font-weight", "bold");
+      lbl.setAttribute("fill", "#795548");
+      lbl.setAttribute("font-family", "sans-serif");
+      lbl.setAttribute("pointer-events", "none");
       lbl.textContent = si + 1;
       lbl.id = `gl-${pi}-${si}`;
       svg.appendChild(lbl);
@@ -369,15 +387,17 @@ function renderGuidedPanel(cb, pi, strokes) {
   innerScaleWrap.appendChild(svg);
 
   // Canvas bawah: menyimpan bekas stroke SELESAI (tidak pernah dihapus kecuali reset)
-  const doneCvs = document.createElement('canvas');
-  doneCvs.width = 250; doneCvs.height = 250;
-  doneCvs.style.cssText = 'position:absolute;top:0;left:0;z-index:8;pointer-events:none;touch-action:none;width:100%;height:100%;';
+  const doneCvs = document.createElement("canvas");
+  doneCvs.width = 250;
+  doneCvs.height = 250;
+  doneCvs.style.cssText = "position:absolute;top:0;left:0;z-index:8;pointer-events:none;touch-action:none;width:100%;height:100%;";
   doneCvs.id = `donecvs-${pi}`;
   innerScaleWrap.appendChild(doneCvs);
 
-  const cvs = document.createElement('canvas');
-  cvs.width = 250; cvs.height = 250;
-  cvs.style.cssText = 'position:absolute;top:0;left:0;z-index:10;cursor:crosshair;touch-action:none;width:100%;height:100%;';
+  const cvs = document.createElement("canvas");
+  cvs.width = 250;
+  cvs.height = 250;
+  cvs.style.cssText = "position:absolute;top:0;left:0;z-index:10;cursor:crosshair;touch-action:none;width:100%;height:100%;";
   cvs.id = `ucvs-${pi}`;
   innerScaleWrap.appendChild(cvs);
 
@@ -390,26 +410,26 @@ function renderGuidedPanel(cb, pi, strokes) {
 // ATTACH EVENT LISTENER TRACING PER PANEL
 // ================================================================
 function attachStrokeEvents(cvs, strokes, pi) {
-  const ctx  = cvs.getContext('2d');
-  ctx.lineWidth = 5; ctx.lineCap = 'round'; ctx.lineJoin = 'round'; // Line width dipertebal
-  ctx.strokeStyle = 'rgba(62,39,35,0.85)';
+  const ctx = cvs.getContext("2d");
+  ctx.lineWidth = 5;
+  ctx.lineCap = "round";
+  ctx.lineJoin = "round"; // Line width dipertebal
+  ctx.strokeStyle = "rgba(62,39,35,0.85)";
 
-  const SCALE      = 250 / 180; // Faktor skala canvas
-  const PROX       = 30;        // toleransi jarak di ruang 180 (px)
-  const MIN_PROG   = 0.65;      // minimal 65% jalur harus ditempuh
-  const END_R_CHECK = 22;       // radius endpoint di ruang 180
+  const SCALE = 250 / 180; // Faktor skala canvas
+  const PROX = 30; // toleransi jarak di ruang 180 (px)
+  const MIN_PROG = 0.65; // minimal 65% jalur harus ditempuh
+  const END_R_CHECK = 22; // radius endpoint di ruang 180
 
   const getPt = (e) => {
     const r = cvs.getBoundingClientRect();
-    const sx = cvs.width / r.width, sy = cvs.height / r.height;
+    const sx = cvs.width / r.width,
+      sy = cvs.height / r.height;
     const src = e.touches ? e.touches[0] : e;
     return { x: (src.clientX - r.left) * sx, y: (src.clientY - r.top) * sy };
   };
 
-  const nearPath = (pt, pts) =>
-    pts.slice(0, -1).some((_, i) =>
-      distToSeg(pt.x, pt.y, pts[i][0], pts[i][1], pts[i+1][0], pts[i+1][1]) < PROX
-    );
+  const nearPath = (pt, pts) => pts.slice(0, -1).some((_, i) => distToSeg(pt.x, pt.y, pts[i][0], pts[i][1], pts[i + 1][0], pts[i + 1][1]) < PROX);
 
   let lastPt = null; // posisi terakhir kursor (selalu diperbarui)
 
@@ -417,18 +437,21 @@ function attachStrokeEvents(cvs, strokes, pi) {
     const st = tracingPanelStates[pi];
     if (!st) return;
     ctx.clearRect(0, 0, 180, 180);
-    st.drawn = []; st.offCount = 0; lastPt = null;
-    cvs.classList.add('shake-tracing');
-    setTimeout(() => cvs.classList.remove('shake-tracing'), 600);
+    st.drawn = [];
+    st.offCount = 0;
+    lastPt = null;
+    cvs.classList.add("shake-tracing");
+    setTimeout(() => cvs.classList.remove("shake-tracing"), 600);
   };
 
   const showNgawur = () => {
     resetStroke();
     Swal.fire({
-      icon: 'error', title: 'Ojo Ngawur!',
-      text: 'Waduh, coretane metu saka jalure! Tebali sesuai garis putus-putus ya! 🖊️',
-      confirmButtonColor: '#795548',
-      customClass: { popup: 'swal-paper', confirmButton: 'swal-paper-confirm' }
+      icon: "error",
+      title: "Ojo Ngawur!",
+      text: "Waduh, coretane metu saka jalure! Tebali sesuai garis putus-putus ya! 🖊️",
+      confirmButtonColor: "#795548",
+      customClass: { popup: "swal-paper", confirmButton: "swal-paper-confirm" },
     });
   };
 
@@ -446,12 +469,13 @@ function attachStrokeEvents(cvs, strokes, pi) {
     // Harus mulai dekat hotspot awal (radius 30px di ruang 180)
     if (Math.hypot(mappedX - sp[0], mappedY - sp[1]) <= 30) {
       st.isDrawing = true;
-      st.drawn    = [];
+      st.drawn = [];
       st.offCount = 0;
-      lastPt      = pt;
+      lastPt = pt;
       // Hanya clear ucvs (scratchpad) — donecvs tetap
       ctx.clearRect(0, 0, 250, 250);
-      ctx.beginPath(); ctx.moveTo(pt.x, pt.y);
+      ctx.beginPath();
+      ctx.moveTo(pt.x, pt.y);
     }
   };
 
@@ -459,7 +483,7 @@ function attachStrokeEvents(cvs, strokes, pi) {
     const st = tracingPanelStates[pi];
     if (!st || !st.isDrawing) return;
     e.preventDefault();
-    const pt  = getPt(e);
+    const pt = getPt(e);
     // Kita harus mapping pt (0-250) balik ke (0-180) untuk komparasi dengan strokeData
     const mappedPt = { x: pt.x / SCALE, y: pt.y / SCALE };
     const pts = strokes[st.currentStroke].points;
@@ -467,8 +491,10 @@ function attachStrokeEvents(cvs, strokes, pi) {
     lastPt = pt;
 
     // Selalu gambar (bisa coret ngawur)
-    ctx.lineTo(pt.x, pt.y); ctx.stroke();
-    ctx.beginPath(); ctx.moveTo(pt.x, pt.y);
+    ctx.lineTo(pt.x, pt.y);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(pt.x, pt.y);
 
     // Klasifikasikan: dekat jalur atau tidak
     if (nearPath(mappedPt, pts)) {
@@ -483,10 +509,10 @@ function attachStrokeEvents(cvs, strokes, pi) {
     if (!st || !st.isDrawing) return;
     st.isDrawing = false;
 
-    const pts      = strokes[st.currentStroke].points;
-    const ep       = pts[pts.length - 1]; // titik akhir stroke
-    const onPts    = st.drawn.length;
-    const offPts   = st.offCount || 0;
+    const pts = strokes[st.currentStroke].points;
+    const ep = pts[pts.length - 1]; // titik akhir stroke
+    const onPts = st.drawn.length;
+    const offPts = st.offCount || 0;
     const totalPts = onPts + offPts;
 
     // ── 1. Cek ngawur: > 35% titik di luar jalur (berlaku dari 4 titik) ──
@@ -498,11 +524,10 @@ function attachStrokeEvents(cvs, strokes, pi) {
     //    (endpoint = titik akhir jalur; radius 22px; harus betul-betul
     //     menyentuh area ujung jalur, bukan di luar jalur)
     const END_R = 22;
-    const endReached = st.drawn.some(pt =>
-      Math.hypot(pt.x - ep[0], pt.y - ep[1]) < END_R
-    );
+    const endReached = st.drawn.some((pt) => Math.hypot(pt.x - ep[0], pt.y - ep[1]) < END_R);
     if (!endReached) {
-      resetStroke(); return;
+      resetStroke();
+      return;
     }
 
     // ── 3. Cek progress: minimal 65% jalur harus ditempuh ──
@@ -514,42 +539,58 @@ function attachStrokeEvents(cvs, strokes, pi) {
     }
   };
 
-  cvs.addEventListener('mousedown',  onStart);
-  cvs.addEventListener('mousemove',  onMove);
-  cvs.addEventListener('mouseup',    onEnd);
-  cvs.addEventListener('mouseleave', onEnd);
-  cvs.addEventListener('touchstart', onStart, { passive: false });
-  cvs.addEventListener('touchmove',  onMove,  { passive: false });
-  cvs.addEventListener('touchend',   onEnd,   { passive: false });
+  cvs.addEventListener("mousedown", onStart);
+  cvs.addEventListener("mousemove", onMove);
+  cvs.addEventListener("mouseup", onEnd);
+  cvs.addEventListener("mouseleave", onEnd);
+  cvs.addEventListener("touchstart", onStart, { passive: false });
+  cvs.addEventListener("touchmove", onMove, { passive: false });
+  cvs.addEventListener("touchend", onEnd, { passive: false });
 }
 
 // ================================================================
 // SELESAI SATU STROKE → AKTIFKAN STROKE BERIKUTNYA
 // ================================================================
 function doFinishStroke(pi, strokes) {
-  const NS = 'http://www.w3.org/2000/svg';
+  const NS = "http://www.w3.org/2000/svg";
   const st = tracingPanelStates[pi];
   const si = st.currentStroke;
   const el = (id) => document.getElementById(id);
 
   // Sembunyikan guide path yg sudah selesai (biarkan coretan user terlihat)
   const gp = el(`gp-${pi}-${si}`);
-  if (gp) { gp.style.opacity = '0'; gp.style.transition = 'opacity 0.4s'; }
+  if (gp) {
+    gp.style.opacity = "0";
+    gp.style.transition = "opacity 0.4s";
+  }
   // Sembunyikan hotspot dan end dot
-  const gh = el(`gh-${pi}-${si}`); if (gh) { gh.style.opacity = '0'; gh.style.transition = 'opacity 0.4s'; }
-  const gl = el(`gl-${pi}-${si}`); if (gl) { gl.style.opacity = '0'; }
-  const ge = el(`ge-${pi}-${si}`); if (ge) { ge.style.opacity = '0'; ge.style.transition = 'opacity 0.4s'; }
-  const gr = el(`gr-${pi}-${si}`); if (gr) gr.setAttribute('fill', 'none');
+  const gh = el(`gh-${pi}-${si}`);
+  if (gh) {
+    gh.style.opacity = "0";
+    gh.style.transition = "opacity 0.4s";
+  }
+  const gl = el(`gl-${pi}-${si}`);
+  if (gl) {
+    gl.style.opacity = "0";
+  }
+  const ge = el(`ge-${pi}-${si}`);
+  if (ge) {
+    ge.style.opacity = "0";
+    ge.style.transition = "opacity 0.4s";
+  }
+  const gr = el(`gr-${pi}-${si}`);
+  if (gr) gr.setAttribute("fill", "none");
 
   // TIDAK clear ucvs — salin ke doneCvs, lalu kosongkan ucvs
   const ucvs = el(`ucvs-${pi}`);
   const doneCvs = el(`donecvs-${pi}`);
   if (ucvs && doneCvs) {
-    const doneCtx = doneCvs.getContext('2d');
+    const doneCtx = doneCvs.getContext("2d");
     doneCtx.drawImage(ucvs, 0, 0);
-    ucvs.getContext('2d').clearRect(0, 0, 250, 250);
+    ucvs.getContext("2d").clearRect(0, 0, 250, 250);
   }
-  st.drawn = []; st.offCount = 0;
+  st.drawn = [];
+  st.offCount = 0;
   st.currentStroke++;
 
   if (st.currentStroke < strokes.length) {
@@ -558,57 +599,74 @@ function doFinishStroke(pi, strokes) {
 
     // Aktifkan guide path berikutnya
     const ngp = el(`gp-${pi}-${nsi}`);
-    if (ngp) { ngp.setAttribute('stroke', '#D4956B'); ngp.style.opacity = '0.85'; }
+    if (ngp) {
+      ngp.setAttribute("stroke", "#D4956B");
+      ngp.style.opacity = "0.85";
+    }
     const ngh = el(`gh-${pi}-${nsi}`);
-    if (ngh) { ngh.setAttribute('fill', '#FFB300'); ngh.style.opacity = '1'; }
+    if (ngh) {
+      ngh.setAttribute("fill", "#FFB300");
+      ngh.style.opacity = "1";
+    }
     const nge = el(`ge-${pi}-${nsi}`);
-    if (nge) { nge.setAttribute('fill', '#D4956B'); nge.style.opacity = '0.9'; }
+    if (nge) {
+      nge.setAttribute("fill", "#D4956B");
+      nge.style.opacity = "0.9";
+    }
 
     // Tambahkan angka di hotspot berikutnya
     const svg = el(`tsvg-${pi}`);
     if (svg) {
       // Ring pulse
-      const ring = document.createElementNS(NS, 'circle');
-      ring.setAttribute('cx', nsp[0]); ring.setAttribute('cy', nsp[1]); ring.setAttribute('r', '15');
-      ring.setAttribute('fill', '#FFB30030'); ring.setAttribute('stroke', 'none');
-      ring.classList.add('hotspot-ring');
+      const ring = document.createElementNS(NS, "circle");
+      ring.setAttribute("cx", nsp[0]);
+      ring.setAttribute("cy", nsp[1]);
+      ring.setAttribute("r", "15");
+      ring.setAttribute("fill", "#FFB30030");
+      ring.setAttribute("stroke", "none");
+      ring.classList.add("hotspot-ring");
       ring.id = `gr-${pi}-${nsi}`;
       const ngh2 = el(`gh-${pi}-${nsi}`);
-      if (ngh2) svg.insertBefore(ring, ngh2); else svg.appendChild(ring);
+      if (ngh2) svg.insertBefore(ring, ngh2);
+      else svg.appendChild(ring);
 
       // Angka
       const existLbl = el(`gl-${pi}-${nsi}`);
       if (!existLbl) {
-        const lbl = document.createElementNS(NS, 'text');
-        lbl.setAttribute('x', nsp[0]); lbl.setAttribute('y', nsp[1] + 4);
-        lbl.setAttribute('text-anchor', 'middle'); lbl.setAttribute('font-size', '9');
-        lbl.setAttribute('font-weight', 'bold'); lbl.setAttribute('fill', '#3E2723');
-        lbl.setAttribute('font-family', 'sans-serif'); lbl.setAttribute('pointer-events', 'none');
+        const lbl = document.createElementNS(NS, "text");
+        lbl.setAttribute("x", nsp[0]);
+        lbl.setAttribute("y", nsp[1] + 4);
+        lbl.setAttribute("text-anchor", "middle");
+        lbl.setAttribute("font-size", "9");
+        lbl.setAttribute("font-weight", "bold");
+        lbl.setAttribute("fill", "#3E2723");
+        lbl.setAttribute("font-family", "sans-serif");
+        lbl.setAttribute("pointer-events", "none");
         lbl.textContent = nsi + 1;
         lbl.id = `gl-${pi}-${nsi}`;
         svg.appendChild(lbl);
       } else {
-        existLbl.style.opacity = '1';
+        existLbl.style.opacity = "1";
       }
     }
 
     const stepEl = el(`step-ind-${pi}`);
     if (stepEl) stepEl.textContent = `Langkah ${nsi + 1} / ${strokes.length}`;
-
   } else {
     // Semua stroke selesai!
     st.completed = true;
-    
+
     // Simpan hasil menebali ke local storage
     const ucvs = el(`ucvs-${pi}`);
     const doneCvs = el(`donecvs-${pi}`);
     if (ucvs && doneCvs) {
-      const finalCvs = document.createElement('canvas');
-      finalCvs.width = 250; finalCvs.height = 250;
-      const fctx = finalCvs.getContext('2d');
+      const finalCvs = document.createElement("canvas");
+      finalCvs.width = 250;
+      finalCvs.height = 250;
+      const fctx = finalCvs.getContext("2d");
       fctx.drawImage(doneCvs, 0, 0);
       fctx.drawImage(ucvs, 0, 0); // Gabungkan scratchpad terakhir (walaupun harusnya kosong)
-      
+
       const cb = tracingAksaras[currentTracingIndex];
       if (cb) {
         savedDrawings[cb.value] = finalCvs.toDataURL();
@@ -618,7 +676,10 @@ function doFinishStroke(pi, strokes) {
     }
 
     const stepEl = el(`step-ind-${pi}`);
-    if (stepEl) { stepEl.textContent = '✅ Selesai!'; stepEl.style.color = '#22c55e'; }
+    if (stepEl) {
+      stepEl.textContent = "✅ Selesai!";
+      stepEl.style.color = "#22c55e";
+    }
   }
 }
 
@@ -628,55 +689,62 @@ function doFinishStroke(pi, strokes) {
 function resetGuidedPanel(pi, strokes) {
   const st = tracingPanelStates[pi];
   if (!st) return;
-  st.currentStroke = 0; st.completed = false; st.drawn = []; st.isDrawing = false; st.offCount = 0;
+  st.currentStroke = 0;
+  st.completed = false;
+  st.drawn = [];
+  st.isDrawing = false;
+  st.offCount = 0;
 
   // Clear kedua canvas
-  const ucvs   = document.getElementById(`ucvs-${pi}`);
+  const ucvs = document.getElementById(`ucvs-${pi}`);
   const doneCvs = document.getElementById(`donecvs-${pi}`);
-  if (ucvs)    ucvs.getContext('2d').clearRect(0, 0, 250, 250);
-  if (doneCvs) doneCvs.getContext('2d').clearRect(0, 0, 250, 250);
+  if (ucvs) ucvs.getContext("2d").clearRect(0, 0, 250, 250);
+  if (doneCvs) doneCvs.getContext("2d").clearRect(0, 0, 250, 250);
 
   strokes.forEach((_, si) => {
     const active = si === 0;
     // Guide path
     const gp = document.getElementById(`gp-${pi}-${si}`);
     if (gp) {
-      gp.setAttribute('stroke', active ? '#D4956B' : '#C0B49A');
-      gp.setAttribute('stroke-dasharray', '7 5');
-      gp.style.transition = '';
-      gp.style.opacity = active ? '0.85' : '0.28';
+      gp.setAttribute("stroke", active ? "#D4956B" : "#C0B49A");
+      gp.setAttribute("stroke-dasharray", "7 5");
+      gp.style.transition = "";
+      gp.style.opacity = active ? "0.85" : "0.28";
     }
     // Hotspot circle
     const gh = document.getElementById(`gh-${pi}-${si}`);
     if (gh) {
-      gh.setAttribute('fill', active ? '#FFB300' : '#D4C5A9');
-      gh.style.transition = '';
-      gh.style.opacity = active ? '1' : '0.32';
+      gh.setAttribute("fill", active ? "#FFB300" : "#D4C5A9");
+      gh.style.transition = "";
+      gh.style.opacity = active ? "1" : "0.32";
     }
     // End dot
     const ge = document.getElementById(`ge-${pi}-${si}`);
     if (ge) {
-      ge.setAttribute('fill', active ? '#D4956B' : '#C0B49A');
-      ge.style.transition = '';
-      ge.style.opacity = active ? '0.9' : '0.28';
+      ge.setAttribute("fill", active ? "#D4956B" : "#C0B49A");
+      ge.style.transition = "";
+      ge.style.opacity = active ? "0.9" : "0.28";
     }
     // Label angka — tampilkan hanya untuk stroke aktif (si=0)
     const gl = document.getElementById(`gl-${pi}-${si}`);
     if (gl) {
-      gl.style.opacity = active ? '1' : '0';
+      gl.style.opacity = active ? "1" : "0";
       gl.textContent = si + 1;
     }
     // Ring pulse — restore si=0, hapus si>0 yang mungkin sudah dibuat
     const gr = document.getElementById(`gr-${pi}-${si}`);
     if (si === 0 && gr) {
-      gr.setAttribute('fill', '#FFB30030');
+      gr.setAttribute("fill", "#FFB30030");
     } else if (gr) {
       gr.remove();
     }
   });
 
   const stepEl = document.getElementById(`step-ind-${pi}`);
-  if (stepEl) { stepEl.textContent = `Langkah 1 / ${strokes.length}`; stepEl.style.color = '#5D4037'; }
+  if (stepEl) {
+    stepEl.textContent = `Langkah 1 / ${strokes.length}`;
+    stepEl.style.color = "#5D4037";
+  }
 }
 
 // ================================================================
@@ -685,13 +753,19 @@ function resetGuidedPanel(pi, strokes) {
 window.startTracing = () => {
   const checked = Array.from(document.querySelectorAll(".aksara-checkbox:checked"));
   if (checked.length === 0) {
-    return Swal.fire({ icon: "warning", title: "Pilih Aksara!", text: "Sampeyan kudu milih sakora-orane siji aksara kanggo latihan nebali", confirmButtonColor: "#03A9F4", customClass: { popup: "swal-paper", confirmButton: "swal-paper-confirm" } });
+    return Swal.fire({
+      icon: "warning",
+      title: "Pilih Aksara!",
+      text: "Sampeyan kudu milih sakora-orane siji aksara kanggo latihan nebali",
+      confirmButtonColor: "#03A9F4",
+      customClass: { popup: "swal-paper", confirmButton: "swal-paper-confirm" },
+    });
   }
 
   const modal = document.getElementById("canvas-modal");
   tracingAksaras = checked;
   currentTracingIndex = 0;
-  
+
   renderCurrentTracingAksara();
   modal.classList.remove("hidden");
 };
@@ -699,8 +773,10 @@ window.startTracing = () => {
 function renderCurrentTracingAksara() {
   const container = document.getElementById("canvas-container");
   container.innerHTML = "";
-  tracingPanelStates = []; currentlyTrackedStrokes = [];
-  canvases = []; contexts = [];
+  tracingPanelStates = [];
+  currentlyTrackedStrokes = [];
+  canvases = [];
+  contexts = [];
 
   const cb = tracingAksaras[currentTracingIndex];
   const index = 0; // Karena cuma satu yang tampil
@@ -724,19 +800,27 @@ function renderCurrentTracingAksara() {
         if (doneCvs) {
           const img = new Image();
           img.onload = () => {
-             doneCvs.getContext('2d').drawImage(img, 0, 0);
-             // Sembunyikan semua guide karena sudah selesai
-             tracingPanelStates[0].completed = true;
-             tracingPanelStates[0].currentStroke = data.strokes.length;
-             data.strokes.forEach((_, si) => {
-               const gp = document.getElementById(`gp-0-${si}`); if (gp) gp.style.opacity = '0';
-               const gh = document.getElementById(`gh-0-${si}`); if (gh) gh.style.opacity = '0';
-               const gl = document.getElementById(`gl-0-${si}`); if (gl) gl.style.opacity = '0';
-               const ge = document.getElementById(`ge-0-${si}`); if (ge) ge.style.opacity = '0';
-               const gr = document.getElementById(`gr-0-${si}`); if (gr) gr.setAttribute('fill', 'none');
-             });
-             const stepEl = document.getElementById(`step-ind-0`);
-             if (stepEl) { stepEl.textContent = '✅ Selesai!'; stepEl.style.color = '#22c55e'; }
+            doneCvs.getContext("2d").drawImage(img, 0, 0);
+            // Sembunyikan semua guide karena sudah selesai
+            tracingPanelStates[0].completed = true;
+            tracingPanelStates[0].currentStroke = data.strokes.length;
+            data.strokes.forEach((_, si) => {
+              const gp = document.getElementById(`gp-0-${si}`);
+              if (gp) gp.style.opacity = "0";
+              const gh = document.getElementById(`gh-0-${si}`);
+              if (gh) gh.style.opacity = "0";
+              const gl = document.getElementById(`gl-0-${si}`);
+              if (gl) gl.style.opacity = "0";
+              const ge = document.getElementById(`ge-0-${si}`);
+              if (ge) ge.style.opacity = "0";
+              const gr = document.getElementById(`gr-0-${si}`);
+              if (gr) gr.setAttribute("fill", "none");
+            });
+            const stepEl = document.getElementById(`step-ind-0`);
+            if (stepEl) {
+              stepEl.textContent = "✅ Selesai!";
+              stepEl.style.color = "#22c55e";
+            }
           };
           img.src = savedDrawings[cb.value];
         }
@@ -761,8 +845,12 @@ function renderCurrentTracingAksara() {
       const cvs = document.getElementById("board-0");
       if (!cvs) return;
       const ctx = cvs.getContext("2d", { willReadFrequently: true });
-      ctx.lineWidth = 5; ctx.lineCap = "round"; ctx.lineJoin = "round"; ctx.strokeStyle = "#3E2723";
-      canvases.push(cvs); contexts.push(ctx);
+      ctx.lineWidth = 5;
+      ctx.lineCap = "round";
+      ctx.lineJoin = "round";
+      ctx.strokeStyle = "#3E2723";
+      canvases.push(cvs);
+      contexts.push(ctx);
 
       // RESTORE SAVED DRAWING (Fallback)
       if (savedDrawings[cb.value]) {
@@ -772,24 +860,43 @@ function renderCurrentTracingAksara() {
       }
 
       let isDrawing = false;
-      const drawFn = (e) => { 
-        if (!isDrawing) return; 
-        e.preventDefault(); 
-        const r = cvs.getBoundingClientRect(); 
-        const x = ((e.touches ? e.touches[0].clientX : e.clientX) - r.left) * cvs.width / r.width; 
-        const y = ((e.touches ? e.touches[0].clientY : e.clientY) - r.top) * cvs.height / r.height; 
-        ctx.lineTo(x, y); ctx.stroke(); ctx.beginPath(); ctx.moveTo(x, y); 
-        
+      const drawFn = (e) => {
+        if (!isDrawing) return;
+        e.preventDefault();
+        const r = cvs.getBoundingClientRect();
+        const x = (((e.touches ? e.touches[0].clientX : e.clientX) - r.left) * cvs.width) / r.width;
+        const y = (((e.touches ? e.touches[0].clientY : e.clientY) - r.top) * cvs.height) / r.height;
+        ctx.lineTo(x, y);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(x, y);
+
         // Simpan setiap coretan ke local storage (untuk free canvas)
         savedDrawings[cb.value] = cvs.toDataURL();
         localStorage.setItem("legena_drawings", JSON.stringify(savedDrawings));
       };
-      cvs.addEventListener("mousedown", (e) => { isDrawing = true; drawFn(e); });
-      cvs.addEventListener("mouseup",   () => { isDrawing = false; ctx.beginPath(); });
+      cvs.addEventListener("mousedown", (e) => {
+        isDrawing = true;
+        drawFn(e);
+      });
+      cvs.addEventListener("mouseup", () => {
+        isDrawing = false;
+        ctx.beginPath();
+      });
       cvs.addEventListener("mousemove", drawFn);
-      cvs.addEventListener("touchstart", (e) => { isDrawing = true; drawFn(e); }, { passive: false });
-      cvs.addEventListener("touchend",   () => { isDrawing = false; ctx.beginPath(); });
-      cvs.addEventListener("touchmove",  drawFn, { passive: false });
+      cvs.addEventListener(
+        "touchstart",
+        (e) => {
+          isDrawing = true;
+          drawFn(e);
+        },
+        { passive: false },
+      );
+      cvs.addEventListener("touchend", () => {
+        isDrawing = false;
+        ctx.beginPath();
+      });
+      cvs.addEventListener("touchmove", drawFn, { passive: false });
     }, 100);
   }
 }
@@ -808,25 +915,31 @@ window.clearCanvas = () => {
 };
 
 window.checkCanvas = () => {
-  const hasGuided = tracingPanelStates.some(st => st && !st.isFree);
+  const hasGuided = tracingPanelStates.some((st) => st && !st.isFree);
 
   if (hasGuided) {
     // --- CEK GUIDED TRACING ---
-    const allDone = tracingPanelStates.every(st => st && st.completed);
+    const allDone = tracingPanelStates.every((st) => st && st.completed);
     if (!allDone) {
-      return Swal.fire({ icon: "warning", title: "Dereng Rampung!", text: "Ibutake kabeh garis! Tebali saka nomer 1 tekan rampung ya! 🖊️", confirmButtonColor: "#03A9F4", customClass: { popup: "swal-paper", confirmButton: "swal-paper-confirm" } });
+      return Swal.fire({
+        icon: "warning",
+        title: "Dereng Rampung!",
+        text: "Tebeli neh, tulisi kabeh garis! Tebali saka nomer 1 tekan rampung ya!",
+        confirmButtonColor: "#03A9F4",
+        customClass: { popup: "swal-paper", confirmButton: "swal-paper-confirm" },
+      });
     }
 
     // Jika masih ada aksara berikutnya
     if (currentTracingIndex < tracingAksaras.length - 1) {
-      Swal.fire({ 
-        icon: "success", 
-        title: "Mantap! ✨", 
-        text: "Siji maneh yo, ayo diteruske!", 
-        confirmButtonColor: "#03A9F4", 
+      Swal.fire({
+        icon: "success",
+        title: "Mantap! ✨",
+        text: "Siji maneh yo, ayo diteruske!",
+        confirmButtonColor: "#03A9F4",
         timer: 1500,
         showConfirmButton: false,
-        customClass: { popup: "swal-paper" } 
+        customClass: { popup: "swal-paper" },
       }).then(() => {
         currentTracingIndex++;
         renderCurrentTracingAksara();
@@ -836,13 +949,22 @@ window.checkCanvas = () => {
 
     completedPages[currentPage] = true;
     localStorage.setItem("legena_completed_pages", JSON.stringify(completedPages));
-    if (currentPage === aksaraData.length - 1) sessionStorage.setItem('completed_legena', 'true');
+    if (currentPage === aksaraData.length - 1) sessionStorage.setItem("completed_legena", "true");
     Swal.fire({ icon: "success", title: "Sae Pisann! ✨", text: "Tulisanmu apik lan rapi, mantepp!", confirmButtonColor: "#03A9F4", customClass: { popup: "swal-paper", confirmButton: "swal-paper-confirm" } }).then(() => {
       closeCanvas();
       if (currentPage < aksaraData.length - 1) {
         nextPage();
       } else {
-        Swal.fire({ icon: "success", title: "Mantepp!", html: "Sampeyan wis ngrampungake kabeh aksara Legena!", confirmButtonText: "Lanjut →", confirmButtonColor: "#03A9F4", customClass: { popup: "swal-paper", confirmButton: "swal-paper-confirm" } }).then(() => { window.location.href = "beranda.html"; });
+        Swal.fire({
+          icon: "success",
+          title: "Mantepp!",
+          html: "Sampeyan wis ngrampungake kabeh aksara Legena!",
+          confirmButtonText: "Lanjut →",
+          confirmButtonColor: "#03A9F4",
+          customClass: { popup: "swal-paper", confirmButton: "swal-paper-confirm" },
+        }).then(() => {
+          window.location.href = "beranda.html";
+        });
       }
     });
     return;
@@ -853,11 +975,16 @@ window.checkCanvas = () => {
   const cvs = canvases[0];
   if (!cvs) return;
   const ctx = contexts[0];
-  
+
   // Deteksi canvas kosong
   const pix = ctx.getImageData(0, 0, cvs.width, cvs.height).data;
   let hasInk = false;
-  for (let i = 0; i < pix.length; i += 4) { if (pix[i+3] > 20) { hasInk = true; break; } }
+  for (let i = 0; i < pix.length; i += 4) {
+    if (pix[i + 3] > 20) {
+      hasInk = true;
+      break;
+    }
+  }
   if (!hasInk) empty = true;
 
   if (empty) {
@@ -866,14 +993,14 @@ window.checkCanvas = () => {
 
   // Jika masih ada aksara berikutnya
   if (currentTracingIndex < tracingAksaras.length - 1) {
-    Swal.fire({ 
-      icon: "success", 
-      title: "Mantap! ✨", 
-      text: "Siji maneh yo!", 
-      confirmButtonColor: "#03A9F4", 
+    Swal.fire({
+      icon: "success",
+      title: "Mantap! ✨",
+      text: "Siji maneh yo!",
+      confirmButtonColor: "#03A9F4",
       timer: 1500,
       showConfirmButton: false,
-      customClass: { popup: "swal-paper" } 
+      customClass: { popup: "swal-paper" },
     }).then(() => {
       currentTracingIndex++;
       renderCurrentTracingAksara();
@@ -884,8 +1011,8 @@ window.checkCanvas = () => {
   completedPages[currentPage] = true;
   localStorage.setItem("legena_completed_pages", JSON.stringify(completedPages));
 
-  if (currentPage === aksaraData.length - 1) sessionStorage.setItem('completed_legena', 'true');
-  
+  if (currentPage === aksaraData.length - 1) sessionStorage.setItem("completed_legena", "true");
+
   Swal.fire({ icon: "success", title: "Mantepp! ✨", text: "Halaman iki wis rampung!", confirmButtonColor: "#03A9F4", customClass: { popup: "swal-paper" } }).then(() => {
     closeCanvas();
     if (currentPage < aksaraData.length - 1) nextPage();

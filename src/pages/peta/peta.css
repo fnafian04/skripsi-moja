@@ -623,3 +623,51 @@
   details>summary::-webkit-details-marker {
     display: none;
   }
+
+  /* =========================================================
+     6. BUTTON ANIMATIONS - PENJELASAN PENILAIAN
+     ========================================================= */
+  @keyframes fadeOut {
+    from {
+      opacity: 1;
+      transform: scale(1);
+    }
+    to {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+  }
+
+  @keyframes pulse {
+    0%, 100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.5;
+    }
+  }
+
+  .swal-paper-confirm:hover {
+    background-color: #0288D1 !important;
+    transform: scale(1.08) !important;
+    box-shadow: 4px 4px 0px #FFC947 !important;
+  }
+
+  @keyframes clickPulse {
+    0% {
+      box-shadow: 0 0 0 0 rgba(255, 201, 71, 0.7);
+    }
+    50% {
+      box-shadow: 0 0 0 10px rgba(255, 201, 71, 0);
+    }
+    100% {
+      box-shadow: 0 0 0 0 rgba(255, 201, 71, 0);
+    }
+  }
+
+  @keyframes rippleEffect {
+    to {
+      transform: scale(4);
+      opacity: 0;
+    }
+  }
