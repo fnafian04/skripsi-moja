@@ -9,7 +9,7 @@ export const candiData = {
     q1: "Bangunane digawe saka tatanan apa?",
     a1: ["bata", "ꦧꦠ"],
     q2: "Werna batane apa?",
-    a2: ["abang", "ꦲꦧꦀ"],
+    a2: ["abang", "ꦲꦧꦁ"],
   },
   bajang: {
     title: "Candi Bajang Ratu",
@@ -44,8 +44,8 @@ export const candiData = {
     detailDesc: "Candi Gentong manggon cedhak banget karo Candi Brahu ing kawasan Trowulan, Mojokerto. Situs iki kalebu salah siji peninggalan sejarah saka jaman Karajan Majapahit sing nduweni nilai budaya lan sejarah kang wigati. Jeneng “Candi Gentong” dijupuk saka akehé pecahan gentong utawa kendi gedhe sing ditemokake ing sakiwa-tengene situs nalika ditindakake panalitèn lan penggalian arkeologi. Pecahan kasebut diprakirakake minangka piranti panyimpen banyu utawa kebutuhan upacara ing jaman biyen.\n\nBangunan Candi Gentong digawe saka bata abang khas arsitektur Majapahit. Sanajan ora kabeh bangunan isih utuh, situs iki tetep nuduhake keagungan lan kepinteran masyarakat Majapahit ing babagan tata bangunan. Miturut para ahli, Candi Gentong diprakirakake nduweni fungsi minangka papan suci utawa papan kanggo kegiatan keagamaan. Kajaba iku, situs iki uga dadi bukti yen kawasan Trowulan biyen minangka pusat peradaban lan pemerintahan Majapahit sing maju banget. Saiki, Candi Gentong kerep ditekani wisatawan lan para siswa kanggo sinau sejarah lan nambah wawasan ngenani peninggalan budaya bangsa.",
     q1: "Candi iki salah siji paninggalan kerajaan...",
     a1: ["majapahit", "ꦩꦗꦥꦲꦶꦠ꧀"],
-    q2: "Jeneng \"Gentong\" dijupuk amarga akeh ditemokake pecahan apa?",
-    a2: ["gentong", "ꦒꦼꦤꦠꦺꦴꦀ"],
+    q2: "Pecahan gentong di prakirakake minangka piranti panyimpen banyu utawa kebutuhan…ing jaman biyen",
+    a2: ["upacara", "ꦲꦸꦥꦕꦫ"],
   },
   minakjinggo: {
     title: "Candi Minak Jinggo",
@@ -69,7 +69,7 @@ export const candiData = {
     q1: "Candi Wringin Lawang iku minangka bangunan apa?",
     a1: ["gapura", "ꦒꦥꦸꦫ"],
     q2: "Gapura uga diarani apa?",
-    a2: ["gerbang", "ꦒꦼꦂꦧꦀ"],
+    a2: ["gerbang", "ꦒꦼꦂꦧꦁ"],
   },
   jedong: {
     title: "Candi Jedong",
@@ -81,7 +81,7 @@ export const candiData = {
     q1: "Candi Jedong wujude apa?",
     a1: ["gapura", "ꦒꦥꦸꦫ"],
     q2: "Dumunung ing ngendi?",
-    a2: ["gunung", "ꦒꦸꦤꦸꦀ"],
+    a2: ["gunung", "ꦒꦸꦤꦸꦁ"],
   },
   kedaton: {
     title: "Candi Kedaton",
@@ -91,7 +91,7 @@ export const candiData = {
     desc: "Situs Kedaton dipercaya minangka bekas keraton utawa papan dununge para bangsawan. Ing papan iki akeh ditemokake sumur kuna lan sisa lantai bata.",
     detailDesc: "Situs Kedaton dipercaya minangka bekas keraton utawa papan dununge para bangsawan ing jaman Karajan Majapahit. Situs iki dumunung ing kawasan Trowulan, Mojokerto, sing dikenal minangka pusat pemerintahan Majapahit biyen. Miturut para ahli sejarah lan arkeologi, papan iki nduweni peran penting amarga diprakirakake dadi pusat kegiatan kerajaan lan papan panggonan keluarga bangsawan.\n\nIng Situs Kedaton akeh ditemokake sumur kuna, saluran banyu, lan sisa lantai bata abang sing nuduhake majune tata bangunan masyarakat Majapahit nalika semana. Panemuan kasebut dadi bukti yen masyarakat Majapahit wis nduweni sistem tata kota lan teknologi bangunan sing apik. Saiki, Situs Kedaton kerep didadekake papan wisata sejarah lan sarana edukasi kanggo sinau ngenani kejayaan Karajan Majapahit.",
     q1: "Situs Kedaton minangka bekas para sapa?",
-    a1: ["bangsawan", "ꦧꦀꦱꦮꦤ"],
+    a1: ["bangsawan", "ꦧꦁꦱꦮꦤ꧀"],
     q2: "Ing kono akeh ditemokake apa?",
     a2: ["sumur", "ꦱꦸꦩꦸꦂ"],
   },
