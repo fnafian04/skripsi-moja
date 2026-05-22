@@ -361,15 +361,15 @@ function checkFinishAll() {
     const normalizedScore = Math.round((score / maxScore) * 100);
     
     // Show floating button block
-    const actionBtns = document.getElementById("finished-actions");
-    if(actionBtns) actionBtns.style.display = 'flex';
+    const cekBtn = document.getElementById("btn-cek-hasil");
+    const baleniBtn = document.getElementById("btn-baleni");
+    if(cekBtn) cekBtn.classList.remove('hidden');
+    if(baleniBtn) baleniBtn.classList.remove('hidden');
 
     sessionStorage.setItem('completed_pasinaon', 'true');
 
     setTimeout(() => {
       document.getElementById("popup-book").classList.add("hidden");
-      showFinalResult(normalizedScore);
-      showDetailScore(score, maxScore);
     }, 1000);
   }
 }
@@ -465,16 +465,11 @@ window.showDetailScore = (score, maxScore) => {
         <strong style="color: #03A9F4; font-size: 16px;">-1 poin / kesalahan</strong><br/>
         <small style="color: #999;">Conto: Salah 1x = 5.5 poin, Salah 2x = 4.5 poin</small>
       </div>
-
-      <div style="margin-top: 15px; padding: 10px; background: #E3F2FD; border-radius: 4px; border: 1px solid #03A9F4; text-align: center;">
-        <strong style="color: #03A9F4; font-size: 14px;">Skor Maksimal</strong><br/>
-        <strong style="color: #03A9F4; font-size: 20px;">${maxScore} poin</strong>${score !== null ? `<br/><small style="color: #666; margin-top: 8px;">Skor Sampeyan: ${score} / ${maxScore}</small>` : ''}
-      </div>
     </div>
   `;
   
   Swal.fire({
-    title: "Penjelasan Penilaian",
+    title: "Penjelasan Pambiji",
     html: detailHtml,
     icon: "info",
     confirmButtonColor: "#03A9F4",
@@ -544,6 +539,36 @@ window.showDetailScore = (score, maxScore) => {
       icon.style.animation = "pulse 0.6s ease-in-out";
     }
   });
+};
+
+window.showFinalResultWithScore = () => {
+  // Hitung skor dari userProgress
+  let score = 0;
+  const total = Object.keys(candiData).length;
+  
+  Object.values(userProgress).forEach((p) => {
+    let q1Points = 0;
+    if (p.q1State === "correct") {
+      q1Points = POINTS_PER_SOAL;
+    } else if (p.q1State === "wrong") {
+      q1Points = Math.max(0, POINTS_PER_SOAL - (p.q1Attempts * PENALTY_PER_KESALAHAN));
+    }
+    
+    let q2Points = 0;
+    if (p.q2State === "correct") {
+      q2Points = POINTS_PER_SOAL;
+    } else if (p.q2State === "wrong") {
+      q2Points = Math.max(0, POINTS_PER_SOAL - (p.q2Attempts * PENALTY_PER_KESALAHAN));
+    }
+    
+    score += q1Points + q2Points;
+  });
+  
+  const maxScore = total * POINTS_PER_SOAL * 2;
+  const normalizedScore = Math.round((score / maxScore) * 100);
+  
+  // Tampilkan langsung di hasil akhir
+  showFinalResult(normalizedScore);
 };
 
 window.restartGame = () => {

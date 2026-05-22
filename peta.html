@@ -20,13 +20,7 @@
           </svg>
         </a>
         <span class="font-serif text-lg font-bold">Latihan Pasinaon 🗺️</span>
-        <button
-          onclick="showDetailScore()"
-          class="bg-[#03A9F4] hover:bg-sky-600 text-[#FFFFFF] font-bold py-1 px-3 md:px-3 rounded-full shadow-lg border-2 border-[#3E2723] transition-transform hover:scale-110 active:scale-95 duration-150 font-serif text-lg md:text-xl w-10 h-10 md:w-12 md:h-12 flex items-center justify-center"
-          title="Penjelasan Penilaian"
-        >
-          ?
-        </button>
+        <div class="w-12"></div>
       </header>
 
       <main class="flex-1 bg-batik relative flex flex-col w-full">
@@ -127,19 +121,27 @@
           </div>
         </div>
 
-        <!-- Tombol Selesai Kuis -->
-        <div id="finished-actions" class="absolute bottom-5 right-5 flex-col md:flex-row gap-3 z-[150]" style="display: none">
+        <!-- Actions Bar -->
+        <div id="actions-bar" class="absolute bottom-5 right-5 left-5 md:left-auto flex gap-2 z-[150]">
           <button
-            onclick="showFinalResult()"
-            class="bg-[#03A9F4] hover:bg-sky-600 text-[#FFFFFF] font-bold py-2 px-4 rounded-xl shadow-lg border-2 border-[#3E2723] transition-transform hover:scale-105 active:scale-95 duration-150 font-serif text-sm md:text-base"
+            id="btn-cek-hasil"
+            onclick="showFinalResultWithScore()"
+            class="hidden bg-[#03A9F4] hover:bg-sky-600 text-[#FFFFFF] font-bold py-1 px-2 md:px-3 rounded-lg shadow-lg border border-[#3E2723] transition-transform hover:scale-105 active:scale-95 duration-150 font-serif text-xs md:text-sm"
           >
-            Cek Hasil
+            ✅ Cek
           </button>
           <button
-            onclick="restartGame()"
-            class="bg-red-600 hover:bg-red-700 text-[#FFFFFF] font-bold py-2 px-4 rounded-xl shadow-lg border-2 border-[#3E2723] transition-transform hover:scale-105 active:scale-95 duration-150 font-serif text-sm md:text-base"
+            onclick="showDetailScore()"
+            class="bg-[#9C27B0] hover:bg-purple-700 text-[#FFFFFF] font-bold py-1 px-2 md:px-3 rounded-lg shadow-lg border border-[#3E2723] transition-transform hover:scale-105 active:scale-95 duration-150 font-serif text-xs md:text-sm"
           >
-            Baleni (Restart)
+            📖 Pambiji
+          </button>
+          <button
+            id="btn-baleni"
+            onclick="restartGame()"
+            class="hidden bg-red-600 hover:bg-red-700 text-[#FFFFFF] font-bold py-1 px-2 md:px-3 rounded-lg shadow-lg border border-[#3E2723] transition-transform hover:scale-105 active:scale-95 duration-150 font-serif text-xs md:text-sm"
+          >
+            ↺ Baleni
           </button>
         </div>
       </main>
