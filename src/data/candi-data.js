@@ -34,7 +34,7 @@ export const candiData = {
     detailDesc:
       "Candi Tikus minangka salah siji situs peninggalan Karajan Majapahit sing dumunung ing kawasan Trowulan, Mojokerto, Jawa Timur. Candi iki diprakirakake minangka situs patirtan suci utawa papan kanggo adus lan upacara keagamaan. Wujude unik amarga mirip miniatur gunung kanthi bangunan utama ing tengah lan diubengi kolam banyu. Jeneng “Candi Tikus” asalé saka akehé tikus sing ditemokake nalika situs iki digali lan ditemokake maneh.\n\nNalika sepisanan ditemokake, Candi Tikus kakubur ing ngisor lemah lan ketutupan tanah nganti pirang-pirang taun. Sawisé ditindakake penggalian dening para arkeolog, bangunan candi iki bisa dipugar lan dirawat supaya tetep lestari. Anane saluran banyu lan kolam ing sekitar candi nuduhake yen masyarakat Majapahit wis nduweni teknologi tata banyu sing maju. Saiki, Candi Tikus dadi salah siji objek wisata sejarah sing kerep ditekani wisatawan lan pelajar kanggo sinau budaya lan sejarah Majapahit.",
     q1: "Candi Tikus iku situs apa?",
-    a1: ["patirtan", "ꦥꦠꦁꦂꦠꦤ"],
+    a1: ["patirtan", "ꦥꦠꦁꦂꦠꦤ꧀"],
     q2: "Nalika ditemokake, situs iki kakubur ing ngisor?",
     a2: ["lemah", "ꦭꦼꦩꦃ"],
   },
