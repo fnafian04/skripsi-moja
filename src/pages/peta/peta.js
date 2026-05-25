@@ -418,6 +418,10 @@ function checkFinishAll() {
 
     setTimeout(() => {
       document.getElementById("popup-book").classList.add("hidden");
+      // Auto-show nilai setelah popup tertutup
+      setTimeout(() => {
+        showFinalResult(normalizedScore);
+      }, 500);
     }, 1000);
   }
 }
