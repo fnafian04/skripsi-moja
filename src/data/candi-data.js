@@ -10,7 +10,7 @@ export const candiData = {
     q1: "Bangunane digawe saka tatanan apa?",
     a1: ["bata", "ꦧꦠ"],
     q2: "Werna batane apa?",
-    a2: ["abang", "ꦲꦧꦁ", "ꦲꦧꦀ"],
+    a2: ["abang", "ꦲꦧꦀ", "ꦲꦧꦀ"],
   },
   bajang: {
     title: "Candi Bajang Ratu",
@@ -34,7 +34,7 @@ export const candiData = {
     detailDesc:
       "Candi Tikus minangka salah siji situs peninggalan Karajan Majapahit sing dumunung ing kawasan Trowulan, Mojokerto, Jawa Timur. Candi iki diprakirakake minangka situs patirtan suci utawa papan kanggo adus lan upacara keagamaan. Wujude unik amarga mirip miniatur gunung kanthi bangunan utama ing tengah lan diubengi kolam banyu. Jeneng “Candi Tikus” asalé saka akehé tikus sing ditemokake nalika situs iki digali lan ditemokake maneh.\n\nNalika sepisanan ditemokake, Candi Tikus kakubur ing ngisor lemah lan ketutupan tanah nganti pirang-pirang taun. Sawisé ditindakake penggalian dening para arkeolog, bangunan candi iki bisa dipugar lan dirawat supaya tetep lestari. Anane saluran banyu lan kolam ing sekitar candi nuduhake yen masyarakat Majapahit wis nduweni teknologi tata banyu sing maju. Saiki, Candi Tikus dadi salah siji objek wisata sejarah sing kerep ditekani wisatawan lan pelajar kanggo sinau budaya lan sejarah Majapahit.",
     q1: "Candi Tikus iku situs apa?",
-    a1: ["patirtan", "ꦥꦠꦶꦂꦠꦤ"],
+    a1: ["patirtan", "ꦥꦠꦁꦂꦠꦤ"],
     q2: "Nalika ditemokake, situs iki kakubur ing ngisor?",
     a2: ["lemah", "ꦭꦼꦩꦃ"],
   },
@@ -47,7 +47,7 @@ export const candiData = {
     detailDesc:
       "Candi Gentong manggon cedhak banget karo Candi Brahu ing kawasan Trowulan, Mojokerto. Situs iki kalebu salah siji peninggalan sejarah saka jaman Karajan Majapahit sing nduweni nilai budaya lan sejarah kang wigati. Jeneng “Candi Gentong” dijupuk saka akehé pecahan gentong utawa kendi gedhe sing ditemokake ing sakiwa-tengene situs nalika ditindakake panalitèn lan penggalian arkeologi. Pecahan kasebut diprakirakake minangka piranti panyimpen banyu utawa kebutuhan upacara ing jaman biyen.\n\nBangunan Candi Gentong digawe saka bata abang khas arsitektur Majapahit. Sanajan ora kabeh bangunan isih utuh, situs iki tetep nuduhake keagungan lan kepinteran masyarakat Majapahit ing babagan tata bangunan. Miturut para ahli, Candi Gentong diprakirakake nduweni fungsi minangka papan suci utawa papan kanggo kegiatan keagamaan. Kajaba iku, situs iki uga dadi bukti yen kawasan Trowulan biyen minangka pusat peradaban lan pemerintahan Majapahit sing maju banget. Saiki, Candi Gentong kerep ditekani wisatawan lan para siswa kanggo sinau sejarah lan nambah wawasan ngenani peninggalan budaya bangsa.",
     q1: "Candi iki salah siji paninggalan kerajaan...",
-    a1: ["majapahit", "ꦩꦗꦥꦲꦶꦠ꧀"],
+    a1: ["majapahit", "ꦩꦗꦥꦲꦁꦠ꧀"],
     q2: "Pecahan gentong di prakirakake minangka piranti panyimpen banyu utawa kebutuhan…ing jaman biyen",
     a2: ["upacara", "ꦲꦸꦥꦕꦫ"],
   },
@@ -75,7 +75,7 @@ export const candiData = {
     q1: "Candi Wringin Lawang iku minangka bangunan apa?",
     a1: ["gapura", "ꦒꦥꦸꦫ"],
     q2: "Gapura uga diarani apa?",
-    a2: ["gerbang", "ꦒꦼꦂꦧꦁ", "ꦒꦼꦂꦧꦀ"],
+    a2: ["gerbang", "ꦒꦼꦂꦧꦀ", "ꦒꦼꦂꦧꦀ"],
   },
   jedong: {
     title: "Candi Jedong",
@@ -88,7 +88,7 @@ export const candiData = {
     q1: "Candi Jedong wujude apa?",
     a1: ["gapura", "ꦒꦥꦸꦫ"],
     q2: "Dumunung ing ngendi?",
-    a2: ["gunung", "ꦒꦸꦤꦸꦁ", "ꦒꦸꦤꦸꦀ"],
+    a2: ["gunung", "ꦒꦸꦤꦸꦀ", "ꦒꦸꦤꦸꦀ"],
   },
   kedaton: {
     title: "Candi Kedaton",
@@ -99,7 +99,7 @@ export const candiData = {
     detailDesc:
       "Situs Kedaton dipercaya minangka bekas keraton utawa papan dununge para bangsawan ing jaman Karajan Majapahit. Situs iki dumunung ing kawasan Trowulan, Mojokerto, sing dikenal minangka pusat pemerintahan Majapahit biyen. Miturut para ahli sejarah lan arkeologi, papan iki nduweni peran penting amarga diprakirakake dadi pusat kegiatan kerajaan lan papan panggonan keluarga bangsawan.\n\nIng Situs Kedaton akeh ditemokake sumur kuna, saluran banyu, lan sisa lantai bata abang sing nuduhake majune tata bangunan masyarakat Majapahit nalika semana. Panemuan kasebut dadi bukti yen masyarakat Majapahit wis nduweni sistem tata kota lan teknologi bangunan sing apik. Saiki, Situs Kedaton kerep didadekake papan wisata sejarah lan sarana edukasi kanggo sinau ngenani kejayaan Karajan Majapahit.",
     q1: "Situs Kedaton minangka bekas para sapa?",
-    a1: ["bangsawan", "ꦧꦁꦱꦮꦤ꧀", "ꦧꦀꦱꦮꦤ꧀"],
+    a1: ["bangsawan", "ꦧꦀꦱꦮꦤ꧀", "ꦧꦀꦱꦮꦤ꧀"],
     q2: "Ing kono akeh ditemokake apa?",
     a2: ["sumur", "ꦱꦸꦩꦸꦂ"],
   },
