@@ -71,11 +71,11 @@ function renderBook() {
       
       <div class="w-full flex justify-between items-center mt-auto pt-3 border-t border-dashed border-[#A1887F]/30 flex-shrink-0">
         <button onclick="prevPage()" class="btn-modern-3d text-[9px] md:text-[11px] font-bold tracking-wider" style="padding: 6px 16px;" ${currentPage === 0 ? "disabled" : ""}>
-          <span style="display: flex; gap: 4px; align-items: center;"><span>⬅</span><span>BALENI</span></span>
+          BALENI
         </button>
         <span class="text-[#795548] font-bold text-[9px] md:text-[11px]">Hal ${currentPage + 1}/4</span>
         <button onclick="nextPage()" class="btn-modern-3d text-[9px] md:text-[11px] font-bold tracking-wider" style="padding: 6px 16px;" ${currentPage === pasanganData.length - 1 || !completedPages[currentPage] ? "disabled" : ""}>
-          <span style="display: flex; gap: 4px; align-items: center;"><span>LANJUT</span><span>➡</span></span>
+          LANJUT
         </button>
       </div>
     </div>

@@ -77,7 +77,7 @@ function renderBook() {
         <!-- Navigasi Bawah -->
         <div class="w-full flex justify-start items-center flex-shrink-0">
           <button onclick="prevPage()" class="btn-modern-3d text-[7px] md:text-[11px] font-bold tracking-wider px-1.5 py-1 md:px-3 active:scale-95 transition-transform duration-150" ${currentPage === 0 ? "disabled" : ""}>
-            <span style="display: flex; gap: 2px; align-items: center;"><span>⬅</span><span>BALENI</span></span>
+            BALENI
           </button>
         </div>
       </div>
@@ -108,7 +108,7 @@ function renderBook() {
         <div class="w-full flex justify-between items-center flex-shrink-0">
           <span class="text-[#795548] font-bold text-[7px] md:text-[11px]">Hal ${currentPage + 1}/4</span>
           <button onclick="nextPage()" class="btn-modern-3d text-[7px] md:text-[11px] font-bold tracking-wider px-1.5 py-1 md:px-3 active:scale-95 transition-transform duration-150" ${currentPage === aksaraData.length - 1 || !completedPages[currentPage] ? "disabled" : ""}>
-            <span style="display: flex; gap: 2px; align-items: center;"><span>LANJUT</span><span>➡</span></span>
+            LANJUT
           </button>
         </div>
       </div>

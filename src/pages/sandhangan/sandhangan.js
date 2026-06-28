@@ -55,7 +55,7 @@ function renderBook() {
         <!-- Navigasi Bawah -->
         <div class="w-full flex justify-between items-center flex-shrink-0 absolute bottom-0 left-4 md:left-8 pr-4 md:pr-8 z-[100]">
           <button onclick="prevPage()" class="btn-modern-3d text-[7px] md:text-[11px] font-bold tracking-wider px-1.5 py-1 md:px-3 active:scale-95 transition-transform duration-150" ${currentPage === 0 ? "style='visibility:hidden'" : ""}>
-            <span style="display: flex; gap: 2px; align-items: center;"><span>⬅</span><span>BALENI</span></span>
+            BALENI
           </button>
         </div>
       </div>
@@ -75,7 +75,7 @@ function renderBook() {
         <div class="w-full flex justify-end items-center flex-shrink-0 absolute bottom-0 right-4 md:right-8 gap-2 md:gap-4 z-[100]">
           <span class="text-[#795548] font-bold text-[8px] md:text-[12px] font-serif bg-white/80 px-2 py-0.5 rounded shadow-sm border border-[#5D4037]/20">Hal ${currentPage + 1}/${pages.length}</span>
           <button onclick="nextPage()" class="btn-modern-3d text-[7px] md:text-[11px] font-bold tracking-wider px-1.5 py-1 md:px-3 active:scale-95 transition-transform duration-150" ${currentPage === pages.length - 1 ? "style='visibility:hidden'" : ""}>
-            <span style="display: flex; gap: 2px; align-items: center;"><span>LANJUT</span><span>➡</span></span>
+            LANJUT
           </button>
         </div>
       </div>
