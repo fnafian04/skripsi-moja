@@ -7,15 +7,6 @@ const pages = [
   "/assets/sandhangan - taling tarung.jpeg",
   "/assets/sandhangan - suku.jpeg",
   "/assets/sandhangan - pepet.jpeg",
-  "/assets/sandhangan panyigeg.jpeg",
-  "/assets/sandhangan panyigeg - wignyan.jpeg",
-  "/assets/sandhangan panyigeg - pangkon.jpeg",
-  "/assets/sandhangan panyigeg - layar.jpeg",
-  "/assets/sandhangan panyigeg - cecak.jpeg",
-  "/assets/sandhangan mandaswara.jpeg",
-  "/assets/sandhangan mandaswara - pengkal.jpeg",
-  "/assets/sandhangan mandaswara - cakra.jpeg",
-  "/assets/sandhangan mandaswara - cakra keret.jpeg",
 ];
 
 // Preload images to avoid loading flickers
